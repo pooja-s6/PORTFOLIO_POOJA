@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* Custom Pastel Colors */
+.bg-pastel-blue { background-color: #E0F2FE; }
+.bg-pastel-blueLight { background-color: #F0F9FF; }
+.bg-pastel-blueDark { background-color: #BAE6FD; }
+.bg-pastel-pink { background-color: #FCE7F3; }
+.bg-pastel-pinkLight { background-color: #FDF2F8; }
+.bg-pastel-pinkDark { background-color: #FBCFE8; }
+.bg-pastel-lavender { background-color: #EDE9FE; }
+.bg-pastel-lavenderLight { background-color: #F5F3FF; }
+.bg-pastel-lavenderDark { background-color: #DDD6FE; }
+.bg-pastel-peach { background-color: #FED7AA; }
+.bg-pastel-peachLight { background-color: #FFF7ED; }
+.bg-pastel-peachDark { background-color: #FDBA74; }
+.bg-pastel-mint { background-color: #D1FAE5; }
+.bg-pastel-mintLight { background-color: #ECFDF5; }
+.bg-pastel-mintDark { background-color: #A7F3D0; }
+
+.from-pastel-blue { --tw-gradient-from: #E0F2FE; }
+.from-pastel-blueLight { --tw-gradient-from: #F0F9FF; }
+.from-pastel-blueDark { --tw-gradient-from: #BAE6FD; }
+.from-pastel-pink { --tw-gradient-from: #FCE7F3; }
+.from-pastel-pinkLight { --tw-gradient-from: #FDF2F8; }
+.from-pastel-lavender { --tw-gradient-from: #EDE9FE; }
+.from-pastel-lavenderLight { --tw-gradient-from: #F5F3FF; }
+.from-pastel-mint { --tw-gradient-from: #D1FAE5; }
+.from-pastel-mintLight { --tw-gradient-from: #ECFDF5; }
+
+.via-pastel-blue { --tw-gradient-via: #E0F2FE; }
+.via-pastel-blueLight { --tw-gradient-via: #F0F9FF; }
+.via-pastel-pink { --tw-gradient-via: #FCE7F3; }
+.via-pastel-pinkLight { --tw-gradient-via: #FDF2F8; }
+.via-pastel-lavender { --tw-gradient-via: #EDE9FE; }
+
+.to-pastel-blue { --tw-gradient-to: #E0F2FE; }
+.to-pastel-blueLight { --tw-gradient-to: #F0F9FF; }
+.to-pastel-pink { --tw-gradient-to: #FCE7F3; }
+.to-pastel-pinkLight { --tw-gradient-to: #FDF2F8; }
+.to-pastel-lavender { --tw-gradient-to: #EDE9FE; }
+.to-pastel-lavenderLight { --tw-gradient-to: #F5F3FF; }
+.to-pastel-mint { --tw-gradient-to: #D1FAE5; }
+.to-pastel-mintLight { --tw-gradient-to: #ECFDF5; }
+
+.font-display {
+  font-family: 'Poppins', sans-serif;
+}
