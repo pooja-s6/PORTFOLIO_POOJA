@@ -10,7 +10,7 @@ import BackToTop from './components/BackToTop'
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pastel-blueLight via-white to-pastel-pinkLight">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
       <About />
