@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiArrowUp } from 'react-icons/hi';
+import { FaArrowUp } from 'react-icons/fa';
 
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,7 +40,7 @@ const BackToTop = () => {
           className="fixed bottom-8 right-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all z-50 hover:scale-110"
           aria-label="Back to top"
         >
-          <HiArrowUp className="w-6 h-6" />
+          <FaArrowUp className="w-6 h-6" />
         </motion.button>
       )}
     </AnimatePresence>

@@ -1,20 +1,47 @@
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from '../lib/gsap';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const ref = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.footer-item',
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: 'top 90%',
+          },
+        },
+      );
+    }, ref);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-12">
+    <footer ref={ref} className="bg-gray-900 text-gray-300 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
           {/* Brand */}
-          <div className="text-center md:text-left">
+          <div className="footer-item text-center md:text-left">
             <h3 className="text-2xl font-display font-bold text-white mb-2">Pooja S</h3>
-            <p className="text-gray-400">Aspiring Full Stack Developer</p>
+            <p className="text-gray-400">Full Stack Developer | Backend &amp; Cloud Enthusiast | AI Explorer</p>
           </div>
 
           {/* Social Links */}
-          <div className="flex space-x-6">
+          <div className="footer-item flex space-x-6">
             <a
               href="https://github.com/pooja-s6"
               target="_blank"
@@ -43,7 +70,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="flex space-x-6 text-sm">
+          <div className="footer-item flex space-x-6 text-sm">
             <a href="#about" className="hover:text-white transition-colors">About</a>
             <a href="#skills" className="hover:text-white transition-colors">Skills</a>
             <a href="#experience" className="hover:text-white transition-colors">Experience</a>

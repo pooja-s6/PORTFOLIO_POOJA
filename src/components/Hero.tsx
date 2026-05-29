@@ -1,9 +1,37 @@
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaDownload } from 'react-icons/fa';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { gsap } from '../lib/gsap';
 
 const Hero = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const [phoneCopied, setPhoneCopied] = useState(false);
+
+  useLayoutEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      tl.fromTo('.hero-title', { opacity: 0, y: 32 }, { opacity: 1, y: 0, duration: 0.8 })
+        .fromTo('.hero-subtitle', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.45')
+        .fromTo('.hero-copy', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.4')
+        .fromTo('.hero-social', { opacity: 0, y: 18, stagger: 0.08 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35')
+        .fromTo('.hero-cta', { opacity: 0, y: 18, stagger: 0.08 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.25');
+
+      gsap.to('.hero-blob', {
+        y: '+=18',
+        x: '+=10',
+        duration: 6,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.2,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const copyPhoneNumber = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -15,6 +43,7 @@ const Hero = () => {
   return (
     <section
       id="home"
+      ref={sectionRef}
       className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16"
     >
       <div className="max-w-7xl mx-auto w-full">
@@ -24,7 +53,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-4">
+            <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-4">
               Hi, I'm{' '}
               <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
                 Pooja S
@@ -33,27 +62,26 @@ const Hero = () => {
           </motion.div>
 
           <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-gray-700 mb-6"
+            className="hero-subtitle text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-gray-700 mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Aspiring Full Stack Developer
+            Full Stack Developer | Backend &amp; Cloud Enthusiast | AI Explorer
           </motion.h2>
 
           <motion.p
-            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8"
+            className="hero-copy text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Passionate Computer Science Engineering student specializing in building
-            scalable, real-world applications using Java, Spring Boot, React, and MongoDB.
+            Computer Science undergraduate (Honours in Data Science) with strong foundations in full stack development, backend engineering, and cloud systems. Experienced across multiple internships building production-level applications using Spring Boot, FastAPI, and React. Possess hands-on knowledge in LLMs, RAG, and deep learning through Honours specialization. Passionate about building scalable REST APIs, AI-integrated backends, and real-world deployments.
           </motion.p>
 
           {/* Social Links */}
           <motion.div
-            className="flex justify-center space-x-6 mb-10"
+            className="hero-social flex justify-center space-x-6 mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -100,7 +128,7 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row justify-center gap-4"
+            className="hero-cta flex flex-col sm:flex-row justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -131,7 +159,7 @@ const Hero = () => {
         {/* Animated Background Elements */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-pastel-lavender rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            className="hero-blob absolute top-20 left-10 w-72 h-72 bg-pastel-lavender rounded-full mix-blend-multiply filter blur-xl opacity-70"
             animate={{
               scale: [1, 1.2, 1],
               x: [0, 50, 0],
@@ -144,7 +172,7 @@ const Hero = () => {
             }}
           />
           <motion.div
-            className="absolute top-40 right-10 w-72 h-72 bg-pastel-pink rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            className="hero-blob absolute top-40 right-10 w-72 h-72 bg-pastel-pink rounded-full mix-blend-multiply filter blur-xl opacity-70"
             animate={{
               scale: [1, 1.3, 1],
               x: [0, -50, 0],
@@ -157,7 +185,7 @@ const Hero = () => {
             }}
           />
           <motion.div
-            className="absolute -bottom-20 left-1/3 w-72 h-72 bg-pastel-blue rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            className="hero-blob absolute -bottom-20 left-1/3 w-72 h-72 bg-pastel-blue rounded-full mix-blend-multiply filter blur-xl opacity-70"
             animate={{
               scale: [1, 1.1, 1],
               x: [0, 30, 0],

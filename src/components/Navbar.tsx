@@ -1,10 +1,27 @@
 import { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from '../lib/gsap';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (!navRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.nav-item',
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08, delay: 0.15 },
+      );
+    }, navRef);
+
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +61,7 @@ const Navbar = () => {
 
   return (
     <nav
+      ref={navRef}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-white/90 backdrop-blur-md shadow-lg'
@@ -56,7 +74,7 @@ const Navbar = () => {
           <motion.a
             href="#home"
             onClick={(e) => scrollToSection(e, '#home')}
-            className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+            className="nav-item text-2xl md:text-3xl font-display font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
@@ -71,7 +89,7 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-gray-700 hover:text-purple-600 hover:scale-110 font-medium transition-all duration-200 relative group"
+                className="nav-item text-gray-700 hover:text-purple-600 hover:scale-110 font-medium transition-all duration-200 relative group"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
