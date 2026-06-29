@@ -67,7 +67,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Full Stack Developer | Backend &amp; Cloud Enthusiast | AI Explorer
+            Backend Engineering • AI Systems • DS &amp; Algorithms • Problem Solving
           </motion.h2>
 
           <motion.p
@@ -76,7 +76,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Computer Science undergraduate (Honours in Data Science) with strong foundations in full stack development, backend engineering, and cloud systems. Experienced across multiple internships building production-level applications using Spring Boot, FastAPI, and React. Possess hands-on knowledge in LLMs, RAG, and deep learning through Honours specialization. Passionate about building scalable REST APIs, AI-integrated backends, and real-world deployments.
+            Computer Science undergraduate (Honours in Data Science) at Velammal Engineering College, Chennai, with nearly two years of hands-on software engineering experience through multiple internships. Experienced in designing backend systems, developing RESTful APIs, and building scalable web applications using Java, Spring Boot, FastAPI, Python, React, PostgreSQL, MongoDB, Docker, and Firebase.
           </motion.p>
 
           {/* Social Links */}

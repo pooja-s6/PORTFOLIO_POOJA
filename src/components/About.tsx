@@ -58,10 +58,10 @@ const About = () => {
               Professional Summary
             </h3>
             <p className="text-gray-700 leading-relaxed">
-              Computer Science undergraduate (Honours in Data Science) with strong foundations in full stack development, backend engineering, and cloud systems. Experienced across multiple internships building production-level applications using Spring Boot, FastAPI, and React. Possess hands-on knowledge in LLMs, RAG, and deep learning through Honours specialization. Passionate about building scalable REST APIs, AI-integrated backends, and real-world deployments.
+              Computer Science undergraduate (Honours in Data Science) at Velammal Engineering College, Chennai, with nearly two years of hands-on software engineering experience through multiple internships. Experienced in designing backend systems, developing RESTful APIs, and building scalable web applications using Java, Spring Boot, FastAPI, Python, React, PostgreSQL, MongoDB, Docker, and Firebase.
             </p>
             <p className="text-gray-700 leading-relaxed mt-4">
-              Collaborative team-player with experience working in agile environments across the full product lifecycle. Focused on delivering clean, maintainable code and deploying reliable, production-ready solutions.
+              Strong foundation in Data Structures and Algorithms, Object-Oriented Programming, Operating Systems, DBMS, and Computer Networks, complemented by practical experience in enterprise software development, collaborative Agile workflows, Git-based version control, testing, and cloud deployment. Passionate about solving complex engineering problems, building reliable software systems, and continuously learning modern technologies in backend engineering and AI.
             </p>
           </motion.div>
 
@@ -94,7 +94,7 @@ const About = () => {
                     Higher Secondary Certificate (HSC)
                   </h4>
                   <p className="text-pink-600 font-medium">
-                    Sri Venkateshwara Matric. Hr. Sec. School, Chennai
+                    Sri Venkateshwara Matriculation Higher Secondary School
                   </p>
                   <p className="text-gray-600 text-sm">2022 – 2023</p>
                   <p className="text-gray-700 font-semibold mt-1">Percentage: 86%</p>

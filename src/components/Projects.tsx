@@ -44,8 +44,12 @@ const Projects = () => {
   const projects = [
     {
       title: 'TutorX',
-      description: 'AI-powered tutoring chatbot that assists students with personalized academic guidance using OpenAI LLMs. Built with FastAPI backend and React Native mobile frontend.',
-      features: ['Real-time LLM responses', 'Personalized guidance', 'Mobile-first'],
+      description: 'AI-Based Personalized Learning Platform that assists students with academic guidance using OpenAI LLMs, with a robust FastAPI backend and React Native mobile frontend.',
+      features: [
+        'Built an AI-powered tutoring chatbot that assists students with personalized academic guidance using OpenAI\'s LLM.',
+        'Designed and integrated FastAPI backend with real-time processing and full-cycle API response environment.',
+        'Developed the mobile frontend using React Native; collaborated in a team for end-to-end platform delivery.'
+      ],
       technologies: [
         { name: 'FastAPI', icon: SiFastapi, color: 'text-teal-500' },
         { name: 'React Native', icon: SiReact, color: 'text-cyan-500' },
@@ -59,8 +63,12 @@ const Projects = () => {
     },
     {
       title: 'Legal Aid Matching Platform',
-      description: 'Role-based legal assistance platform enabling citizens to connect with NGOs and lawyers for case resolution. Includes analytics dashboard for case monitoring.',
-      features: ['3 user roles', 'Case matching logic', 'Analytics dashboard'],
+      description: 'Platform connecting NGOs, Lawyers, and Citizens for role-based legal assistance and case resolution.',
+      features: [
+        'Built a role-based legal assistance platform enabling citizens to connect with NGOs and lawyers for case resolution.',
+        'Developed backend case-matching logic, role-based access workflows, and relational database schema using PostgreSQL across 3 user roles.',
+        'Designed an analytics dashboard for case monitoring and progress tracking.'
+      ],
       technologies: [
         { name: 'React', icon: SiReact, color: 'text-cyan-500' },
         { name: 'Spring Boot', icon: SiSpringboot, color: 'text-green-600' },
@@ -72,9 +80,13 @@ const Projects = () => {
       live: '',
     },
     {
-      title: 'QuizFlow (EduFlex)',
-      description: 'Real-time quiz platform with live leaderboards actively used by 100+ students. Features concurrent user synchronization and scalable Firebase schema.',
-      features: ['100+ students', 'Live leaderboards', 'Deployed on Vercel'],
+      title: 'QuizFlow',
+      description: 'Real-Time Quiz Platform for Students and Teachers with live leaderboard updates and Firebase backend.',
+      features: [
+        'Engineered real-time quiz rooms with live leaderboard updates, actively used by 100+ students.',
+        'Designed a scalable Firebase schema for low-latency synchronization across concurrent users.',
+        'Implemented session control, performance tracking, and modular UI components; successfully deployed on Vercel.'
+      ],
       technologies: [
         { name: 'React', icon: SiReact, color: 'text-cyan-500' },
         { name: 'Firebase', icon: SiFirebase, color: 'text-yellow-500' },
@@ -87,8 +99,12 @@ const Projects = () => {
     },
     {
       title: 'VocalMart',
-      description: 'Full stack e-commerce platform with voice-driven product search using the Web Speech API. Designed RESTful APIs for product listing, cart, and order management.',
-      features: ['Voice search', 'REST APIs', 'Full stack delivery'],
+      description: 'Voice Search-Enabled E-Commerce Platform with voice-driven product search using the Web Speech API.',
+      features: [
+        'Developed a full stack e-commerce platform with voice-driven product search using the Web Speech API.',
+        'Designed RESTful APIs with Spring Boot for product listing, cart, and order management workflows.',
+        'Integrated MongoDB for flexible product catalog storage and retrieval.'
+      ],
       technologies: [
         { name: 'Spring Boot', icon: SiSpringboot, color: 'text-green-600' },
         { name: 'React', icon: SiReact, color: 'text-cyan-500' },

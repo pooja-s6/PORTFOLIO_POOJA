@@ -9,7 +9,6 @@ import {
   FaDatabase,
   FaCode,
   FaBrain,
-  FaMicrophone,
   FaNetworkWired,
   FaSitemap,
   FaRobot,
@@ -17,18 +16,21 @@ import {
   FaHtml5,
   FaCss3Alt,
   FaGithub,
+  FaCheckCircle,
 } from 'react-icons/fa';
 import {
   SiSpringboot,
   SiMongodb,
   SiPostman,
-  SiJavascript,
   SiFirebase,
   SiPostgresql,
   SiNodedotjs,
   SiExpress,
   SiIntellijidea,
   SiAmazonwebservices,
+  SiCplusplus,
+  SiC,
+  SiApachemaven,
 } from 'react-icons/si';
 import { gsap } from '../lib/gsap';
 
@@ -63,42 +65,42 @@ const Skills = () => {
 
   const skillCategories = [
     {
-      title: 'Programming',
+      title: 'Programming Languages',
       skills: [
-        { name: 'Python', icon: FaPython, color: 'text-blue-500' },
+        { name: 'C++', icon: SiCplusplus, color: 'text-blue-600' },
         { name: 'Java', icon: FaJava, color: 'text-orange-600' },
-        { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-500' },
-        { name: 'SQL', icon: FaDatabase, color: 'text-blue-600' },
+        { name: 'C', icon: SiC, color: 'text-blue-500' },
+        { name: 'Python', icon: FaPython, color: 'text-blue-500' },
       ],
     },
     {
-      title: 'Backend',
+      title: 'Core Computer Science',
+      skills: [
+        { name: 'Data Structures & Algorithms', icon: FaCode, color: 'text-blue-600' },
+        { name: 'Object-Oriented Programming', icon: FaLayerGroup, color: 'text-orange-600' },
+        { name: 'Operating Systems', icon: FaNetworkWired, color: 'text-indigo-500' },
+        { name: 'DBMS', icon: FaDatabase, color: 'text-green-600' },
+        { name: 'Computer Networks', icon: FaNetworkWired, color: 'text-blue-500' },
+        { name: 'System Design', icon: FaSitemap, color: 'text-gray-700' },
+      ],
+    },
+    {
+      title: 'Backend Development',
       skills: [
         { name: 'Spring Boot', icon: SiSpringboot, color: 'text-green-600' },
         { name: 'FastAPI', icon: FaPython, color: 'text-blue-500' },
         { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-600' },
         { name: 'Express.js', icon: SiExpress, color: 'text-gray-700' },
-        { name: 'REST APIs', icon: FaCode, color: 'text-indigo-600' },
+        { name: 'RESTful APIs', icon: FaCode, color: 'text-indigo-600' },
       ],
     },
     {
-      title: 'Frontend',
+      title: 'Frontend Technologies',
       skills: [
-        { name: 'React', icon: FaReact, color: 'text-cyan-500' },
+        { name: 'React.js', icon: FaReact, color: 'text-cyan-500' },
         { name: 'React Native', icon: FaReact, color: 'text-cyan-400' },
-        { name: 'HTML', icon: FaHtml5, color: 'text-orange-500' },
-        { name: 'CSS', icon: FaCss3Alt, color: 'text-blue-500' },
-      ],
-    },
-    {
-      title: 'AI / ML',
-      skills: [
-        { name: 'LLM Integration', icon: FaRobot, color: 'text-purple-600' },
-        { name: 'RAG', icon: FaLayerGroup, color: 'text-purple-500' },
-        { name: 'Generative AI', icon: FaRobot, color: 'text-pink-500' },
-        { name: 'NNDL', icon: FaBrain, color: 'text-blue-500' },
-        { name: 'Text and Speech Analysis', icon: FaMicrophone, color: 'text-indigo-500' },
-        { name: 'Model Evaluation', icon: FaCode, color: 'text-green-600' },
+        { name: 'HTML5', icon: FaHtml5, color: 'text-orange-500' },
+        { name: 'CSS3', icon: FaCss3Alt, color: 'text-blue-500' },
       ],
     },
     {
@@ -110,25 +112,34 @@ const Skills = () => {
       ],
     },
     {
-      title: 'Tools',
+      title: 'AI / Machine Learning',
       skills: [
-        { name: 'Git', icon: FaGitAlt, color: 'text-orange-600' },
-        { name: 'GitHub', icon: FaGithub, color: 'text-gray-800' },
-        { name: 'Postman', icon: SiPostman, color: 'text-orange-500' },
-        { name: 'VS Code', icon: FaCode, color: 'text-blue-600' },
-        { name: 'IntelliJ IDEA', icon: SiIntellijidea, color: 'text-indigo-600' },
-        { name: 'Docker', icon: FaDocker, color: 'text-blue-600' },
-        { name: 'AWS', icon: SiAmazonwebservices, color: 'text-orange-500' },
+        { name: 'LLM Integration', icon: FaRobot, color: 'text-purple-600' },
+        { name: 'Retrieval-Augmented Generation (RAG)', icon: FaLayerGroup, color: 'text-purple-500' },
+        { name: 'Prompt Engineering', icon: FaRobot, color: 'text-indigo-600' },
+        { name: 'Generative AI', icon: FaRobot, color: 'text-pink-500' },
+        { name: 'Neural Networks & Deep Learning', icon: FaBrain, color: 'text-blue-500' },
+        { name: 'Time Series Analysis', icon: FaCode, color: 'text-indigo-500' },
+        { name: 'Model Evaluation', icon: FaCode, color: 'text-green-600' },
       ],
     },
     {
-      title: 'Core Concepts',
+      title: 'Cloud & DevOps',
       skills: [
-        { name: 'Data Structures & Algorithms', icon: FaCode, color: 'text-blue-600' },
-        { name: 'OOPs', icon: FaLayerGroup, color: 'text-orange-600' },
-        { name: 'DBMS', icon: FaDatabase, color: 'text-green-600' },
-        { name: 'Computer Networks', icon: FaNetworkWired, color: 'text-indigo-500' },
-        { name: 'System Design', icon: FaSitemap, color: 'text-gray-700' },
+        { name: 'Docker', icon: FaDocker, color: 'text-blue-600' },
+        { name: 'AWS', icon: SiAmazonwebservices, color: 'text-orange-500' },
+        { name: 'Git', icon: FaGitAlt, color: 'text-orange-600' },
+        { name: 'GitHub', icon: FaGithub, color: 'text-gray-800' },
+      ],
+    },
+    {
+      title: 'Tools',
+      skills: [
+        { name: 'Postman', icon: SiPostman, color: 'text-orange-500' },
+        { name: 'VS Code', icon: FaCode, color: 'text-blue-600' },
+        { name: 'IntelliJ IDEA', icon: SiIntellijidea, color: 'text-indigo-600' },
+        { name: 'Playwright', icon: FaCheckCircle, color: 'text-red-500' },
+        { name: 'Maven', icon: SiApachemaven, color: 'text-red-600' },
       ],
     },
   ];
