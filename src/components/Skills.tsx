@@ -1,222 +1,181 @@
-import { motion, useInView } from 'framer-motion';
-import { useLayoutEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import {
-  FaJava,
-  FaPython,
-  FaReact,
+  FaBrain,
+  FaCheckCircle,
+  FaCode,
+  FaCss3Alt,
+  FaDatabase,
   FaDocker,
   FaGitAlt,
-  FaDatabase,
-  FaCode,
-  FaBrain,
-  FaNetworkWired,
-  FaSitemap,
-  FaRobot,
-  FaLayerGroup,
-  FaHtml5,
-  FaCss3Alt,
   FaGithub,
-  FaCheckCircle,
+  FaHtml5,
+  FaJava,
+  FaLayerGroup,
+  FaNetworkWired,
+  FaPython,
+  FaReact,
+  FaRobot,
+  FaSitemap,
 } from 'react-icons/fa';
 import {
-  SiSpringboot,
-  SiMongodb,
-  SiPostman,
-  SiFirebase,
-  SiPostgresql,
-  SiNodedotjs,
-  SiExpress,
-  SiIntellijidea,
   SiAmazonwebservices,
-  SiCplusplus,
-  SiC,
   SiApachemaven,
+  SiC,
+  SiCplusplus,
+  SiExpress,
+  SiFirebase,
+  SiIntellijidea,
+  SiMongodb,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPostman,
+  SiSpringboot,
 } from 'react-icons/si';
-import { gsap } from '../lib/gsap';
+import type { IconType } from 'react-icons';
+import SectionHeading from './SectionHeading';
+
+type Skill = {
+  name: string;
+  icon: IconType;
+};
+
+const skillCategories: { title: string; skills: Skill[] }[] = [
+  {
+    title: 'Programming Languages',
+    skills: [
+      { name: 'C++', icon: SiCplusplus },
+      { name: 'Java', icon: FaJava },
+      { name: 'C', icon: SiC },
+      { name: 'Python', icon: FaPython },
+    ],
+  },
+  {
+    title: 'Core Computer Science',
+    skills: [
+      { name: 'Data Structures & Algorithms', icon: FaCode },
+      { name: 'Object-Oriented Programming', icon: FaLayerGroup },
+      { name: 'Operating Systems', icon: FaNetworkWired },
+      { name: 'DBMS', icon: FaDatabase },
+      { name: 'Computer Networks', icon: FaNetworkWired },
+      { name: 'System Design', icon: FaSitemap },
+    ],
+  },
+  {
+    title: 'Backend Development',
+    skills: [
+      { name: 'Spring Boot', icon: SiSpringboot },
+      { name: 'FastAPI', icon: FaPython },
+      { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'Express.js', icon: SiExpress },
+      { name: 'RESTful APIs', icon: FaCode },
+    ],
+  },
+  {
+    title: 'Frontend Technologies',
+    skills: [
+      { name: 'React.js', icon: FaReact },
+      { name: 'React Native', icon: FaReact },
+      { name: 'HTML5', icon: FaHtml5 },
+      { name: 'CSS3', icon: FaCss3Alt },
+    ],
+  },
+  {
+    title: 'Databases',
+    skills: [
+      { name: 'PostgreSQL', icon: SiPostgresql },
+      { name: 'MongoDB', icon: SiMongodb },
+      { name: 'Firebase', icon: SiFirebase },
+    ],
+  },
+  {
+    title: 'AI / Machine Learning',
+    skills: [
+      { name: 'LLM Integration', icon: FaRobot },
+      { name: 'Retrieval-Augmented Generation (RAG)', icon: FaLayerGroup },
+      { name: 'Prompt Engineering', icon: FaRobot },
+      { name: 'Generative AI', icon: FaRobot },
+      { name: 'Neural Networks & Deep Learning', icon: FaBrain },
+      { name: 'Time Series Analysis', icon: FaCode },
+      { name: 'Model Evaluation', icon: FaCode },
+    ],
+  },
+  {
+    title: 'Cloud & DevOps',
+    skills: [
+      { name: 'Docker', icon: FaDocker },
+      { name: 'AWS', icon: SiAmazonwebservices },
+      { name: 'Git', icon: FaGitAlt },
+      { name: 'GitHub', icon: FaGithub },
+    ],
+  },
+  {
+    title: 'Tools',
+    skills: [
+      { name: 'Postman', icon: SiPostman },
+      { name: 'VS Code', icon: FaCode },
+      { name: 'IntelliJ IDEA', icon: SiIntellijidea },
+      { name: 'Playwright', icon: FaCheckCircle },
+      { name: 'Maven', icon: SiApachemaven },
+    ],
+  },
+];
 
 const Skills = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  useLayoutEffect(() => {
-    if (!ref.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.skill-card',
-        { opacity: 0, y: 30, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.75,
-          ease: 'power3.out',
-          stagger: 0.08,
-          scrollTrigger: {
-            trigger: ref.current,
-            start: 'top 75%',
-          },
-        },
-      );
-    }, ref);
-
-    return () => ctx.revert();
-  }, []);
-
-  const skillCategories = [
-    {
-      title: 'Programming Languages',
-      skills: [
-        { name: 'C++', icon: SiCplusplus, color: 'text-blue-600' },
-        { name: 'Java', icon: FaJava, color: 'text-orange-600' },
-        { name: 'C', icon: SiC, color: 'text-blue-500' },
-        { name: 'Python', icon: FaPython, color: 'text-blue-500' },
-      ],
-    },
-    {
-      title: 'Core Computer Science',
-      skills: [
-        { name: 'Data Structures & Algorithms', icon: FaCode, color: 'text-blue-600' },
-        { name: 'Object-Oriented Programming', icon: FaLayerGroup, color: 'text-orange-600' },
-        { name: 'Operating Systems', icon: FaNetworkWired, color: 'text-indigo-500' },
-        { name: 'DBMS', icon: FaDatabase, color: 'text-green-600' },
-        { name: 'Computer Networks', icon: FaNetworkWired, color: 'text-blue-500' },
-        { name: 'System Design', icon: FaSitemap, color: 'text-gray-700' },
-      ],
-    },
-    {
-      title: 'Backend Development',
-      skills: [
-        { name: 'Spring Boot', icon: SiSpringboot, color: 'text-green-600' },
-        { name: 'FastAPI', icon: FaPython, color: 'text-blue-500' },
-        { name: 'Node.js', icon: SiNodedotjs, color: 'text-green-600' },
-        { name: 'Express.js', icon: SiExpress, color: 'text-gray-700' },
-        { name: 'RESTful APIs', icon: FaCode, color: 'text-indigo-600' },
-      ],
-    },
-    {
-      title: 'Frontend Technologies',
-      skills: [
-        { name: 'React.js', icon: FaReact, color: 'text-cyan-500' },
-        { name: 'React Native', icon: FaReact, color: 'text-cyan-400' },
-        { name: 'HTML5', icon: FaHtml5, color: 'text-orange-500' },
-        { name: 'CSS3', icon: FaCss3Alt, color: 'text-blue-500' },
-      ],
-    },
-    {
-      title: 'Databases',
-      skills: [
-        { name: 'PostgreSQL', icon: SiPostgresql, color: 'text-blue-600' },
-        { name: 'MongoDB', icon: SiMongodb, color: 'text-green-600' },
-        { name: 'Firebase', icon: SiFirebase, color: 'text-yellow-500' },
-      ],
-    },
-    {
-      title: 'AI / Machine Learning',
-      skills: [
-        { name: 'LLM Integration', icon: FaRobot, color: 'text-purple-600' },
-        { name: 'Retrieval-Augmented Generation (RAG)', icon: FaLayerGroup, color: 'text-purple-500' },
-        { name: 'Prompt Engineering', icon: FaRobot, color: 'text-indigo-600' },
-        { name: 'Generative AI', icon: FaRobot, color: 'text-pink-500' },
-        { name: 'Neural Networks & Deep Learning', icon: FaBrain, color: 'text-blue-500' },
-        { name: 'Time Series Analysis', icon: FaCode, color: 'text-indigo-500' },
-        { name: 'Model Evaluation', icon: FaCode, color: 'text-green-600' },
-      ],
-    },
-    {
-      title: 'Cloud & DevOps',
-      skills: [
-        { name: 'Docker', icon: FaDocker, color: 'text-blue-600' },
-        { name: 'AWS', icon: SiAmazonwebservices, color: 'text-orange-500' },
-        { name: 'Git', icon: FaGitAlt, color: 'text-orange-600' },
-        { name: 'GitHub', icon: FaGithub, color: 'text-gray-800' },
-      ],
-    },
-    {
-      title: 'Tools',
-      skills: [
-        { name: 'Postman', icon: SiPostman, color: 'text-orange-500' },
-        { name: 'VS Code', icon: FaCode, color: 'text-blue-600' },
-        { name: 'IntelliJ IDEA', icon: SiIntellijidea, color: 'text-indigo-600' },
-        { name: 'Playwright', icon: FaCheckCircle, color: 'text-red-500' },
-        { name: 'Maven', icon: SiApachemaven, color: 'text-red-600' },
-      ],
-    },
-  ];
-
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-pastel-blueLight to-white" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="skill-card text-4xl md:text-5xl font-display font-bold mb-4">
-            Technical <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Skills</span>
-          </h2>
-          <div className="skill-card w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto rounded-full"></div>
-        </motion.div>
+    <section id="skills" className="scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading eyebrow="Skills" title="Technical Skills" />
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid gap-5 md:grid-cols-2">
           {skillCategories.map((category, categoryIndex) => (
-            <motion.div
+            <motion.article
               key={category.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
-              className="skill-card bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.4, delay: (categoryIndex % 2) * 0.05 }}
+              className="surface-card p-6"
             >
-              <h3 className="text-xl font-display font-semibold mb-6 text-purple-600">
-                {category.title}
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {category.skills.map((skill, skillIndex) => {
+              <h3 className="font-display text-lg font-semibold text-white">{category.title}</h3>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {category.skills.map((skill) => {
                   const Icon = skill.icon;
                   return (
-                    <motion.div
+                    <span
                       key={skill.name}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.5, delay: categoryIndex * 0.2 + skillIndex * 0.1 }}
-                      className="skill-card flex flex-col items-center justify-center p-4 bg-gradient-to-br from-pastel-lavenderLight to-white rounded-xl hover:shadow-md hover:scale-105 transition-all duration-200 group"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-sm text-zinc-300 transition hover:border-accent/50 hover:text-white"
                     >
-                      <Icon className={`text-4xl mb-2 ${skill.color} group-hover:scale-110 transition-transform duration-200`} />
-                      <span className="text-sm font-medium text-gray-700 text-center">
-                        {skill.name}
-                      </span>
-                    </motion.div>
+                      <Icon className="text-lavender" aria-hidden="true" />
+                      {skill.name}
+                    </span>
                   );
                 })}
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
-        {/* Certifications */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-12 bg-gradient-to-r from-pastel-pink to-pastel-peach rounded-2xl p-8 shadow-lg"
+        <motion.article
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.4 }}
+          className="surface-card mt-5 p-6 sm:p-8"
         >
-          <h3 className="text-2xl font-display font-semibold mb-6 text-purple-600 text-center">
-            Certifications & Achievements
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white/80 rounded-xl p-4 hover:shadow-md transition-shadow duration-200">
-              <h4 className="font-semibold text-gray-800 mb-2">Certifications</h4>
-              <ul className="text-sm text-gray-600 space-y-2">
+          <h3 className="font-display text-xl font-semibold text-white">Certifications &amp; Achievements</h3>
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div>
+              <h4 className="text-sm font-medium uppercase tracking-[0.16em] text-lavender">Certifications</h4>
+              <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-400">
                 <li>Infosys Springboard — Java Foundation (2025)</li>
                 <li>AI Fundamentals — IBM SkillsBuild (2025)</li>
                 <li>AWS Solutions Architecture Simulation — Forage (2025)</li>
                 <li>AI/ML Internship — IBM SkillsBuild (2025)</li>
               </ul>
             </div>
-            <div className="bg-white/80 rounded-xl p-4 hover:shadow-md transition-shadow duration-200">
-              <h4 className="font-semibold text-gray-800 mb-2">Achievements</h4>
-              <ul className="text-sm text-gray-600 space-y-2">
+            <div>
+              <h4 className="text-sm font-medium uppercase tracking-[0.16em] text-lavender">Achievements</h4>
+              <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-400">
                 <li>🥈 6th Place — Debug Relay (Team Event), REC College — 2026</li>
                 <li>💡 Cognizant Hackathon Participant — 2026</li>
                 <li>🇮🇳 Smart India Hackathon (SIH) — Internal Round, VEC — 2025</li>
@@ -224,7 +183,7 @@ const Skills = () => {
               </ul>
             </div>
           </div>
-        </motion.div>
+        </motion.article>
       </div>
     </section>
   );

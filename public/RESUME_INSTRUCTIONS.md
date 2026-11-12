@@ -1,14 +1,9 @@
-# Resume Placeholder
+# Resume
 
-To enable the resume download feature, please add your resume PDF file here:
+The download button serves the real resume from:
 
-**Location:** `public/Pooja_S_Resume.pdf`
+`public/assets/Pooja_S_Resume.pdf`
 
-## Instructions:
-
-1. Save your resume as a PDF file
-2. Rename it to `Pooja_S_Resume.pdf`
-3. Place it in the `public` folder of this project
-4. The download button in the Hero section will automatically work
-
-The button is already configured in the Hero component and will trigger a download when clicked.
+The file is downloaded as `Pooja_S_Resume.pdf`.
+Replace that PDF to update the resume visitors receive.
+A copy also remains at `public/Pooja_S_Resume.pdf` so the previous URL still works.

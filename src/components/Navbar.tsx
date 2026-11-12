@@ -1,142 +1,126 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useLayoutEffect, useRef } from 'react';
-import { gsap } from '../lib/gsap';
+
+const navLinks = [
+  { name: 'Projects', href: '#projects' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Contact', href: '#contact' },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navRef = useRef<HTMLElement | null>(null);
-
-  useLayoutEffect(() => {
-    if (!navRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.nav-item',
-        { opacity: 0, y: -12 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08, delay: 0.15 },
-      );
-    }, navRef);
-
-    return () => ctx.revert();
-  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 12);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const scrollToSection = (href: string) => {
     setIsOpen(false);
-    
-    setTimeout(() => {
+    window.setTimeout(() => {
       const element = document.querySelector(href);
-      if (element) {
-        const navbarHeight = 40; // 40px navbar height
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - navbarHeight;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 100);
+      if (!element) return;
+      const top = element.getBoundingClientRect().top + window.scrollY - 76;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 80);
   };
 
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        isOpen
+          ? 'border-white/10 bg-ink'
+          : scrolled
+            ? 'border-white/10 bg-ink/90 backdrop-blur-xl'
+            : 'border-transparent bg-ink/50 backdrop-blur-md'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          {/* Logo */}
-          <motion.a
-            href="#home"
-            onClick={(e) => scrollToSection(e, '#home')}
-            className="nav-item text-2xl md:text-3xl font-display font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Pooja S
-          </motion.a>
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Primary">
+        <a
+          href="#home"
+          onClick={(event) => {
+            event.preventDefault();
+            scrollToSection('#home');
+          }}
+          className="font-display text-xl font-semibold tracking-tight text-white"
+          aria-label="Pooja S, back to top"
+        >
+          PS<span className="text-lavender">.</span>
+        </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => scrollToSection(e, link.href)}
-                className="nav-item text-gray-700 hover:text-purple-600 hover:scale-110 font-medium transition-all duration-200 relative group"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 group-hover:w-full transition-all duration-300"></span>
-              </motion.a>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
+        <div className="hidden items-center gap-8 lg:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection(link.href);
+              }}
+              className="text-sm text-zinc-400 transition-colors hover:text-white"
+            >
+              {link.name}
+            </a>
+          ))}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700 hover:text-purple-600 focus:outline-none"
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => scrollToSection('#contact')}
+            className="rounded-full bg-gradient-to-r from-accent to-[#7C3AED] px-4 py-2 text-sm font-medium text-white shadow-[0_10px_30px_-12px_rgba(168,85,247,0.9)] transition hover:brightness-110"
           >
-            {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            Contact Me
           </button>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/95 backdrop-blur-md shadow-lg"
-          >
-            <div className="px-4 py-4 space-y-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
-                  className="block px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 hover:text-purple-600 rounded-lg transition-all duration-200 font-medium hover:scale-105 hover:shadow-md"
-                >
-                  {link.name}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+        <button
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+          className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white lg:hidden"
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+        >
+          {isOpen ? <FaTimes size={16} /> : <FaBars size={16} />}
+        </button>
+      </nav>
+
+      {isOpen && (
+        <div className="border-t border-white/10 bg-ink px-5 pb-6 pt-4 lg:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col gap-1">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(link.href);
+                }}
+                className="rounded-xl px-3 py-3 text-sm text-zinc-200 hover:bg-white/5"
+              >
+                {link.name}
+              </a>
+            ))}
+            <button
+              type="button"
+              onClick={() => scrollToSection('#contact')}
+              className="mt-2 rounded-full bg-gradient-to-r from-accent to-[#7C3AED] px-4 py-3 text-sm font-medium text-white"
+            >
+              Contact Me
+            </button>
+          </div>
+        </div>
+      )}
+    </header>
   );
 };
 

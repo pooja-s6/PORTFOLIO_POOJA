@@ -1,203 +1,116 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaDownload } from 'react-icons/fa';
-import { useLayoutEffect, useRef, useState } from 'react';
-import { gsap } from '../lib/gsap';
+import { FaDownload, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 
-const Hero = () => {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [phoneCopied, setPhoneCopied] = useState(false);
+const PHOTO_SOURCES = [
+  '/assets/profile.jpg',
+  '/assets/profile.jpeg',
+  '/assets/profile.png',
+  '/assets/profile.webp',
+];
 
-  useLayoutEffect(() => {
-    if (!sectionRef.current) return;
+const socialLinks = [
+  { label: 'GitHub', href: 'https://github.com/pooja-s6', icon: FaGithub },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/pooja-s2006', icon: FaLinkedin },
+  { label: 'Email', href: 'mailto:poojasuku0606@gmail.com', icon: FaEnvelope },
+];
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      tl.fromTo('.hero-title', { opacity: 0, y: 32 }, { opacity: 1, y: 0, duration: 0.8 })
-        .fromTo('.hero-subtitle', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.45')
-        .fromTo('.hero-copy', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.4')
-        .fromTo('.hero-social', { opacity: 0, y: 18, stagger: 0.08 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35')
-        .fromTo('.hero-cta', { opacity: 0, y: 18, stagger: 0.08 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.25');
-
-      gsap.to('.hero-blob', {
-        y: '+=18',
-        x: '+=10',
-        duration: 6,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.2,
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const copyPhoneNumber = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigator.clipboard.writeText('+919840737246');
-    setPhoneCopied(true);
-    setTimeout(() => setPhoneCopied(false), 2000);
-  };
+const Portrait = () => {
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const missing = sourceIndex >= PHOTO_SOURCES.length;
 
   return (
-    <section
-      id="home"
-      ref={sectionRef}
-      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16"
-    >
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-4">
-              Hi, I'm{' '}
-              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                Pooja S
-              </span>
-            </h1>
-          </motion.div>
+    <div className="relative mx-auto w-full max-w-[340px] sm:max-w-[400px] lg:mx-0 lg:ml-auto lg:max-w-[420px]">
+      <div
+        className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-accent/30 blur-3xl"
+        aria-hidden="true"
+      />
+      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#111113] shadow-[0_30px_80px_-28px_rgba(168,85,247,0.65)]">
+        {missing ? (
+          <div className="flex aspect-[4/5] flex-col items-center justify-center gap-4 px-8 text-center">
+            <span className="font-display text-6xl font-semibold tracking-tight text-lavender">PS</span>
+            <p className="max-w-[16rem] text-sm leading-relaxed text-zinc-400">
+              Add your photograph as
+              <span className="mt-2 block font-medium text-zinc-100">public/assets/profile.jpg</span>
+            </p>
+          </div>
+        ) : (
+          <img
+            src={PHOTO_SOURCES[sourceIndex]}
+            alt="Pooja S"
+            className="aspect-[4/5] w-full object-cover object-top"
+            onError={() => setSourceIndex((index) => index + 1)}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
-          <motion.h2
-            className="hero-subtitle text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-gray-700 mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Backend Engineering • AI Systems • DS &amp; Algorithms • Problem Solving
-          </motion.h2>
+const Hero = () => {
+  return (
+    <section id="home" className="relative flex min-h-screen items-center overflow-hidden px-5 pb-20 pt-28 sm:px-8">
+      <div
+        className="pointer-events-none absolute right-[-8%] top-[12%] -z-10 h-[520px] w-[520px] rounded-full bg-accent/20 blur-[120px]"
+        aria-hidden="true"
+      />
 
-          <motion.p
-            className="hero-copy text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Computer Science undergraduate (Honours in Data Science) at Velammal Engineering College, Chennai, with nearly two years of hands-on software engineering experience through multiple internships. Experienced in designing backend systems, developing RESTful APIs, and building scalable web applications using Java, Spring Boot, FastAPI, Python, React, PostgreSQL, MongoDB, Docker, and Firebase.
-          </motion.p>
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,0.85fr)] lg:gap-16">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+        >
+          <p className="inline-flex rounded-full border border-accent/70 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-lavender">
+            Hey, I&apos;m
+          </p>
+          <h1 className="mt-6 font-display text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Pooja S.
+          </h1>
+          <p className="mt-4 text-xl font-medium text-lavender sm:text-2xl">
+            Full-Stack Developer &amp; AI Enthusiast
+          </p>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+            Computer Science Engineering student specializing in Data Science, passionate about building intelligent
+            applications, scalable backend systems, and AI-powered solutions.
+          </p>
 
-          {/* Social Links */}
-          <motion.div
-            className="hero-social flex justify-center space-x-6 mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
+          <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a
-              href="https://github.com/pooja-s6"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-700 hover:text-purple-600 transform hover:scale-110 transition-all duration-200"
-              aria-label="GitHub"
+              href="/assets/Pooja_S_Resume.pdf"
+              download="Pooja_S_Resume.pdf"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:bg-zinc-100"
             >
-              <FaGithub size={28} />
-            </a>
-            <a
-              href="https://linkedin.com/in/pooja-s2006"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-700 hover:text-blue-600 transform hover:scale-110 transition-all duration-200"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin size={28} />
-            </a>
-            <a
-              href="mailto:poojasuku0606@gmail.com"
-              className="text-gray-700 hover:text-pink-600 transform hover:scale-110 transition-all duration-200"
-              aria-label="Email"
-            >
-              <FaEnvelope size={28} />
-            </a>
-            <button
-              onClick={copyPhoneNumber}
-              className="text-gray-700 hover:text-green-600 transform hover:scale-110 transition-all duration-200 relative"
-              aria-label="Phone"
-              title={phoneCopied ? "Copied!" : "Click to copy phone number"}
-            >
-              <FaPhone size={28} />
-              {phoneCopied && (
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                  Copied!
-                </span>
-              )}
-            </button>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="hero-cta flex flex-col sm:flex-row justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <a
-              href="#projects"
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200"
-            >
-              View My Work
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-3 bg-white text-purple-600 font-semibold rounded-full border-2 border-purple-600 hover:bg-purple-50 hover:scale-105 transition-all duration-200"
-            >
-              Get In Touch
-            </a>
-            <a
-              href="/Pooja_S_Resume.pdf"
-              download
-              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
-            >
-              <FaDownload size={18} />
+              <FaDownload size={14} aria-hidden="true" />
               Download Resume
             </a>
-          </motion.div>
-        </div>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((link) => {
+                const Icon = link.icon;
+                const external = link.href.startsWith('http');
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    aria-label={link.label}
+                    className="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition hover:border-accent hover:text-lavender"
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
 
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-          <motion.div
-            className="hero-blob absolute top-20 left-10 w-72 h-72 bg-pastel-lavender rounded-full mix-blend-multiply filter blur-xl opacity-70"
-            animate={{
-              scale: [1, 1.2, 1],
-              x: [0, 50, 0],
-              y: [0, 30, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-          />
-          <motion.div
-            className="hero-blob absolute top-40 right-10 w-72 h-72 bg-pastel-pink rounded-full mix-blend-multiply filter blur-xl opacity-70"
-            animate={{
-              scale: [1, 1.3, 1],
-              x: [0, -50, 0],
-              y: [0, 50, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-          />
-          <motion.div
-            className="hero-blob absolute -bottom-20 left-1/3 w-72 h-72 bg-pastel-blue rounded-full mix-blend-multiply filter blur-xl opacity-70"
-            animate={{
-              scale: [1, 1.1, 1],
-              x: [0, 30, 0],
-              y: [0, -30, 0],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-          />
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.08, ease: 'easeOut' }}
+        >
+          <Portrait />
+        </motion.div>
       </div>
     </section>
   );
