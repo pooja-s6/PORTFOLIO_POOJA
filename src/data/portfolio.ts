@@ -113,6 +113,7 @@ export type Project = {
   github: string;
   live: string;
   image?: string;
+  imageCaption?: string;
   featured?: boolean;
 };
 
@@ -129,6 +130,9 @@ export const projects: Project[] = [
     stack: ['FastAPI', 'PostgreSQL', 'pgvector', 'Redis', 'React', 'Docker'],
     github: 'https://github.com/pooja-s6/multitenant-rag',
     live: '',
+    image: '/projects/multitenant-rag.webp',
+    imageCaption: 'Architecture diagram',
+    featured: true,
   },
   {
     title: 'BugLens AI',
@@ -286,7 +290,7 @@ export const achievements = [
 
 export const sections = [
   { id: 'work', name: 'Work', heading: 'Work', note: 'five internships, newest first' },
-  { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'live and in use' },
+  { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'my strongest work' },
   { id: 'projects', name: 'All projects', heading: 'All projects', note: 'with source code on GitHub' },
   { id: 'skills', name: 'Skills', heading: 'Skills', note: 'hover one to see where I used it' },
   { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'small wins along the way' },

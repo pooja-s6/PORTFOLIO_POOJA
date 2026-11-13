@@ -10,24 +10,29 @@ const Featured = () => (
       {featured.map((project) => (
         <li key={project.title}>
           {project.image ? (
-            <a
-              href={project.live || project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              tabIndex={-1}
-              aria-hidden="true"
-              className="group block overflow-hidden rounded-xl border border-line bg-surface"
-            >
-              <img
-                src={project.image}
-                alt=""
-                width={960}
-                height={540}
-                loading="lazy"
-                decoding="async"
-                className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
-              />
-            </a>
+            <figure>
+              <a
+                href={project.live || project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={-1}
+                aria-hidden="true"
+                className="group block overflow-hidden rounded-xl border border-line bg-surface"
+              >
+                <img
+                  src={project.image}
+                  alt=""
+                  width={960}
+                  height={540}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+                />
+              </a>
+              {project.imageCaption ? (
+                <figcaption className="mt-2 text-xs text-muted">{project.imageCaption}</figcaption>
+              ) : null}
+            </figure>
           ) : null}
           <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h3 className="text-lg font-semibold text-fg">{project.title}</h3>
@@ -53,7 +58,11 @@ const Featured = () => (
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition-colors hover:border-accent hover:text-accent-text"
+                className={
+                  project.live
+                    ? 'inline-flex items-center gap-2 rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition-colors hover:border-accent hover:text-accent-text'
+                    : 'inline-flex items-center gap-2 rounded-lg bg-fg px-4 py-2 text-sm font-semibold text-bg transition-opacity hover:opacity-90'
+                }
               >
                 <FaGithub size={13} aria-hidden="true" />
                 GitHub
