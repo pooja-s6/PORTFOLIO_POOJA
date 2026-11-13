@@ -50,9 +50,9 @@ export const experience: Experience[] = [
     impact: 'Building FastAPI + PostgreSQL services and AI workflows for an AI-powered education platform.',
     tags: ['FastAPI', 'PostgreSQL', 'REST APIs', 'AI workflows'],
     points: [
-      'Developing scalable backend services for an AI-powered education platform using FastAPI, PostgreSQL and RESTful APIs.',
-      'Designing and implementing backend modules with cross-functional teams in an Agile workflow.',
-      'Integrating AI-powered workflows into backend services; working on architecture, API design and production debugging.',
+      'Developing scalable backend services for an **AI-powered education platform** using **FastAPI**, **PostgreSQL** and REST APIs.',
+      'Designing and implementing backend modules with cross-functional teams in an **Agile** workflow.',
+      'Integrating **AI workflows** into backend services; working on architecture, API design and **production debugging**.',
     ],
   },
   {
@@ -64,9 +64,9 @@ export const experience: Experience[] = [
     impact: 'Built QuizFlow with React and Firebase, used by 200+ students.',
     tags: ['React', 'Firebase', 'Vercel'],
     points: [
-      'Worked in a three-member team in an IIT professor-led startup to build QuizFlow, a real-time quiz platform used by 200+ students.',
-      'Built React frontend modules and the Firebase schema for concurrent real-time quiz sessions.',
-      'Deployed on Vercel; handled debugging, feature enhancements and production support.',
+      'Worked in a **three-member team** at an IIT professor-led startup to build **QuizFlow**, a real-time quiz platform used by **200+ students**.',
+      'Built **React** frontend modules and the **Firebase** schema for concurrent real-time quiz sessions.',
+      'Deployed on **Vercel**; handled debugging, feature enhancements and production support.',
     ],
   },
   {
@@ -78,9 +78,9 @@ export const experience: Experience[] = [
     impact: 'Built a role-based legal aid platform with Spring Boot, in a five-member Agile team.',
     tags: ['Java', 'Spring Boot', 'React', 'PostgreSQL'],
     points: [
-      'Built the Legal Aid Matching Platform in a five-member Agile team.',
-      'Designed backend modules, REST APIs and a relational schema for role-based legal case management; used Git feature branches and resolved merge conflicts.',
-      'Earned the Java Foundation certification.',
+      'Built the **Legal Aid Matching Platform** in a **five-member Agile team**.',
+      'Designed backend modules, **REST APIs** and a relational schema for **role-based** legal case management; used Git feature branches and resolved merge conflicts.',
+      'Earned the **Java Foundation** certification.',
     ],
   },
   {
@@ -92,8 +92,8 @@ export const experience: Experience[] = [
     impact: 'Built and compared KNN and Logistic Regression salary-prediction models.',
     tags: ['Python', 'scikit-learn', 'KNN', 'Logistic Regression'],
     points: [
-      'Built an employee salary prediction model with supervised ML.',
-      'Trained and compared KNN and Logistic Regression; covered data preprocessing, feature engineering and model evaluation.',
+      'Built an employee **salary prediction** model with supervised ML.',
+      'Trained and compared **KNN** and **Logistic Regression**; covered data preprocessing, feature engineering and model evaluation.',
     ],
   },
   {
@@ -105,9 +105,9 @@ export const experience: Experience[] = [
     impact: 'Ten months on a voice-enabled e-commerce platform (Whisper, Spring Boot, Flask, Docker, Playwright).',
     tags: ['Java', 'Spring Boot', 'React', 'MongoDB', 'Docker', 'Flask', 'Playwright'],
     points: [
-      'Built REST APIs for a voice-enabled e-commerce platform, integrating Whisper speech recognition with Flask and Spring Boot services.',
-      'Worked with layered architecture and dependency injection; used Docker and JBoss/WildFly for deployments.',
-      'Wrote Playwright automation tests and did manual testing and production support.',
+      'Spent **ten months** building REST APIs for a **voice-enabled e-commerce** platform, integrating **Whisper** speech recognition with Flask and Spring Boot services.',
+      'Worked with layered architecture and dependency injection; used **Docker** and JBoss/WildFly for deployments.',
+      'Wrote **Playwright** automation tests and did manual testing and production support.',
     ],
   },
 ];
@@ -269,16 +269,26 @@ export const about = {
   learning: ['Agentic AI', 'LangGraph', 'System Design'],
 };
 
-export const homeSections = [
-  { id: 'experience', name: 'Experience' },
-  { id: 'projects', name: 'Projects' },
-  { id: 'skills', name: 'Skills' },
-  { id: 'recognition', name: 'Recognition' },
+export const intro = [
+  "I'm a **backend and AI developer** and a final-year CSE student at Velammal Engineering College, Chennai. I like the part of software most people never see: **APIs**, databases, and the pipelines that make AI features actually work.",
+  "Right now I'm a backend intern at **Hexaware Technologies**, building FastAPI services for an AI education platform. Before that, I shipped **QuizFlow**, a real-time quiz app used by **200+ students**, across **five internships** in total.",
 ];
 
-export const pages = [
-  { path: '/experience', name: 'Experience history' },
-  { path: '/projects', name: 'Project archive' },
-  { path: '/resume', name: 'Resume' },
-  { path: '/contact', name: 'Contact' },
+export const sections = [
+  { id: 'work', name: 'Work', note: 'five internships, newest first' },
+  { id: 'projects', name: 'Projects', note: 'things I built and shipped' },
+  { id: 'skills', name: 'Skills', note: 'hover one to see where I used it' },
+  { id: 'recognition', name: 'Recognition', note: 'small wins along the way' },
+  { id: 'contact', name: 'Contact', note: 'say hi' },
 ];
+
+const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9+#]/g, '');
+
+export const skillUsage = (skill: string) => {
+  const key = normalize(skill);
+  const places = [
+    ...experience.filter((item) => item.tags.some((tag) => normalize(tag) === key)).map((item) => item.company),
+    ...projects.filter((item) => item.stack.some((tag) => normalize(tag) === key)).map((item) => item.title),
+  ];
+  return [...new Set(places)];
+};

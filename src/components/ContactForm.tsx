@@ -2,20 +2,19 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { links } from '../data/portfolio';
 
-type Field = 'name' | 'email' | 'message';
+type Field = 'email' | 'message';
 type Errors = Partial<Record<Field, string>>;
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 const validate = (values: Record<Field, string>): Errors => {
   const errors: Errors = {};
-  if (!values.name.trim()) errors.name = 'Please add your name.';
-  if (!/^\S+@\S+\.\S+$/.test(values.email.trim())) errors.email = 'Please add a valid email address.';
-  if (values.message.trim().length < 10) errors.message = 'Please write at least a sentence (10+ characters).';
+  if (!/^\S+@\S+\.\S+$/.test(values.email.trim())) errors.email = 'Please add a valid email so I can reply.';
+  if (values.message.trim().length < 10) errors.message = 'A sentence or two is plenty (10+ characters).';
   return errors;
 };
 
 const inputClass =
-  'mt-2 w-full border-b border-line-strong bg-transparent py-2.5 text-base text-fg placeholder:text-muted focus:border-accent focus:outline-none';
+  'mt-2 w-full rounded-lg border border-line-strong bg-transparent px-3.5 py-2.5 text-[0.9375rem] text-fg placeholder:text-muted focus:border-accent focus:outline-none aria-[invalid=true]:border-[var(--error)]';
 
 const ContactForm = () => {
   const [errors, setErrors] = useState<Errors>({});
@@ -25,21 +24,18 @@ const ContactForm = () => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const values = {
-      name: String(data.get('name') ?? ''),
-      email: String(data.get('email') ?? ''),
-      message: String(data.get('message') ?? ''),
-    };
+    const values = { email: String(data.get('email') ?? ''), message: String(data.get('message') ?? '') };
     const found = validate(values);
     setErrors(found);
-    if (Object.keys(found).length > 0) {
-      form.querySelector<HTMLElement>(`[name="${Object.keys(found)[0]}"]`)?.focus();
+    const firstError = Object.keys(found)[0];
+    if (firstError) {
+      form.querySelector<HTMLElement>(`[name="${firstError}"]`)?.focus();
       return;
     }
 
     if (!links.formspreeId) {
-      const subject = encodeURIComponent(`Portfolio message from ${values.name}`);
-      const body = encodeURIComponent(`${values.message}\n\n${values.name}\n${values.email}`);
+      const subject = encodeURIComponent('Hi from your portfolio');
+      const body = encodeURIComponent(`${values.message}\n\n${values.email}`);
       window.location.href = `mailto:${links.email}?subject=${subject}&body=${body}`;
       setStatus('sent');
       return;
@@ -62,68 +58,72 @@ const ContactForm = () => {
 
   if (status === 'sent') {
     return (
-      <div role="status" className="border-t border-line pt-8">
-        <p className="font-serif text-3xl text-fg">Thank you.</p>
-        <p className="mt-3 text-muted">
+      <div role="status" className="rounded-lg border border-line p-6">
+        <p className="text-lg font-semibold text-fg">Thanks, message received.</p>
+        <p className="mt-2 text-[0.9375rem] text-muted">
           {links.formspreeId
-            ? 'Your message is on its way. I will get back to you soon.'
-            : 'Your email app should open with the message filled in. Send it from there and I will reply soon.'}
+            ? "I'll get back to you soon."
+            : 'Your email app should open with the message ready. Hit send there and it reaches me.'}
         </p>
-        <button type="button" onClick={() => setStatus('idle')} className="mt-6 text-sm font-medium text-accent-text hover:underline">
-          Write another message
+        <button type="button" onClick={() => setStatus('idle')} className="mt-4 text-sm font-medium text-accent-text hover:underline">
+          Send another
         </button>
       </div>
     );
   }
 
-  const field = (name: Field, label: string, props: Record<string, unknown> = {}) => (
-    <div>
-      <label htmlFor={`contact-${name}`} className="label">
-        {label}
-      </label>
-      {name === 'message' ? (
-        <textarea
-          id={`contact-${name}`}
-          name={name}
-          rows={5}
-          aria-invalid={Boolean(errors[name])}
-          aria-describedby={errors[name] ? `contact-${name}-error` : undefined}
-          className={`${inputClass} resize-y`}
-        />
-      ) : (
-        <input
-          id={`contact-${name}`}
-          name={name}
-          aria-invalid={Boolean(errors[name])}
-          aria-describedby={errors[name] ? `contact-${name}-error` : undefined}
-          className={inputClass}
-          {...props}
-        />
-      )}
-      {errors[name] ? (
-        <p id={`contact-${name}-error`} className="mt-2 text-sm text-[var(--error)]">
-          {errors[name]}
-        </p>
-      ) : null}
-    </div>
-  );
+  const describedBy = (name: Field) => (errors[name] ? `contact-${name}-error` : undefined);
+  const errorText = (name: Field) =>
+    errors[name] ? (
+      <p id={`contact-${name}-error`} className="mt-1.5 text-sm text-[var(--error)]">
+        {errors[name]}
+      </p>
+    ) : null;
 
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-8">
-      {field('name', 'Name', { autoComplete: 'name' })}
-      {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
-      {field('message', 'Message')}
+    <form noValidate onSubmit={onSubmit} className="space-y-5">
+      <div>
+        <label htmlFor="contact-email" className="text-sm font-medium text-fg">
+          Your email
+        </label>
+        <input
+          id="contact-email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@company.com"
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={describedBy('email')}
+          className={inputClass}
+        />
+        {errorText('email')}
+      </div>
+      <div>
+        <label htmlFor="contact-message" className="text-sm font-medium text-fg">
+          Message
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          rows={4}
+          placeholder="A role, a project, or just hello"
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby={describedBy('message')}
+          className={`${inputClass} resize-y`}
+        />
+        {errorText('message')}
+      </div>
       <div className="flex flex-wrap items-center gap-4">
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="rounded-full bg-accent-fill px-6 py-3 text-sm font-semibold text-accent-contrast transition-colors hover:bg-accent-fill-hover disabled:opacity-60"
+          className="rounded-lg bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {status === 'sending' ? 'Sending…' : 'Send message'}
         </button>
         {status === 'error' ? (
           <p role="alert" className="text-sm text-muted">
-            Something went wrong. Please email {links.email} directly.
+            That didn't go through. Please email {links.email} directly.
           </p>
         ) : null}
       </div>

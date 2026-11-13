@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { homeSections, links, pages } from '../data/portfolio';
+import { links, profile, sections } from '../data/portfolio';
 import { scrollToId } from '../lib/navigation';
 import { toggleTheme } from '../lib/theme';
 
@@ -14,8 +14,8 @@ const CommandPalette = () => {
     const goToSection = (id: string) => (pathname === '/' ? scrollToId(id) : navigate(`/#${id}`));
     return [
       { name: 'Home', hint: 'Back to the top', run: () => goToSection('top') },
-      ...homeSections.map((section) => ({ name: section.name, hint: 'Section', run: () => goToSection(section.id) })),
-      ...pages.map((page) => ({ name: page.name, hint: 'Page', run: () => navigate(page.path) })),
+      ...sections.map((section) => ({ name: section.name, hint: 'Section', run: () => goToSection(section.id) })),
+      { name: 'Resume', hint: 'Opens the PDF', run: () => window.open(profile.resume.href, '_blank', 'noopener') },
       { name: 'Email Pooja', hint: links.email, run: () => (window.location.href = `mailto:${links.email}`) },
       { name: 'Toggle theme', hint: 'Light / dark', run: toggleTheme },
     ];
