@@ -1,165 +1,134 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import type { MouseEvent } from 'react';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
-import {
-  SiFastapi,
-  SiFirebase,
-  SiMongodb,
-  SiOpenai,
-  SiPostgresql,
-  SiReact,
-  SiSpringboot,
-  SiVercel,
-} from 'react-icons/si';
-import type { IconType } from 'react-icons';
+import { projects } from '../data/portfolio';
+import type { Project } from '../data/portfolio';
+import { iconFor } from '../data/icons';
+import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
 
-type Tech = {
-  name: string;
-  icon: IconType;
+const tilt = (event: MouseEvent<HTMLElement>) => {
+  const card = event.currentTarget;
+  const bounds = card.getBoundingClientRect();
+  const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+  const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+  card.style.transform = `perspective(1200px) rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 4).toFixed(2)}deg)`;
 };
 
-const projects: {
-  title: string;
-  description: string;
-  features: string[];
-  technologies: Tech[];
-  github: string;
-  live: string;
-}[] = [
-  {
-    title: 'TutorX',
-    description:
-      'AI-Based Personalized Learning Platform that assists students with academic guidance using OpenAI LLMs, with a robust FastAPI backend and React Native mobile frontend.',
-    features: [
-      "Built an AI-powered tutoring chatbot that assists students with personalized academic guidance using OpenAI's LLM.",
-      'Designed and integrated FastAPI backend with real-time processing and full-cycle API response environment.',
-      'Developed the mobile frontend using React Native; collaborated in a team for end-to-end platform delivery.',
-    ],
-    technologies: [
-      { name: 'FastAPI', icon: SiFastapi },
-      { name: 'React Native', icon: SiReact },
-      { name: 'PostgreSQL', icon: SiPostgresql },
-      { name: 'OpenAI', icon: SiOpenai },
-    ],
-    github: 'https://github.com/pooja-s6/pod3',
-    live: '',
-  },
-  {
-    title: 'Legal Aid Matching Platform',
-    description: 'Platform connecting NGOs, Lawyers, and Citizens for role-based legal assistance and case resolution.',
-    features: [
-      'Built a role-based legal assistance platform enabling citizens to connect with NGOs and lawyers for case resolution.',
-      'Developed backend case-matching logic, role-based access workflows, and relational database schema using PostgreSQL across 3 user roles.',
-      'Designed an analytics dashboard for case monitoring and progress tracking.',
-    ],
-    technologies: [
-      { name: 'React', icon: SiReact },
-      { name: 'Spring Boot', icon: SiSpringboot },
-      { name: 'PostgreSQL', icon: SiPostgresql },
-    ],
-    github: 'https://github.com/pooja-s6/legal-aid-matching-platform',
-    live: '',
-  },
-  {
-    title: 'QuizFlow',
-    description: 'Real-Time Quiz Platform for Students and Teachers with live leaderboard updates and Firebase backend.',
-    features: [
-      'Engineered real-time quiz rooms with live leaderboard updates, actively used by 100+ students.',
-      'Designed a scalable Firebase schema for low-latency synchronization across concurrent users.',
-      'Implemented session control, performance tracking, and modular UI components; successfully deployed on Vercel.',
-    ],
-    technologies: [
-      { name: 'React', icon: SiReact },
-      { name: 'Firebase', icon: SiFirebase },
-      { name: 'Vercel', icon: SiVercel },
-    ],
-    github: 'https://github.com/FlyHighSkills/eduflex_final',
-    live: 'https://eduflex-zeta.vercel.app/',
-  },
-  {
-    title: 'VocalMart',
-    description: 'Voice Search-Enabled E-Commerce Platform with voice-driven product search using the Web Speech API.',
-    features: [
-      'Developed a full stack e-commerce platform with voice-driven product search using the Web Speech API.',
-      'Designed RESTful APIs with Spring Boot for product listing, cart, and order management workflows.',
-      'Integrated MongoDB for flexible product catalog storage and retrieval.',
-    ],
-    technologies: [
-      { name: 'Spring Boot', icon: SiSpringboot },
-      { name: 'React', icon: SiReact },
-      { name: 'MongoDB', icon: SiMongodb },
-    ],
-    github: 'https://github.com/pooja-s6/vocalmart',
-    live: '',
-  },
-];
+const Screenshot = ({ project }: { project: Project }) =>
+  project.image ? (
+    <img
+      src={project.image}
+      alt={`Screenshot of ${project.title}`}
+      width={960}
+      height={540}
+      loading="lazy"
+      decoding="async"
+      className="aspect-video w-full rounded-xl border border-line object-cover"
+    />
+  ) : (
+    <div
+      className="grid aspect-video w-full place-items-center rounded-xl border border-dashed border-line-strong bg-surface-2"
+      aria-hidden="true"
+    >
+      <span className="font-display text-4xl font-semibold text-accent-text">
+        {project.title
+          .split(' ')
+          .slice(0, 2)
+          .map((word) => word[0])
+          .join('')}
+      </span>
+    </div>
+  );
+
+const ProjectCard = ({ project, index, canTilt }: { project: Project; index: number; canTilt: boolean }) => (
+  <article
+    onMouseMove={canTilt ? tilt : undefined}
+    onMouseLeave={(event) => {
+      event.currentTarget.style.transform = '';
+    }}
+    className={`surface-card h-full p-5 transition-transform duration-200 sm:p-6 ${
+      project.featured ? 'grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center lg:p-8' : 'flex flex-col gap-5'
+    }`}
+  >
+    <Screenshot project={project} />
+    <div className="flex flex-1 flex-col">
+      <p className="font-display text-sm font-semibold text-accent-text">
+        0{index + 1}
+        {project.featured ? <span className="ml-2 text-muted">· Featured</span> : null}
+      </p>
+      <h3 className={`mt-1 font-display font-semibold text-fg ${project.featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+        {project.title}
+      </h3>
+      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent-text">Problem</p>
+      <p className="mt-1.5 text-sm leading-relaxed text-muted">{project.problem}</p>
+      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent-text">What I built</p>
+      <p className="mt-1.5 text-sm leading-relaxed text-muted">{project.built}</p>
+
+      <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tech stack">
+        {project.stack.map((tech) => {
+          const Icon = iconFor(tech);
+          return (
+            <li key={tech} className="chip px-3 py-1 text-xs">
+              {Icon ? <Icon className="text-accent-text" aria-hidden="true" /> : null}
+              {tech}
+            </li>
+          );
+        })}
+      </ul>
+
+      {project.live || project.github ? (
+        <div className="mt-6 flex flex-wrap gap-3">
+          {project.live ? (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-accent-fill px-4 py-2 text-sm font-semibold text-accent-contrast transition hover:bg-accent-fill-hover"
+            >
+              <FaExternalLinkAlt size={11} aria-hidden="true" />
+              Live Demo<span className="sr-only"> of {project.title}</span>
+            </a>
+          ) : null}
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition hover:border-accent hover:text-accent-text"
+            >
+              <FaGithub aria-hidden="true" />
+              GitHub<span className="sr-only"> repository for {project.title}</span>
+            </a>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  </article>
+);
 
 const Projects = () => {
+  const [canTilt] = useState(
+    () => window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
+
   return (
     <section id="projects" className="scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading eyebrow="Projects" title="Featured Projects" />
-
+        <SectionHeading
+          eyebrow="Projects"
+          title="Case studies"
+          description="The problem, what I built, and the stack, strongest work first."
+        />
         <div className="grid gap-5 lg:grid-cols-2">
           {projects.map((project, index) => (
-            <motion.article
+            <Reveal
               key={project.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.4, delay: (index % 2) * 0.05 }}
-              className="surface-card flex h-full flex-col p-6 sm:p-7"
+              delay={project.featured ? 0 : (index % 2) * 0.05}
+              className={project.featured ? 'lg:col-span-2' : undefined}
             >
-              <h3 className="font-display text-2xl font-semibold text-white">{project.title}</h3>
-              <p className="mt-3 leading-relaxed text-zinc-400">{project.description}</p>
-
-              <ul className="mt-5 space-y-2.5">
-                {project.features.map((feature) => (
-                  <li key={feature} className="flex gap-3 text-sm leading-relaxed text-zinc-400">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.technologies.map((tech) => {
-                  const Icon = tech.icon;
-                  return (
-                    <span
-                      key={tech.name}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-sm text-zinc-300"
-                    >
-                      <Icon className="text-lavender" aria-hidden="true" />
-                      {tech.name}
-                    </span>
-                  );
-                })}
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white transition hover:border-accent hover:text-lavender"
-                >
-                  <FaGithub aria-hidden="true" />
-                  View Code
-                </a>
-                {project.live ? (
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-ink transition hover:bg-zinc-100"
-                  >
-                    <FaExternalLinkAlt size={12} aria-hidden="true" />
-                    Live
-                  </a>
-                ) : null}
-              </div>
-            </motion.article>
+              <ProjectCard project={project} index={index} canTilt={canTilt} />
+            </Reveal>
           ))}
         </div>
       </div>
