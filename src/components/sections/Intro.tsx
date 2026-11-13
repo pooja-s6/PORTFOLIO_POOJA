@@ -1,5 +1,5 @@
 import { FaArrowRight, FaFileAlt } from 'react-icons/fa';
-import { intro, profile } from '../../data/portfolio';
+import { exploring, intro, profile } from '../../data/portfolio';
 import { scrollToId } from '../../lib/navigation';
 import Reveal from '../Reveal';
 import Rich from '../Rich';
@@ -26,7 +26,7 @@ const Intro = () => (
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--success-dot)] opacity-60 motion-reduce:animate-none" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--success-dot)]" />
             </span>
-            Open to backend &amp; AI roles
+            {profile.status}
           </p>
           <p className="mt-1 font-serif text-sm italic text-muted">writing code from {profile.location}</p>
         </div>
@@ -66,6 +66,9 @@ const Intro = () => (
       </div>
 
       <SocialLinks size="sm" className="mt-8" />
+      <p className="mt-6 text-sm text-muted">
+        <span className="font-serif italic">Currently exploring:</span> {exploring.join(' · ')}
+      </p>
     </Reveal>
   </section>
 );

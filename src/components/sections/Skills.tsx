@@ -20,8 +20,8 @@ const Skills = () => (
                         className="tag has-tooltip relative cursor-default underline decoration-dotted decoration-line-strong underline-offset-4"
                       >
                         {skill}
-                        <span className="tooltip" role="tooltip">
-                          used in {usedIn.slice(0, 3).join(', ')}
+                        <span className="tooltip w-max max-w-[15rem] whitespace-normal text-center leading-snug" role="tooltip">
+                          used in {usedIn.join(', ')}
                         </span>
                       </span>
                     ) : (

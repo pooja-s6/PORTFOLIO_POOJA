@@ -1,12 +1,8 @@
 export const profile = {
   name: 'Pooja S',
-  displayName: 'Pooja S.',
   positioning: 'Backend & AI Developer',
-  roles: ['Backend Developer', 'AI Systems Builder', 'Full-Stack Engineer'],
-  tagline:
-    'I build backend systems and AI applications, from RAG pipelines to real-time products used by real students.',
+  status: 'Open to backend & AI roles · Graduating 2027',
   location: 'Chennai, IN',
-  footerLine: 'Backend & AI Developer building APIs, RAG systems, and the products around them.',
   photo: { webp: '/pooja.webp', jpg: '/pooja.jpg', alt: 'Portrait of Pooja S smiling outdoors' },
   resume: { href: '/assets/Pooja_S_Resume.pdf', fileName: 'Pooja_S_Resume.pdf' },
 };
@@ -21,11 +17,12 @@ export const links = {
   formspreeId: '',
 };
 
-export const facts = [
-  { label: 'Role', value: 'Backend Developer Intern, Hexaware Technologies' },
-  { label: 'Studying', value: 'B.E. CSE (Data Science), Velammal Engineering College, 2027' },
-  { label: 'Based', value: 'Chennai, India' },
+export const intro = [
+  "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year **CSE (Honours in Data Science)** student at Velammal Engineering College, Chennai.",
+  "Right now I'm a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform. Across **five internships** I've shipped a real-time quiz app used by **200+ students** and a role-based legal aid platform, and built a **multi-tenant RAG system** with permission-aware caching.",
 ];
+
+export const exploring = ['Agentic AI', 'LangGraph', 'System design'];
 
 export type Experience = {
   id: string;
@@ -34,7 +31,6 @@ export type Experience = {
   location: string;
   period: string;
   current?: boolean;
-  impact: string;
   tags: string[];
   points: string[];
 };
@@ -47,12 +43,11 @@ export const experience: Experience[] = [
     location: 'Remote',
     period: 'Feb 2026 – Present',
     current: true,
-    impact: 'Building FastAPI + PostgreSQL services and AI workflows for an AI-powered education platform.',
-    tags: ['FastAPI', 'PostgreSQL', 'REST APIs', 'AI workflows'],
+    tags: ['FastAPI', 'PostgreSQL', 'REST APIs'],
     points: [
-      'Developing scalable backend services for an **AI-powered education platform** using **FastAPI**, **PostgreSQL** and REST APIs.',
-      'Designing and implementing backend modules with cross-functional teams in an **Agile** workflow.',
-      'Integrating **AI workflows** into backend services; working on architecture, API design and **production debugging**.',
+      'Building backend services for an **AI-powered education platform** with **FastAPI, PostgreSQL and REST APIs**.',
+      'Designing and implementing backend modules with cross-functional teams in **Agile sprints**, including **production debugging**.',
+      'Integrating **AI workflows** into backend services while keeping the architecture clean and maintainable.',
     ],
   },
   {
@@ -61,12 +56,11 @@ export const experience: Experience[] = [
     role: 'Full Stack Developer Intern',
     location: 'Remote',
     period: 'Oct 2025 – Jan 2026',
-    impact: 'Built QuizFlow with React and Firebase, used by 200+ students.',
     tags: ['React', 'Firebase', 'Vercel'],
     points: [
-      'Worked in a **three-member team** at an IIT professor-led startup to build **QuizFlow**, a real-time quiz platform used by **200+ students**.',
-      'Built **React** frontend modules and the **Firebase** schema for concurrent real-time quiz sessions.',
-      'Deployed on **Vercel**; handled debugging, feature enhancements and production support.',
+      'Built **QuizFlow** with a **three-member team** at an IIT professor-led startup: a real-time quiz platform now used by **200+ students**.',
+      'Designed the **Firebase** schema and **React** modules that keep leaderboards and scores in sync across **concurrent live sessions**.',
+      'Deployed on **Vercel** and handled debugging, feature requests and production support.',
     ],
   },
   {
@@ -75,11 +69,11 @@ export const experience: Experience[] = [
     role: 'Java Developer Intern',
     location: 'Virtual',
     period: 'Nov 2025 – Jan 2026',
-    impact: 'Built a role-based legal aid platform with Spring Boot, in a five-member Agile team.',
-    tags: ['Java', 'Spring Boot', 'React', 'PostgreSQL'],
+    tags: ['Java', 'Spring Boot', 'PostgreSQL'],
     points: [
-      'Built the **Legal Aid Matching Platform** in a **five-member Agile team**.',
-      'Designed backend modules, **REST APIs** and a relational schema for **role-based** legal case management; used Git feature branches and resolved merge conflicts.',
+      'Built the **Legal Aid Matching Platform** with a **five-member Agile team** using **Java, Spring Boot and PostgreSQL**.',
+      'Designed the **REST APIs**, backend modules and relational schema behind role-based case management across **3 user roles**.',
+      'Worked in a **Git feature-branch** workflow, resolving merge conflicts along the way.',
       'Earned the **Java Foundation** certification.',
     ],
   },
@@ -89,11 +83,10 @@ export const experience: Experience[] = [
     role: 'AI/ML Intern',
     location: 'Virtual',
     period: 'Jun – Jul 2025',
-    impact: 'Built and compared KNN and Logistic Regression salary-prediction models.',
-    tags: ['Python', 'scikit-learn', 'KNN', 'Logistic Regression'],
+    tags: ['Python'],
     points: [
-      'Built an employee **salary prediction** model with supervised ML.',
-      'Trained and compared **KNN** and **Logistic Regression**; covered data preprocessing, feature engineering and model evaluation.',
+      'Built an employee **salary prediction** model using supervised machine learning.',
+      'Trained and compared **KNN and Logistic Regression**, covering preprocessing, feature engineering and evaluation.',
     ],
   },
   {
@@ -102,12 +95,11 @@ export const experience: Experience[] = [
     role: 'Software Engineering Intern',
     location: 'Virtual',
     period: 'Dec 2024 – Sep 2025',
-    impact: 'Ten months on a voice-enabled e-commerce platform (Whisper, Spring Boot, Flask, Docker, Playwright).',
-    tags: ['Java', 'Spring Boot', 'React', 'MongoDB', 'Docker', 'Flask', 'Playwright'],
+    tags: ['Java', 'Spring Boot', 'Flask', 'MongoDB', 'Docker', 'Playwright'],
     points: [
-      'Spent **ten months** building REST APIs for a **voice-enabled e-commerce** platform, integrating **Whisper** speech recognition with Flask and Spring Boot services.',
-      'Worked with layered architecture and dependency injection; used **Docker** and JBoss/WildFly for deployments.',
-      'Wrote **Playwright** automation tests and did manual testing and production support.',
+      'Spent **ten months** on a **voice-enabled e-commerce platform**, building REST APIs that integrate **Whisper** speech recognition with **Flask and Spring Boot**.',
+      'Applied layered architecture and dependency injection, and deployed with **Docker on JBoss/WildFly**.',
+      'Wrote **Playwright** automation tests, did manual testing and supported production issues.',
     ],
   },
 ];
@@ -116,66 +108,86 @@ export type Project = {
   title: string;
   year: string;
   summary: string;
+  details: string[];
   stack: string[];
   github: string;
   live: string;
-  image: string;
 };
 
 export const projects: Project[] = [
   {
     title: 'Multi-Tenant RAG Platform',
     year: '2026',
-    summary: 'Permission-scoped document Q&A with cited answers, Redis semantic caching and LLM routing.',
+    summary: "Ask questions over private documents and get cited answers, with each tenant's data and permissions kept separate.",
+    details: [
+      '**JWT authentication** and role-based, per-document permissions.',
+      'Permission-scoped **semantic caching in Redis** plus complexity-based **LLM routing**, to cut cost and avoid redundant inference.',
+      'Tenant-aware vector retrieval with **pgvector**, backed by automated tests for auth, permissions and caching.',
+    ],
     stack: ['FastAPI', 'PostgreSQL', 'pgvector', 'Redis', 'React', 'Docker'],
     github: 'https://github.com/pooja-s6/multitenant-rag',
     live: '',
-    image: '', // TODO: add /projects/multitenant-rag.webp
   },
   {
     title: 'BugLens AI',
-    year: '', // TODO: add the year
-    summary: 'Bug classification, duplicate detection and root-cause help; BERT classifier at 88.33% accuracy, FAISS retrieval.',
+    year: '2026',
+    summary: 'An AI assistant for bug triage that classifies reports, finds duplicates and suggests root causes.',
+    details: [
+      'Fine-tuned a **BERT** classifier to **88.33% test accuracy**.',
+      '**FAISS** vector search to retrieve similar past bug reports.',
+      'Modular pipeline from parsing to classification, retrieval and AI-assisted root-cause analysis, with guardrails and **PostgreSQL** persistence.',
+    ],
     stack: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'BERT', 'FAISS', 'XGBoost'],
     github: '', // TODO: github.com/pooja-s6/BuglensAI returns 404; add the public repo URL
     live: 'https://buglens-ai-coral.vercel.app/',
-    image: '/projects/buglens.webp',
   },
   {
     title: 'QuizFlow',
     year: '2025',
-    summary: 'Real-time quiz rooms with live leaderboards for 200+ students.',
+    summary: 'Live quiz rooms with instant leaderboards, used by 200+ students.',
+    details: [
+      '**Real-time sync** of scores and leaderboards across concurrent sessions.',
+      'Session control, performance tracking and an **analytics view** for educators.',
+    ],
     stack: ['React', 'Firebase', 'Vercel'],
     github: 'https://github.com/FlyHighSkills/eduflex_final',
     live: 'https://eduflex-zeta.vercel.app/',
-    image: '/projects/quizflow.webp',
   },
   {
     title: 'TutorX',
     year: '2026',
-    summary: 'AI tutoring chatbot with FastAPI and React Native.',
+    summary: 'An AI tutor that answers the question a student actually asked, on mobile.',
+    details: [
+      '**OpenAI**-powered chatbot for personalized academic guidance, served by a **FastAPI** backend.',
+      '**React Native** mobile app, built with a team end to end.',
+    ],
     stack: ['FastAPI', 'React Native', 'PostgreSQL', 'OpenAI'],
     github: 'https://github.com/pooja-s6/pod3',
     live: '',
-    image: '', // TODO: add /projects/tutorx.webp
   },
   {
     title: 'Legal Aid Matching Platform',
     year: '2025',
-    summary: 'Role-based case matching across 3 user roles with an analytics dashboard.',
+    summary: 'One place for citizens, NGOs and lawyers to match cases and follow them through.',
+    details: [
+      'Case-matching logic and **role-based access** workflows across **3 user roles**.',
+      '**Analytics dashboard** for tracking case progress.',
+    ],
     stack: ['React', 'Spring Boot', 'PostgreSQL'],
     github: 'https://github.com/pooja-s6/legal-aid-matching-platform',
     live: '',
-    image: '', // TODO: add /projects/legal-aid.webp
   },
   {
     title: 'VocalMart',
     year: '2025',
-    summary: 'Voice-search e-commerce with the Web Speech API.',
+    summary: 'Shop by speaking: voice search for an e-commerce store.',
+    details: [
+      'Voice-driven product search using the **Web Speech API**.',
+      '**REST APIs** for products, cart and orders, with a **MongoDB** catalog.',
+    ],
     stack: ['Spring Boot', 'React', 'MongoDB'],
     github: 'https://github.com/pooja-s6/vocalmart',
     live: '',
-    image: '', // TODO: add /projects/vocalmart.webp
   },
 ];
 
@@ -186,6 +198,7 @@ export const skillRows = [
     items: [
       'Spring Boot',
       'FastAPI',
+      'Flask',
       'Node.js',
       'Express',
       'REST APIs',
@@ -223,6 +236,31 @@ export const skillRows = [
   },
 ];
 
+const skillUsedIn: Record<string, string[]> = {
+  Java: ['Infosys Springboard', 'AVPS Technologies'],
+  Python: ['IBM SkillsBuild', 'BugLens AI', 'Multi-Tenant RAG Platform'],
+  'Spring Boot': ['Infosys Springboard', 'AVPS Technologies', 'Legal Aid Matching Platform', 'VocalMart'],
+  FastAPI: ['Hexaware Technologies', 'Multi-Tenant RAG Platform', 'BugLens AI', 'TutorX'],
+  Flask: ['AVPS Technologies'],
+  'REST APIs': ['Hexaware Technologies', 'Infosys Springboard', 'AVPS Technologies'],
+  RAG: ['Multi-Tenant RAG Platform'],
+  'Vector Databases': ['Multi-Tenant RAG Platform', 'BugLens AI'],
+  OpenAI: ['TutorX'],
+  JWT: ['Multi-Tenant RAG Platform'],
+  React: ['QuizFlow', 'Multi-Tenant RAG Platform', 'BugLens AI', 'Legal Aid Matching Platform', 'VocalMart'],
+  'React Native': ['TutorX'],
+  PostgreSQL: ['Hexaware Technologies', 'Multi-Tenant RAG Platform', 'BugLens AI', 'TutorX', 'Legal Aid Matching Platform'],
+  pgvector: ['Multi-Tenant RAG Platform'],
+  MongoDB: ['AVPS Technologies', 'VocalMart'],
+  Firebase: ['QuizFlow'],
+  Redis: ['Multi-Tenant RAG Platform'],
+  Docker: ['AVPS Technologies', 'Multi-Tenant RAG Platform'],
+  Git: ['Infosys Springboard'],
+  Playwright: ['AVPS Technologies'],
+};
+
+export const skillUsage = (skill: string) => skillUsedIn[skill] ?? [];
+
 export const certifications = [
   { name: 'Java Foundation', issuer: 'Infosys Springboard', year: '2025', url: '' }, // TODO: credential URL
   { name: 'AI Fundamentals', issuer: 'IBM SkillsBuild', year: '2025', url: '' }, // TODO: credential URL
@@ -233,62 +271,17 @@ export const certifications = [
 ];
 
 export const achievements = [
-  { title: '6th place, Debug Relay (team event)', detail: 'REC College', year: '2026' },
+  // TODO: add the team count if known, e.g. '6th of N teams'.
+  { title: '6th place, Debug Relay', detail: 'Team debugging event, REC College', year: '2026' },
   { title: 'Cognizant Hackathon', detail: 'Participant', year: '2026' },
-  { title: 'Smart India Hackathon', detail: 'Internal round, VEC', year: '2025' },
+  { title: 'Smart India Hackathon', detail: 'Internal round, Velammal Engineering College', year: '2025' },
   { title: 'Technical symposiums', detail: 'Across colleges', year: '2024 – 2026' },
 ];
 
-export type Recommendation = {
-  name: string;
-  role: string;
-  company: string;
-  quote: string;
-  linkedin: string;
-};
-
-// Only add real recommendations (for example, copied from LinkedIn with permission).
-export const recommendations: Recommendation[] = [];
-
-export const about = {
-  education: [
-    {
-      degree: 'B.E. Computer Science and Engineering (Honours in Data Science)',
-      school: 'Velammal Engineering College, Chennai',
-      period: '2023 – 2027',
-      score: 'CGPA 8.64 / 10',
-    },
-    {
-      degree: 'Higher Secondary Certificate (HSC)',
-      school: 'Sri Venkateshwara Matriculation Higher Secondary School',
-      period: '2022 – 2023',
-      score: '86%',
-    },
-  ],
-  interests: ['Full-stack development', 'Backend design', 'UI/UX', 'Cloud deployment', 'Computer vision'],
-  learning: ['Agentic AI', 'LangGraph', 'System Design'],
-};
-
-export const intro = [
-  "I'm a **backend and AI developer** and a final-year CSE student at Velammal Engineering College, Chennai. I like the part of software most people never see: **APIs**, databases, and the pipelines that make AI features actually work.",
-  "Right now I'm a backend intern at **Hexaware Technologies**, building FastAPI services for an AI education platform. Before that, I shipped **QuizFlow**, a real-time quiz app used by **200+ students**, across **five internships** in total.",
-];
-
 export const sections = [
-  { id: 'work', name: 'Work', note: 'five internships, newest first' },
-  { id: 'projects', name: 'Projects', note: 'things I built and shipped' },
-  { id: 'skills', name: 'Skills', note: 'hover one to see where I used it' },
-  { id: 'recognition', name: 'Recognition', note: 'small wins along the way' },
-  { id: 'contact', name: 'Contact', note: 'say hi' },
+  { id: 'work', name: 'Work', heading: 'Work', note: 'five internships, newest first' },
+  { id: 'projects', name: 'Projects', heading: 'Projects', note: 'things I built and shipped' },
+  { id: 'skills', name: 'Skills', heading: 'Skills', note: 'hover one to see where I used it' },
+  { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'small wins along the way' },
+  { id: 'contact', name: 'Contact', heading: 'Say hi', note: '' },
 ];
-
-const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9+#]/g, '');
-
-export const skillUsage = (skill: string) => {
-  const key = normalize(skill);
-  const places = [
-    ...experience.filter((item) => item.tags.some((tag) => normalize(tag) === key)).map((item) => item.company),
-    ...projects.filter((item) => item.stack.some((tag) => normalize(tag) === key)).map((item) => item.title),
-  ];
-  return [...new Set(places)];
-};

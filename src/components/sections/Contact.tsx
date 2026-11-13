@@ -6,7 +6,7 @@ const Contact = () => (
   <Section id="contact">
     <p className="text-[1.0625rem] leading-8 text-muted">
       Hiring for a <strong className="font-semibold text-fg">backend, AI or full-stack</strong> role, or building something
-      interesting? Drop a note below. I read every message myself.
+      interesting? Send me a note. I read every message myself.
     </p>
     <div className="mt-8">
       <ContactForm />
