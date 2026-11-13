@@ -2,7 +2,7 @@ export const profile = {
   name: 'Pooja S',
   positioning: 'Backend & AI Developer',
   status: 'Open to backend & AI roles · Graduating 2027',
-  location: 'Chennai, IN',
+  location: 'Based in Chennai, India',
   photo: { webp: '/pooja.webp', jpg: '/pooja.jpg', alt: 'Portrait of Pooja S smiling outdoors' },
   resume: { href: '/assets/Pooja_S_Resume.pdf', fileName: 'Pooja_S_Resume.pdf' },
 };
@@ -112,6 +112,8 @@ export type Project = {
   stack: string[];
   github: string;
   live: string;
+  image?: string;
+  featured?: boolean;
 };
 
 export const projects: Project[] = [
@@ -138,8 +140,10 @@ export const projects: Project[] = [
       'Modular pipeline from parsing to classification, retrieval and AI-assisted root-cause analysis, with guardrails and **PostgreSQL** persistence.',
     ],
     stack: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'BERT', 'FAISS', 'XGBoost'],
-    github: '', // TODO: github.com/pooja-s6/BuglensAI returns 404; add the public repo URL
+    github: '', // TODO: no public BugLens repo under github.com/pooja-s6; add the repo URL
     live: 'https://buglens-ai-coral.vercel.app/',
+    image: '/projects/buglens.webp',
+    featured: true,
   },
   {
     title: 'QuizFlow',
@@ -152,6 +156,8 @@ export const projects: Project[] = [
     stack: ['React', 'Firebase', 'Vercel'],
     github: 'https://github.com/FlyHighSkills/eduflex_final',
     live: 'https://eduflex-zeta.vercel.app/',
+    image: '/projects/quizflow.webp',
+    featured: true,
   },
   {
     title: 'TutorX',
@@ -280,7 +286,8 @@ export const achievements = [
 
 export const sections = [
   { id: 'work', name: 'Work', heading: 'Work', note: 'five internships, newest first' },
-  { id: 'projects', name: 'Projects', heading: 'Projects', note: 'things I built and shipped' },
+  { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'live and in use' },
+  { id: 'projects', name: 'All projects', heading: 'All projects', note: 'with source code on GitHub' },
   { id: 'skills', name: 'Skills', heading: 'Skills', note: 'hover one to see where I used it' },
   { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'small wins along the way' },
   { id: 'contact', name: 'Contact', heading: 'Say hi', note: '' },

@@ -12,7 +12,7 @@ const Contact = () => (
       <ContactForm />
     </div>
     <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
-      <span className="font-serif italic">or copy my email:</span>
+      <span>Or email me directly:</span>
       <CopyEmail />
     </div>
   </Section>

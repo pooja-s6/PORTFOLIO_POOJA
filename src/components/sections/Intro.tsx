@@ -28,7 +28,7 @@ const Intro = () => (
             </span>
             {profile.status}
           </p>
-          <p className="mt-1 font-serif text-sm italic text-muted">writing code from {profile.location}</p>
+          <p className="mt-1 text-sm text-muted">{profile.location}</p>
         </div>
       </div>
 
@@ -67,7 +67,7 @@ const Intro = () => (
 
       <SocialLinks size="sm" className="mt-8" />
       <p className="mt-6 text-sm text-muted">
-        <span className="font-serif italic">Currently exploring:</span> {exploring.join(' · ')}
+        <span className="font-medium text-fg">Currently exploring:</span> {exploring.join(' · ')}
       </p>
     </Reveal>
   </section>

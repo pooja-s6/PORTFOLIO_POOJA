@@ -1,4 +1,5 @@
 import Contact from '../components/sections/Contact';
+import Featured from '../components/sections/Featured';
 import Intro from '../components/sections/Intro';
 import Projects from '../components/sections/Projects';
 import Recognition from '../components/sections/Recognition';
@@ -13,6 +14,7 @@ const Home = () => {
     <div className="mx-auto max-w-2xl px-5">
       <Intro />
       <Work />
+      <Featured />
       <Projects />
       <Skills />
       <Recognition />

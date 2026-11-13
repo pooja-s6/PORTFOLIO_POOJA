@@ -40,12 +40,12 @@ const ProjectRow = ({ project }: { project: Project }) => {
           aria-controls={detailsId}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-fg"
         >
-          {open ? 'Hide details' : 'How I built it'}
+          {open ? 'Hide details' : 'Show details'}
           <FaChevronDown size={10} className={`transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
         </button>
         {project.live ? (
           <a href={project.live} target="_blank" rel="noopener noreferrer" className={linkClass}>
-            Visit site
+            Live demo
             <FaArrowRight
               size={10}
               className="-rotate-45 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
@@ -57,8 +57,8 @@ const ProjectRow = ({ project }: { project: Project }) => {
         {project.github ? (
           <a href={project.github} target="_blank" rel="noopener noreferrer" className={linkClass}>
             <FaGithub size={13} aria-hidden="true" />
-            Source
-            <span className="sr-only">code for {project.title} (opens in a new tab)</span>
+            GitHub
+            <span className="sr-only">repository for {project.title} (opens in a new tab)</span>
           </a>
         ) : null}
       </div>

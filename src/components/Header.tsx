@@ -4,7 +4,7 @@ import { profile, sections } from '../data/portfolio';
 import { openPalette, scrollToId } from '../lib/navigation';
 import ThemeToggle from './ThemeToggle';
 
-const navIds = ['work', 'projects', 'skills', 'contact'];
+const navIds = ['work', 'featured', 'skills', 'contact'];
 
 const Header = () => {
   const { pathname } = useLocation();
