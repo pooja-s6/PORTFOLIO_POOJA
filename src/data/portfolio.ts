@@ -131,7 +131,6 @@ export const projects: Project[] = [
     github: 'https://github.com/pooja-s6/multitenant-rag',
     live: '',
     image: '/projects/multitenant-rag.webp',
-    imageCaption: 'Architecture diagram',
     featured: true,
   },
   {

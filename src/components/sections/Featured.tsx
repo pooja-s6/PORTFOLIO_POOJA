@@ -26,7 +26,7 @@ const Featured = () => (
                   height={540}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+                  className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
                 />
               </a>
               {project.imageCaption ? (
