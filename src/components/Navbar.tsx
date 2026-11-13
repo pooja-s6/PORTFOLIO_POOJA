@@ -1,36 +1,49 @@
 import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { navSections } from '../data/portfolio';
+import { homeSections } from '../data/portfolio';
 import { openPalette, scrollToId } from '../lib/navigation';
 import ThemeToggle from './ThemeToggle';
 
-const useActiveSection = () => {
-  const [active, setActive] = useState('#home');
+const navItems = [
+  ...homeSections.map((section) => ({ name: section.name, to: `/#${section.id}`, section: section.id })),
+  { name: 'Resume', to: '/resume', section: '' },
+  { name: 'Contact', to: '/contact', section: '' },
+];
+
+const useActiveSection = (enabled: boolean) => {
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    const ids = ['home', ...navSections.map((section) => section.href.slice(1)), 'contact'];
-    const sections = ids
-      .map((id) => document.getElementById(id))
+    if (!enabled) return;
+    const sections = homeSections
+      .map((section) => document.getElementById(section.id))
       .filter((section): section is HTMLElement => Boolean(section));
-
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting)[0];
-        if (visible) setActive(`#${visible.target.id}`);
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
       },
-      { rootMargin: '-40% 0px -55% 0px' },
+      { rootMargin: '-45% 0px -50% 0px' },
     );
     sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      setActive('');
+    };
+  }, [enabled]);
 
   return active;
 };
 
 const Navbar = () => {
+  const { pathname } = useLocation();
+  const onHome = pathname === '/';
+  const active = useActiveSection(onHome);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const active = useActiveSection();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -46,54 +59,60 @@ const Navbar = () => {
     };
   }, []);
 
-  const go = (href: string) => {
-    setIsOpen(false);
-    scrollToId(href);
-  };
+  const isActive = (item: (typeof navItems)[number]) => (item.section ? onHome && active === item.section : pathname === item.to);
+
+  const linkProps = (item: (typeof navItems)[number]) => ({
+    to: item.to,
+    'aria-current': isActive(item) ? ('location' as const) : undefined,
+    onClick: (event: MouseEvent) => {
+      setIsOpen(false);
+      if (item.section && onHome) {
+        event.preventDefault();
+        scrollToId(item.section);
+      }
+    },
+  });
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b ${
-        isOpen || scrolled ? 'border-line bg-bg/90 backdrop-blur-xl' : 'border-transparent bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors ${
+        scrolled || isOpen ? 'border-line bg-bg/85 backdrop-blur-md' : 'border-transparent'
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Primary">
-        <a
-          href="#home"
+        <Link
+          to="/"
           onClick={(event) => {
-            event.preventDefault();
-            go('#home');
+            if (onHome) {
+              event.preventDefault();
+              scrollToId('top');
+            }
           }}
-          className="font-display text-xl font-semibold tracking-tight text-fg"
-          aria-label="Pooja S, back to top"
+          className="font-serif text-2xl font-medium text-fg"
+          aria-label="Pooja S, home"
         >
           PS<span className="text-accent-text">.</span>
-        </a>
+        </Link>
 
-        <div className="hidden items-center gap-7 lg:flex">
-          {navSections.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(event) => {
-                event.preventDefault();
-                go(link.href);
-              }}
-              aria-current={active === link.href ? 'location' : undefined}
-              className={`relative text-sm transition-colors hover:text-fg ${
-                active === link.href
-                  ? 'font-medium text-fg after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-accent'
-                  : 'text-muted'
-              }`}
-            >
-              {link.name}
-            </a>
-          ))}
+        <div className="hidden items-center gap-6 lg:flex">
+          <ul className="flex items-center gap-6">
+            {navItems.map((item) => (
+              <li key={item.name}>
+                <Link
+                  {...linkProps(item)}
+                  className={`text-sm transition-colors hover:text-fg ${isActive(item) ? 'text-fg' : 'text-muted'}`}
+                >
+                  {isActive(item) ? <span className="mr-1 text-accent-text" aria-hidden="true">•</span> : null}
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <button
             type="button"
             onClick={openPalette}
             aria-label="Open command palette (Ctrl+K)"
-            className="has-tooltip relative rounded-full border border-line px-3 py-1.5 font-mono text-xs text-muted transition hover:border-accent hover:text-fg"
+            className="has-tooltip relative rounded-md border border-line px-2 py-1 font-mono text-xs text-muted hover:border-accent hover:text-fg"
           >
             Ctrl K
             <span className="tooltip" role="tooltip">
@@ -101,13 +120,6 @@ const Navbar = () => {
             </span>
           </button>
           <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => go('#contact')}
-            className="rounded-full bg-accent-fill px-4 py-2 text-sm font-semibold text-accent-contrast transition hover:bg-accent-fill-hover"
-          >
-            Contact Me
-          </button>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -126,34 +138,18 @@ const Navbar = () => {
       </nav>
 
       {isOpen ? (
-        <div id="mobile-menu" className="border-t border-line bg-bg px-5 pb-6 pt-3 lg:hidden">
-          <ul className="mx-auto flex max-w-6xl flex-col gap-1">
-            {navSections.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    go(link.href);
-                  }}
-                  aria-current={active === link.href ? 'location' : undefined}
-                  className={`block rounded-xl px-3 py-3 text-sm hover:bg-surface-2 ${
-                    active === link.href ? 'font-medium text-accent-text' : 'text-fg'
-                  }`}
+        <div id="mobile-menu" className="border-t border-line bg-bg px-5 pb-6 pt-2 lg:hidden">
+          <ul className="mx-auto max-w-6xl">
+            {navItems.map((item) => (
+              <li key={item.name} className="border-b border-line">
+                <Link
+                  {...linkProps(item)}
+                  className={`block py-4 font-serif text-2xl ${isActive(item) ? 'text-accent-text' : 'text-fg'}`}
                 >
-                  {link.name}
-                </a>
+                  {item.name}
+                </Link>
               </li>
             ))}
-            <li>
-              <button
-                type="button"
-                onClick={() => go('#contact')}
-                className="mt-2 w-full rounded-full bg-accent-fill px-4 py-3 text-sm font-semibold text-accent-contrast"
-              >
-                Contact Me
-              </button>
-            </li>
           </ul>
         </div>
       ) : null}

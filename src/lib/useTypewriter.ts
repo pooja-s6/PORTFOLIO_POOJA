@@ -15,9 +15,11 @@ export const useTypewriter = (words: string[]) => {
       return () => window.clearTimeout(hold);
     }
     if (deleting && text === '') {
-      setDeleting(false);
-      setIndex((current) => (current + 1) % words.length);
-      return;
+      const next = window.setTimeout(() => {
+        setDeleting(false);
+        setIndex((current) => (current + 1) % words.length);
+      }, 250);
+      return () => window.clearTimeout(next);
     }
 
     const timer = window.setTimeout(

@@ -3,7 +3,7 @@ import { FaEnvelope, FaGithub, FaLaptopCode, FaLinkedin } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
 import { links } from '../data/portfolio';
 
-export const socials: { label: string; href: string; icon: IconType }[] = [
+const socials: { label: string; href: string; icon: IconType }[] = [
   { label: 'GitHub', href: links.github.url, icon: FaGithub },
   { label: 'LinkedIn', href: links.linkedin.url, icon: FaLinkedin },
   { label: 'LeetCode', href: links.leetcode.url, icon: SiLeetcode },

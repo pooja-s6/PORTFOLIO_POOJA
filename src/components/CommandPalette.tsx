@@ -1,18 +1,26 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { navSections } from '../data/portfolio';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { homeSections, links, pages } from '../data/portfolio';
 import { scrollToId } from '../lib/navigation';
 import { toggleTheme } from '../lib/theme';
 
 type Command = { name: string; hint: string; run: () => void };
 
-const commands: Command[] = [
-  { name: 'Home', hint: 'Back to the top', run: () => scrollToId('#home') },
-  ...navSections.map((section) => ({ name: section.name, hint: 'Section', run: () => scrollToId(section.href) })),
-  { name: 'Contact', hint: 'Section', run: () => scrollToId('#contact') },
-  { name: 'Toggle theme', hint: 'Light / dark', run: toggleTheme },
-];
-
 const CommandPalette = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const commands = useMemo<Command[]>(() => {
+    const goToSection = (id: string) => (pathname === '/' ? scrollToId(id) : navigate(`/#${id}`));
+    return [
+      { name: 'Home', hint: 'Back to the top', run: () => goToSection('top') },
+      ...homeSections.map((section) => ({ name: section.name, hint: 'Section', run: () => goToSection(section.id) })),
+      ...pages.map((page) => ({ name: page.name, hint: 'Page', run: () => navigate(page.path) })),
+      { name: 'Email Pooja', hint: links.email, run: () => (window.location.href = `mailto:${links.email}`) },
+      { name: 'Toggle theme', hint: 'Light / dark', run: toggleTheme },
+    ];
+  }, [navigate, pathname]);
+
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
@@ -24,7 +32,7 @@ const CommandPalette = () => {
     const needle = query.trim().toLowerCase();
     if (!needle) return commands;
     return commands.filter((item) => `${item.name} ${item.hint}`.toLowerCase().includes(needle));
-  }, [query]);
+  }, [commands, query]);
 
   const openRef = useRef(false);
   useEffect(() => {
@@ -78,7 +86,7 @@ const CommandPalette = () => {
         role="dialog"
         aria-modal="true"
         aria-label="Command palette"
-        className="w-full max-w-lg rounded-2xl border border-line bg-surface p-3 shadow-[0_30px_80px_-30px_var(--glow)]"
+        className="w-full max-w-lg rounded-xl border border-line-strong bg-bg p-3 shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
         <input
@@ -107,7 +115,7 @@ const CommandPalette = () => {
           aria-expanded="true"
           aria-controls={listId}
           aria-activedescendant={results[active] ? `${listId}-${active}` : undefined}
-          className="w-full rounded-xl border border-line bg-bg px-3 py-3 text-sm text-fg outline-none placeholder:text-muted focus:border-accent"
+          className="w-full rounded-lg border border-line bg-surface px-3 py-3 text-sm text-fg outline-none placeholder:text-muted focus:border-accent"
         />
         <ul id={listId} role="listbox" className="mt-2 max-h-72 overflow-auto">
           {results.length === 0 ? (
@@ -121,12 +129,12 @@ const CommandPalette = () => {
                 aria-selected={index === active}
                 onMouseEnter={() => setActive(index)}
                 onClick={() => run(item)}
-                className={`flex cursor-pointer items-center justify-between rounded-xl px-3 py-3 text-sm ${
-                  index === active ? 'bg-surface-2 text-fg' : 'text-muted'
+                className={`flex cursor-pointer items-center justify-between gap-4 rounded-lg px-3 py-3 text-sm ${
+                  index === active ? 'bg-surface text-fg' : 'text-muted'
                 }`}
               >
                 <span className="font-medium">{item.name}</span>
-                <span className="text-xs text-muted">{item.hint}</span>
+                <span className="truncate font-mono text-xs text-muted">{item.hint}</span>
               </li>
             ))
           )}
