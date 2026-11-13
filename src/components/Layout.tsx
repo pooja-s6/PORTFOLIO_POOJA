@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import CommandPalette from './CommandPalette';
+import CursorFollower from './CursorFollower';
 import Footer from './Footer';
 import Header from './Header';
 import ScrollManager from './ScrollManager';
@@ -19,6 +20,7 @@ const Layout = () => (
     </main>
     <Footer />
     <CommandPalette />
+    <CursorFollower />
   </div>
 );
 
