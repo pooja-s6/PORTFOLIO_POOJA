@@ -8,27 +8,42 @@ import SocialLinks from '../SocialLinks';
 const Intro = () => (
   <section id="top" aria-labelledby="intro-title" className="scroll-mt-24 pb-14 pt-14 sm:pt-20">
     <Reveal>
-      <div className="flex items-center gap-4">
-        <picture>
-          <source srcSet={profile.photo.webp} type="image/webp" />
-          <img
-            src={profile.photo.jpg}
-            alt={profile.photo.alt}
-            width={72}
-            height={72}
-            fetchPriority="high"
-            className="h-[72px] w-[72px] rounded-2xl object-cover ring-1 ring-line-strong"
-          />
-        </picture>
-        <div>
-          <p className="inline-flex items-center gap-2 text-sm text-success">
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--success-dot)] opacity-60 motion-reduce:animate-none" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--success-dot)]" />
-            </span>
-            {profile.status}
+      <div className="flex flex-wrap items-end gap-6">
+        <figure className="relative">
+          <span aria-hidden="true" className="tape" />
+          <div className="polaroid">
+            <picture>
+              <source srcSet={profile.photo.webp} type="image/webp" />
+              <img
+                src={profile.photo.jpg}
+                alt={profile.photo.alt}
+                width={120}
+                height={120}
+                fetchPriority="high"
+                className="h-[120px] w-[120px] object-cover"
+              />
+            </picture>
+            <figcaption className="hand absolute bottom-1 left-0 right-0 text-center text-lg text-[#4a433c]">
+              {profile.photoCaption}
+            </figcaption>
+          </div>
+          <p aria-hidden="true" className="hand absolute -right-2 top-2 text-xl text-accent-text sm:-right-10">
+            hi!
+            <svg className="ml-1 inline -rotate-12" width="28" height="18" viewBox="0 0 28 18" fill="none" aria-hidden="true">
+              <path d="M2 14 C10 2, 18 2, 26 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M21 5 L26 8 L22 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </p>
-          <p className="mt-1 text-sm text-muted">{profile.location}</p>
+        </figure>
+
+        <div className="min-w-0 flex-1">
+          <p className="inline-flex items-center gap-3 text-sm text-success">
+            <span className="stamp" aria-hidden="true">
+              Open to roles
+            </span>
+            <span className="label normal-case tracking-normal text-success">{profile.status}</span>
+          </p>
+          <p className="mt-2 text-sm text-muted">{profile.location}</p>
         </div>
       </div>
 
@@ -49,7 +64,8 @@ const Intro = () => (
         <button
           type="button"
           onClick={() => scrollToId('contact')}
-          className="group inline-flex items-center gap-2 rounded-lg bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90"
+          className="group inline-flex items-center gap-2 rounded-sm bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90"
+          data-cursor="open"
         >
           Say hi
           <FaArrowRight size={11} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -58,7 +74,8 @@ const Intro = () => (
           href={profile.resume.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-line-strong px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:border-accent hover:text-accent-text"
+          className="inline-flex items-center gap-2 rounded-sm border border-line-strong px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:border-accent hover:text-accent-text"
+          data-cursor="open"
         >
           <FaFileAlt size={12} aria-hidden="true" />
           Resume
@@ -67,7 +84,7 @@ const Intro = () => (
 
       <SocialLinks size="sm" className="mt-8" />
       <p className="mt-6 text-sm text-muted">
-        <span className="font-medium text-fg">Currently exploring:</span> {exploring.join(' · ')}
+        <span className="hand text-lg text-fg">currently exploring:</span> {exploring.join(' · ')}
       </p>
     </Reveal>
   </section>

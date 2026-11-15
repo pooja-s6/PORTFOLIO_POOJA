@@ -1,47 +1,86 @@
-import { FaArrowRight } from 'react-icons/fa';
-import { achievements, certifications } from '../../data/portfolio';
+import { FaExternalLinkAlt } from 'react-icons/fa';
+import { alsoRecognition, certificationGroups, highlights } from '../../data/portfolio';
 import Section from '../Section';
 
-type Row = { title: string; detail: string; year: string; url?: string };
-
-const List = ({ heading, rows }: { heading: string; rows: Row[] }) => (
-  <div>
-    <h3 className="text-sm font-medium text-fg">{heading}</h3>
-    <ul className="mt-3 divide-y divide-line border-t border-line">
-      {rows.map((row) => (
-        <li key={row.title} className="flex items-baseline justify-between gap-4 py-3">
-          <div>
-            {row.url ? (
-              <a
-                href={row.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 text-[0.9375rem] text-fg hover:text-accent-text"
-              >
-                {row.title}
-                <FaArrowRight size={9} className="-rotate-45" aria-hidden="true" />
-              </a>
-            ) : (
-              <p className="text-[0.9375rem] text-fg">{row.title}</p>
-            )}
-            <p className="text-sm text-muted">{row.detail}</p>
-          </div>
-          {row.year ? <p className="shrink-0 text-sm tabular-nums text-muted">{row.year}</p> : null}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+const tilts = [-1.4, 1.1, -0.8];
 
 const Recognition = () => (
   <Section id="recognition">
-    <div className="grid gap-10 sm:grid-cols-2">
-      <List heading="Achievements" rows={achievements} />
-      <List
-        heading="Certifications"
-        rows={certifications.map((item) => ({ title: item.name, detail: item.issuer, year: item.year, url: item.url }))}
-      />
+    <ul className="grid gap-4 sm:grid-cols-3">
+      {highlights.map((item, index) => (
+        <li key={item.id}>
+          <article className="ticket h-full" style={{ ['--tilt' as string]: `${tilts[index] ?? 0}deg` }}>
+            <p className="label">Highlight</p>
+            <h3 className="mt-3 font-serif text-2xl font-medium leading-tight text-fg">{item.title}</h3>
+            <p className="mt-2 text-sm leading-6 text-muted">{item.detail}</p>
+            {item.outOf ? <p className="mt-1 font-mono text-xs text-muted">out of {item.outOf} teams</p> : null}
+            {item.built ? <p className="mt-3 text-sm text-fg">{item.built}</p> : null}
+            <p className="mt-5 font-mono text-sm tabular-nums text-fg">{item.year}</p>
+          </article>
+        </li>
+      ))}
+    </ul>
+
+    <div className="mt-12">
+      <h3 className="label mb-5">Certifications</h3>
+      <div className="space-y-8">
+        {certificationGroups.map((group) => (
+          <div key={group.issuer}>
+            <p className="label mb-3">{group.issuer}</p>
+            <ul className="flex flex-wrap gap-4">
+              {group.items.map((item, index) => {
+                const inner = (
+                  <>
+                    <span className="font-serif text-base font-medium leading-snug text-stamp">{item.name}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-wide text-stamp/80">
+                      {item.issuer}
+                      {item.year ? ` · ${item.year}` : ''}
+                    </span>
+                    {item.url ? (
+                      <span className="mt-1 inline-flex items-center gap-1 font-mono text-[10px] text-stamp/70">
+                        credential
+                        <FaExternalLinkAlt size={8} aria-hidden="true" />
+                      </span>
+                    ) : null}
+                  </>
+                );
+                return (
+                  <li key={item.name}>
+                    {item.url ? (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cert-stamp has-tooltip relative"
+                        style={{ ['--tilt' as string]: `${index % 2 === 0 ? -2.2 : 1.8}deg` }}
+                        data-cursor="open"
+                      >
+                        {inner}
+                        <span className="tooltip" role="tooltip">
+                          {item.issuer}
+                        </span>
+                      </a>
+                    ) : (
+                      <span
+                        className="cert-stamp has-tooltip relative"
+                        style={{ ['--tilt' as string]: `${index % 2 === 0 ? -2.2 : 1.8}deg` }}
+                      >
+                        {inner}
+                        <span className="tooltip" role="tooltip">
+                          {item.issuer}
+                        </span>
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
+
+    <p className="label mt-10">{alsoRecognition}</p>
   </Section>
 );
 

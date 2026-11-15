@@ -3,6 +3,8 @@ export const profile = {
   positioning: 'Backend & AI Developer',
   status: 'Open to backend & AI roles · Graduating 2027',
   location: 'Based in Chennai, India',
+  photoCaption: 'Chennai, 2026',
+  lastUpdated: 'Nov 2026',
   photo: { webp: '/pooja.webp', jpg: '/pooja.jpg', alt: 'Portrait of Pooja S smiling outdoors' },
   resume: { href: '/assets/Pooja_S_Resume.pdf', fileName: 'Pooja_S_Resume.pdf' },
 };
@@ -43,7 +45,7 @@ export const experience: Experience[] = [
     location: 'Remote',
     period: 'Feb 2026 – Present',
     current: true,
-    tags: ['FastAPI', 'PostgreSQL', 'REST APIs'],
+    tags: ['FastAPI', 'PostgreSQL', 'REST APIs', 'LLM Pipelines'],
     points: [
       'Building backend services for an **AI-powered education platform** with **FastAPI, PostgreSQL and REST APIs**.',
       'Designing and implementing backend modules with cross-functional teams in **Agile sprints**, including **production debugging**.',
@@ -69,7 +71,7 @@ export const experience: Experience[] = [
     role: 'Java Developer Intern',
     location: 'Virtual',
     period: 'Nov 2025 – Jan 2026',
-    tags: ['Java', 'Spring Boot', 'PostgreSQL'],
+    tags: ['Java', 'Spring Boot', 'PostgreSQL', 'React', 'REST APIs', 'Git'],
     points: [
       'Built the **Legal Aid Matching Platform** with a **five-member Agile team** using **Java, Spring Boot and PostgreSQL**.',
       'Designed the **REST APIs**, backend modules and relational schema behind role-based case management across **3 user roles**.',
@@ -95,7 +97,7 @@ export const experience: Experience[] = [
     role: 'Software Engineering Intern',
     location: 'Virtual',
     period: 'Dec 2024 – Sep 2025',
-    tags: ['Java', 'Spring Boot', 'Flask', 'MongoDB', 'Docker', 'Playwright'],
+    tags: ['Java', 'Spring Boot', 'Flask', 'MongoDB', 'Docker', 'Playwright', 'Microservices', 'React', 'REST APIs'],
     points: [
       'Spent **ten months** on a **voice-enabled e-commerce platform**, building REST APIs that integrate **Whisper** speech recognition with **Flask and Spring Boot**.',
       'Applied layered architecture and dependency injection, and deployed with **Docker on JBoss/WildFly**.',
@@ -105,10 +107,12 @@ export const experience: Experience[] = [
 ];
 
 export type Project = {
+  id: string;
   title: string;
   year: string;
   summary: string;
   details: string[];
+  problem: string;
   stack: string[];
   github: string;
   live: string;
@@ -119,9 +123,11 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'multitenant-rag',
     title: 'Multi-Tenant RAG Platform',
     year: '2026',
     summary: "Ask questions over private documents and get cited answers, with each tenant's data and permissions kept separate.",
+    problem: 'Teams need private document Q&A without leaking data across tenants or roles.',
     details: [
       '**JWT authentication** and role-based, per-document permissions.',
       'Permission-scoped **semantic caching in Redis** plus complexity-based **LLM routing**, to cut cost and avoid redundant inference.',
@@ -134,9 +140,11 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: 'buglens',
     title: 'BugLens AI',
     year: '2026',
     summary: 'An AI assistant for bug triage that classifies reports, finds duplicates and suggests root causes.',
+    problem: 'Bug reports pile up faster than teams can triage them by hand.',
     details: [
       'Fine-tuned a **BERT** classifier to **88.33% test accuracy**.',
       '**FAISS** vector search to retrieve similar past bug reports.',
@@ -149,9 +157,11 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: 'quizflow',
     title: 'QuizFlow',
     year: '2025',
     summary: 'Live quiz rooms with instant leaderboards, used by 200+ students.',
+    problem: 'Educators needed live quizzes that stay in sync for every student in the room.',
     details: [
       '**Real-time sync** of scores and leaderboards across concurrent sessions.',
       'Session control, performance tracking and an **analytics view** for educators.',
@@ -163,9 +173,11 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: 'tutorx',
     title: 'TutorX',
     year: '2026',
     summary: 'An AI tutor that answers the question a student actually asked, on mobile.',
+    problem: 'Students need academic help on their phones, not another desktop chatbot.',
     details: [
       '**OpenAI**-powered chatbot for personalized academic guidance, served by a **FastAPI** backend.',
       '**React Native** mobile app, built with a team end to end.',
@@ -175,9 +187,11 @@ export const projects: Project[] = [
     live: '',
   },
   {
+    id: 'legal-aid',
     title: 'Legal Aid Matching Platform',
     year: '2025',
     summary: 'One place for citizens, NGOs and lawyers to match cases and follow them through.',
+    problem: 'Citizens, NGOs and lawyers had no shared place to match and track legal cases.',
     details: [
       'Case-matching logic and **role-based access** workflows across **3 user roles**.',
       '**Analytics dashboard** for tracking case progress.',
@@ -187,9 +201,11 @@ export const projects: Project[] = [
     live: '',
   },
   {
+    id: 'vocalmart',
     title: 'VocalMart',
     year: '2025',
     summary: 'Shop by speaking: voice search for an e-commerce store.',
+    problem: 'Browsing an online store is hard when your hands are busy.',
     details: [
       'Voice-driven product search using the **Web Speech API**.',
       '**REST APIs** for products, cart and orders, with a **MongoDB** catalog.',
@@ -200,98 +216,203 @@ export const projects: Project[] = [
   },
 ];
 
-export const skillRows = [
-  { label: 'Languages', items: ['Java', 'Python', 'C++', 'C'] },
+export type SkillKind = 'primary' | 'also';
+
+export type SkillItem = {
+  name: string;
+  kind: SkillKind;
+  usedIn: string[];
+};
+
+export type SkillLayer = {
+  id: string;
+  number: string;
+  title: string;
+  skills: SkillItem[];
+};
+
+export const skillLayers: SkillLayer[] = [
   {
-    label: 'Backend & AI',
-    items: [
-      'Spring Boot',
-      'FastAPI',
-      'Flask',
-      'Node.js',
-      'Express',
-      'REST APIs',
-      'Microservices',
-      'RAG',
-      'LLM Pipelines',
-      'Vector Databases',
-      'LangGraph',
-      'Ollama',
-      'OpenAI',
-      'JWT',
+    id: 'api',
+    number: '01/05',
+    title: 'Build the API',
+    skills: [
+      { name: 'FastAPI', kind: 'primary', usedIn: ['Hexaware Technologies', 'Multi-Tenant RAG Platform', 'BugLens AI', 'TutorX'] },
+      { name: 'Spring Boot', kind: 'primary', usedIn: ['Infosys Springboard', 'AVPS Technologies', 'Legal Aid Matching Platform', 'VocalMart'] },
+      { name: 'REST APIs', kind: 'primary', usedIn: ['Hexaware Technologies', 'Infosys Springboard', 'AVPS Technologies'] },
+      { name: 'Flask', kind: 'also', usedIn: ['AVPS Technologies'] },
+      { name: 'Microservices', kind: 'also', usedIn: ['AVPS Technologies'] },
     ],
   },
   {
-    label: 'Frontend & Data',
-    items: ['React', 'React Native', 'HTML5', 'CSS3', 'PostgreSQL', 'pgvector', 'MongoDB', 'Firebase', 'Redis'],
+    id: 'data',
+    number: '02/05',
+    title: 'Store the data',
+    skills: [
+      { name: 'PostgreSQL', kind: 'primary', usedIn: ['Hexaware Technologies', 'Infosys Springboard', 'Multi-Tenant RAG Platform', 'BugLens AI', 'TutorX', 'Legal Aid Matching Platform'] },
+      { name: 'Redis', kind: 'primary', usedIn: ['Multi-Tenant RAG Platform'] },
+      { name: 'pgvector', kind: 'also', usedIn: ['Multi-Tenant RAG Platform'] },
+      { name: 'MongoDB', kind: 'also', usedIn: ['AVPS Technologies', 'VocalMart'] },
+      { name: 'Firebase', kind: 'also', usedIn: ['FlyHigh Educational Institute', 'QuizFlow'] },
+    ],
   },
   {
-    label: 'Foundations & DevOps',
-    items: [
-      'DSA',
-      'OOP',
-      'OS',
-      'DBMS',
-      'Computer Networks',
-      'System Design',
-      'Docker',
-      'AWS',
-      'Git',
-      'CI/CD',
-      'Postman',
-      'Playwright',
-      'Maven',
+    id: 'ai',
+    number: '03/05',
+    title: 'Make it intelligent',
+    skills: [
+      { name: 'RAG', kind: 'primary', usedIn: ['Multi-Tenant RAG Platform'] },
+      { name: 'LLM Pipelines', kind: 'primary', usedIn: ['Multi-Tenant RAG Platform', 'Hexaware Technologies'] },
+      { name: 'Vector Databases', kind: 'also', usedIn: ['Multi-Tenant RAG Platform', 'BugLens AI'] },
+      { name: 'LangGraph', kind: 'also', usedIn: ['Multi-Tenant RAG Platform'] },
+      { name: 'Ollama', kind: 'also', usedIn: ['Multi-Tenant RAG Platform'] },
+      { name: 'OpenAI', kind: 'also', usedIn: ['TutorX'] },
+      { name: 'BERT / FAISS', kind: 'also', usedIn: ['BugLens AI'] },
+    ],
+  },
+  {
+    id: 'ui',
+    number: '04/05',
+    title: 'Show it to people',
+    skills: [
+      {
+        name: 'React',
+        kind: 'primary',
+        usedIn: [
+          'FlyHigh Educational Institute',
+          'Infosys Springboard',
+          'AVPS Technologies',
+          'QuizFlow',
+          'Multi-Tenant RAG Platform',
+          'BugLens AI',
+          'Legal Aid Matching Platform',
+          'VocalMart',
+        ],
+      },
+      { name: 'React Native', kind: 'also', usedIn: ['TutorX'] },
+    ],
+  },
+  {
+    id: 'ship',
+    number: '05/05',
+    title: 'Ship and test it',
+    skills: [
+      { name: 'Docker', kind: 'primary', usedIn: ['AVPS Technologies', 'Multi-Tenant RAG Platform'] },
+      { name: 'AWS', kind: 'also', usedIn: ['AWS Solutions Architecture Simulation (Forage)'] },
+      { name: 'Git', kind: 'also', usedIn: ['Infosys Springboard'] },
+      { name: 'Playwright', kind: 'also', usedIn: ['AVPS Technologies'] },
     ],
   },
 ];
 
-const skillUsedIn: Record<string, string[]> = {
-  Java: ['Infosys Springboard', 'AVPS Technologies'],
-  Python: ['IBM SkillsBuild', 'BugLens AI', 'Multi-Tenant RAG Platform'],
-  'Spring Boot': ['Infosys Springboard', 'AVPS Technologies', 'Legal Aid Matching Platform', 'VocalMart'],
-  FastAPI: ['Hexaware Technologies', 'Multi-Tenant RAG Platform', 'BugLens AI', 'TutorX'],
-  Flask: ['AVPS Technologies'],
-  'REST APIs': ['Hexaware Technologies', 'Infosys Springboard', 'AVPS Technologies'],
-  RAG: ['Multi-Tenant RAG Platform'],
-  'Vector Databases': ['Multi-Tenant RAG Platform', 'BugLens AI'],
-  OpenAI: ['TutorX'],
-  JWT: ['Multi-Tenant RAG Platform'],
-  React: ['QuizFlow', 'Multi-Tenant RAG Platform', 'BugLens AI', 'Legal Aid Matching Platform', 'VocalMart'],
-  'React Native': ['TutorX'],
-  PostgreSQL: ['Hexaware Technologies', 'Multi-Tenant RAG Platform', 'BugLens AI', 'TutorX', 'Legal Aid Matching Platform'],
-  pgvector: ['Multi-Tenant RAG Platform'],
-  MongoDB: ['AVPS Technologies', 'VocalMart'],
-  Firebase: ['QuizFlow'],
-  Redis: ['Multi-Tenant RAG Platform'],
-  Docker: ['AVPS Technologies', 'Multi-Tenant RAG Platform'],
-  Git: ['Infosys Springboard'],
-  Playwright: ['AVPS Technologies'],
+export const languageSkills = {
+  primary: [
+    { name: 'Python', usedIn: ['IBM SkillsBuild', 'BugLens AI', 'Multi-Tenant RAG Platform'] },
+    { name: 'Java', usedIn: ['Infosys Springboard', 'AVPS Technologies'] },
+  ],
+  also: [{ name: 'C++', usedIn: [] as string[] }, { name: 'C', usedIn: [] as string[] }],
 };
 
-export const skillUsage = (skill: string) => skillUsedIn[skill] ?? [];
+export const foundationsLine =
+  'Strong foundations in DSA, OOP, operating systems, DBMS, computer networks and system design.';
 
-export const certifications = [
+export const allSkills = [
+  ...skillLayers.flatMap((layer) => layer.skills),
+  ...languageSkills.primary,
+  ...languageSkills.also,
+];
+
+export type PlaceRef = {
+  label: string;
+  year: string;
+  targetId: string;
+  kind: 'work' | 'project' | 'recognition';
+};
+
+const placeCatalog: PlaceRef[] = [
+  ...experience.map((item) => ({
+    label: item.company,
+    year: item.period.match(/\d{4}/g)?.at(-1) || item.period,
+    targetId: item.id,
+    kind: 'work' as const,
+  })),
+  ...projects.map((item) => ({
+    label: item.title,
+    year: item.year,
+    targetId: item.id,
+    kind: 'project' as const,
+  })),
+  {
+    label: 'AWS Solutions Architecture Simulation (Forage)',
+    year: '2025',
+    targetId: 'recognition',
+    kind: 'recognition',
+  },
+];
+
+export const resolvePlace = (label: string) => placeCatalog.find((place) => place.label === label);
+
+export type Highlight = {
+  id: string;
+  title: string;
+  detail: string;
+  year: string;
+  outOf?: string; // TODO: Debug Relay team count, e.g. '48'
+  built?: string; // TODO: one-line "what I built"; hidden when empty
+};
+
+export const highlights: Highlight[] = [
+  {
+    id: 'debug-relay',
+    title: '6th place, Debug Relay',
+    detail: 'Team debugging event, REC College',
+    year: '2026',
+    // TODO: outOf: 'N',
+    // TODO: built: '...',
+  },
+  {
+    id: 'sih',
+    title: 'Smart India Hackathon',
+    detail: 'Internal round, Velammal Engineering College',
+    year: '2025',
+  },
+  {
+    id: 'cognizant',
+    title: 'Cognizant Hackathon',
+    detail: 'Participant',
+    year: '2026',
+  },
+];
+
+export type Certification = {
+  name: string;
+  issuer: string;
+  year: string;
+  url: string;
+};
+
+export const certifications: Certification[] = [
   { name: 'Java Foundation', issuer: 'Infosys Springboard', year: '2025', url: '' }, // TODO: credential URL
   { name: 'AI Fundamentals', issuer: 'IBM SkillsBuild', year: '2025', url: '' }, // TODO: credential URL
-  { name: 'AI/ML Internship', issuer: 'IBM SkillsBuild', year: '2025', url: '' }, // TODO: credential URL
   { name: 'AWS Solutions Architecture Simulation', issuer: 'Forage', year: '2025', url: '' }, // TODO: credential URL
   { name: 'NLP and Deep Learning', issuer: 'NPTEL', year: '', url: '' }, // TODO: year and credential URL
   { name: 'Software Project Management', issuer: 'NPTEL', year: '', url: '' }, // TODO: year and credential URL
 ];
 
-export const achievements = [
-  // TODO: add the team count if known, e.g. '6th of N teams'.
-  { title: '6th place, Debug Relay', detail: 'Team debugging event, REC College', year: '2026' },
-  { title: 'Cognizant Hackathon', detail: 'Participant', year: '2026' },
-  { title: 'Smart India Hackathon', detail: 'Internal round, Velammal Engineering College', year: '2025' },
-  { title: 'Technical symposiums', detail: 'Across colleges', year: '2024 – 2026' },
+export const certificationGroups = [
+  { issuer: 'Infosys Springboard', items: certifications.filter((item) => item.issuer === 'Infosys Springboard') },
+  { issuer: 'IBM SkillsBuild', items: certifications.filter((item) => item.issuer === 'IBM SkillsBuild') },
+  { issuer: 'Forage', items: certifications.filter((item) => item.issuer === 'Forage') },
+  { issuer: 'NPTEL', items: certifications.filter((item) => item.issuer === 'NPTEL') },
 ];
+
+export const alsoRecognition = 'Also: technical symposiums across colleges, 2024 – 2026.';
 
 export const sections = [
   { id: 'work', name: 'Work', heading: 'Work', note: 'five internships, newest first' },
   { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'my strongest work' },
   { id: 'projects', name: 'All projects', heading: 'All projects', note: 'with source code on GitHub' },
-  { id: 'skills', name: 'Skills', heading: 'Skills', note: 'hover one to see where I used it' },
+  { id: 'skills', name: 'Skills', heading: 'Skills', note: 'click a skill to see where I used it' },
   { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'small wins along the way' },
   { id: 'contact', name: 'Contact', heading: 'Say hi', note: '' },
 ];

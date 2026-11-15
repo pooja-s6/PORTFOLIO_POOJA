@@ -1,23 +1,31 @@
 import { FaArrowRight, FaGithub } from 'react-icons/fa';
 import { projects } from '../../data/portfolio';
+import { useSkillFilter } from '../../lib/skillFilter';
 import Section from '../Section';
 
-const featured = projects.filter((project) => project.featured);
+const Featured = () => {
+  const featured = projects.filter((project) => project.featured);
+  const { matches, isFiltering } = useSkillFilter();
 
-const Featured = () => (
+  return (
   <Section id="featured">
     <ul className="grid gap-10">
       {featured.map((project) => (
-        <li key={project.title}>
+        <li
+          key={project.id}
+          id={`featured-${project.id}`}
+          className={`transition-opacity duration-300 ${isFiltering && !matches(project.title) ? 'opacity-35' : 'opacity-100'}`}
+        >
           {project.image ? (
-            <figure>
+            <figure className="index-card overflow-hidden p-2" style={{ ['--tilt' as string]: '-0.8deg' }}>
               <a
                 href={project.live || project.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={-1}
                 aria-hidden="true"
-                className="group block overflow-hidden rounded-xl border border-line bg-surface"
+                className="group block overflow-hidden"
+                data-cursor="open"
               >
                 <img
                   src={project.image}
@@ -30,13 +38,13 @@ const Featured = () => (
                 />
               </a>
               {project.imageCaption ? (
-                <figcaption className="mt-2 text-xs text-muted">{project.imageCaption}</figcaption>
+                <figcaption className="mt-2 px-1 text-xs text-muted">{project.imageCaption}</figcaption>
               ) : null}
             </figure>
           ) : null}
           <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h3 className="text-lg font-semibold text-fg">{project.title}</h3>
-            {project.year ? <p className="text-sm tabular-nums text-muted">{project.year}</p> : null}
+            {project.year ? <p className="label tabular-nums">{project.year}</p> : null}
           </div>
           <p className="mt-2 text-[0.9375rem] leading-7 text-muted">{project.summary}</p>
           <p className="mt-3 font-mono text-xs leading-6 text-muted">{project.stack.join(' · ')}</p>
@@ -74,6 +82,7 @@ const Featured = () => (
       ))}
     </ul>
   </Section>
-);
+  );
+};
 
 export default Featured;

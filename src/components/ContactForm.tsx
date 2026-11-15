@@ -58,8 +58,11 @@ const ContactForm = () => {
 
   if (status === 'sent') {
     return (
-      <div role="status" className="rounded-lg border border-line p-6">
-        <p className="text-lg font-semibold text-fg">Thanks, message received.</p>
+      <div role="status" className="rounded-sm border border-line-strong bg-paper p-6">
+        <p className="hand text-3xl text-accent-text" aria-hidden="true">
+          ✈
+        </p>
+        <p className="mt-2 text-lg font-semibold text-fg">Thanks, message received.</p>
         <p className="mt-2 text-[0.9375rem] text-muted">
           {links.formspreeId
             ? "I'll get back to you soon."
@@ -117,7 +120,8 @@ const ContactForm = () => {
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="rounded-lg bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="rounded-sm bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+          data-cursor="open"
         >
           {status === 'sending' ? 'Sending…' : 'Send message'}
         </button>

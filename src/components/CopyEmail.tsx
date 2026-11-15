@@ -7,7 +7,7 @@ const CopyEmail = () => {
 
   useEffect(() => {
     if (!copied) return;
-    const timer = window.setTimeout(() => setCopied(false), 2000);
+    const timer = window.setTimeout(() => setCopied(false), 1800);
     return () => window.clearTimeout(timer);
   }, [copied]);
 
@@ -21,26 +21,27 @@ const CopyEmail = () => {
   };
 
   return (
-    <>
+    <span className="relative inline-flex items-center">
       <button
         type="button"
         onClick={copy}
         className="group inline-flex items-center gap-3 border-b border-line-strong pb-1 font-mono text-sm text-fg hover:border-accent hover:text-accent-text sm:text-base"
+        data-cursor="copy"
       >
         {links.email}
         <FaCopy size={12} className="text-muted group-hover:text-accent-text" aria-hidden="true" />
         <span className="sr-only">Copy email address</span>
       </button>
-      <div
+      <span
         role="status"
         aria-live="polite"
-        className={`fixed bottom-6 left-1/2 z-[70] -translate-x-1/2 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg shadow-lg transition-opacity ${
-          copied ? 'opacity-100' : 'pointer-events-none opacity-0'
+        className={`hand pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 text-xl text-accent-text transition-opacity ${
+          copied ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        {copied ? 'Copied' : ''}
-      </div>
-    </>
+        {copied ? 'copied!' : ''}
+      </span>
+    </span>
   );
 };
 

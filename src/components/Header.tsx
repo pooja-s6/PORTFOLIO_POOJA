@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { profile, sections } from '../data/portfolio';
+import { playClick, toggleSound, useSound } from '../lib/extras';
 import { openPalette, scrollToId } from '../lib/navigation';
 import ThemeToggle from './ThemeToggle';
 
@@ -11,6 +12,7 @@ const Header = () => {
   const onHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('');
+  const soundOn = useSound();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -43,7 +45,9 @@ const Header = () => {
       <nav aria-label="Primary" className="mx-auto flex h-16 max-w-2xl items-center justify-between gap-4 px-5">
         <Link
           to="/"
+          data-logo
           onClick={(event) => {
+            playClick();
             if (onHome) {
               event.preventDefault();
               scrollToId('top');
@@ -64,7 +68,9 @@ const Header = () => {
                   <Link
                     to={`/#${item.id}`}
                     aria-current={isActive ? 'location' : undefined}
+                    onMouseEnter={playClick}
                     onClick={(event) => {
+                      playClick();
                       if (onHome) {
                         event.preventDefault();
                         scrollToId(item.id);
@@ -85,6 +91,7 @@ const Header = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors hover:text-fg"
+            data-cursor="open"
           >
             Resume
           </a>
@@ -95,6 +102,15 @@ const Header = () => {
             className="hidden rounded-md border border-line px-1.5 py-0.5 font-mono text-[11px] text-muted hover:text-fg md:inline-block"
           >
             Ctrl K
+          </button>
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={soundOn}
+            aria-label={soundOn ? 'Turn sound off' : 'Turn sound on'}
+            className="hidden rounded-md border border-line px-1.5 py-0.5 font-mono text-[11px] text-muted hover:text-fg sm:inline-block"
+          >
+            sound: {soundOn ? 'on' : 'off'}
           </button>
           <ThemeToggle />
         </div>

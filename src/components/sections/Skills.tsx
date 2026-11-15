@@ -1,41 +1,125 @@
-import { skillRows, skillUsage } from '../../data/portfolio';
+import { useId } from 'react';
+import { foundationsLine, languageSkills, skillLayers } from '../../data/portfolio';
+import type { SkillItem } from '../../data/portfolio';
+import { jumpToPlace } from '../../lib/jumpToPlace';
+import { useSkillFilter } from '../../lib/skillFilter';
 import Section from '../Section';
 
-const Skills = () => (
-  <Section id="skills">
-    <dl className="space-y-6">
-      {skillRows.map((row) => (
-        <div key={row.label} className="grid gap-3 sm:grid-cols-[9.5rem_minmax(0,1fr)]">
-          <dt className="pt-1 text-sm font-medium text-fg">{row.label}</dt>
-          <dd>
-            <ul className="flex flex-wrap gap-2">
-              {row.items.map((skill) => {
-                const usedIn = skillUsage(skill);
-                return (
-                  <li key={skill}>
-                    {usedIn.length ? (
-                      <span
-                        tabIndex={0}
-                        aria-label={`${skill}, used in ${usedIn.join(', ')}`}
-                        className="tag has-tooltip relative cursor-default underline decoration-dotted decoration-line-strong underline-offset-4"
-                      >
-                        {skill}
-                        <span className="tooltip w-max max-w-[15rem] whitespace-normal text-center leading-snug" role="tooltip">
-                          used in {usedIn.join(', ')}
-                        </span>
-                      </span>
-                    ) : (
-                      <span className="tag">{skill}</span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </dd>
+const SkillChip = ({ skill }: { skill: SkillItem }) => {
+  const { selected, select, places } = useSkillFilter();
+  const pressed = selected === skill.name;
+  const noteId = useId();
+  const canOpen = skill.usedIn.length > 0;
+
+  return (
+    <span className="relative inline-flex">
+      <button
+        type="button"
+        aria-pressed={pressed}
+        aria-describedby={pressed && canOpen ? noteId : undefined}
+        disabled={!canOpen && !pressed}
+        onClick={() => canOpen && select(skill.name)}
+        className={`${skill.kind === 'primary' ? 'chip-primary' : 'chip-also'} ${!canOpen ? 'opacity-70' : ''}`}
+        data-cursor="view"
+      >
+        {skill.name}
+      </button>
+      {pressed && canOpen ? (
+        <span
+          id={noteId}
+          role="status"
+          className="absolute left-0 top-[calc(100%+0.55rem)] z-20 w-56 rounded-sm border border-line-strong bg-paper p-3 shadow-lg sm:w-64"
+        >
+          <span aria-hidden="true" className="tape left-4 translate-x-0" />
+          <p className="label">Used in</p>
+          <ul className="mt-2 space-y-1.5">
+            {places.slice(0, 3).map((place) => (
+              <li key={place.label}>
+                <button
+                  type="button"
+                  onClick={() => jumpToPlace(place)}
+                  className="text-left text-sm text-fg underline decoration-line-strong underline-offset-3 hover:text-accent-text"
+                  data-cursor="open"
+                >
+                  {place.label}
+                  <span className="ml-1 font-mono text-xs text-muted">{place.year}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          {places.length > 3 ? <p className="mt-2 text-xs text-muted">+{places.length - 3} more</p> : null}
+        </span>
+      ) : null}
+    </span>
+  );
+};
+
+const Skills = () => {
+  const { selected, clear, isFiltering } = useSkillFilter();
+
+  return (
+    <Section id="skills">
+      <p className="label -mt-4 mb-8">Backend &amp; AI Developer . the toolkit</p>
+
+      {isFiltering ? (
+        <div className="mb-6 flex items-center gap-3 rounded-sm border border-dashed border-line-strong bg-paper px-3 py-2">
+          <p className="text-sm text-muted">
+            Showing where <span className="font-medium text-fg">{selected}</span> shows up
+          </p>
+          <button type="button" onClick={clear} className="hand text-lg text-accent-text" aria-label="Clear skill filter">
+            ✕
+          </button>
         </div>
-      ))}
-    </dl>
-  </Section>
-);
+      ) : null}
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        {skillLayers.map((layer, index) => (
+          <article key={layer.id} className="index-card relative p-5" style={{ ['--tilt' as string]: `${index % 2 === 0 ? -1.2 : 1.1}deg` }}>
+            <span aria-hidden="true" className="paperclip" />
+            <div className="flex items-baseline justify-between gap-3">
+              <p className="label">{layer.title}</p>
+              <p className="label">{layer.number}</p>
+            </div>
+            <hr className="divider-dashed my-3" />
+            <ul className="flex flex-wrap gap-2">
+              {layer.skills.map((skill) => (
+                <li key={skill.name}>
+                  <SkillChip skill={skill} />
+                </li>
+              ))}
+            </ul>
+            {index < skillLayers.length - 1 ? (
+              <p aria-hidden="true" className="hand absolute -bottom-4 left-1/2 z-10 -translate-x-1/2 text-base text-muted sm:hidden">
+                ↓
+              </p>
+            ) : null}
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-10 border-t border-dashed border-line-strong pt-6">
+        <p className="label mb-3">Languages</p>
+        <p className="font-mono text-sm leading-7 text-fg">
+          <span className="font-semibold">Primary:</span>{' '}
+          {languageSkills.primary.map((skill, index) => (
+            <span key={skill.name}>
+              {index > 0 ? ', ' : ''}
+              <SkillChip skill={{ ...skill, kind: 'primary' }} />
+            </span>
+          ))}
+          <span className="text-muted">. Also comfortable with: </span>
+          {languageSkills.also.map((skill, index) => (
+            <span key={skill.name}>
+              {index > 0 ? ', ' : ''}
+              <SkillChip skill={{ ...skill, kind: 'also' }} />
+            </span>
+          ))}
+          .
+        </p>
+        <p className="mt-5 text-[0.9375rem] leading-7 text-muted">{foundationsLine}</p>
+      </div>
+    </Section>
+  );
+};
 
 export default Skills;
