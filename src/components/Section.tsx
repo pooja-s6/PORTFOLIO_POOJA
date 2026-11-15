@@ -17,7 +17,7 @@ const Section = ({ id, children }: SectionProps) => {
           <h2 id={`${id}-title`} className="font-serif text-3xl font-medium tracking-tight text-fg">
             {meta?.heading}
           </h2>
-          {meta?.note ? <p className="hand text-xl text-muted">{meta.note}</p> : null}
+          {meta?.note ? <p className="label">{meta.note}</p> : null}
         </div>
         {children}
       </Reveal>

@@ -67,7 +67,7 @@ const Work = () => {
                   ))}
                 </ul>
               ) : (
-                <p className="mt-3 hand text-base">{coarse ? 'tap for details' : 'hover for details'}</p>
+                <p className="mt-3 text-sm text-muted">{coarse ? 'Tap to view details' : 'Hover to view details'}</p>
               )}
             </li>
           );

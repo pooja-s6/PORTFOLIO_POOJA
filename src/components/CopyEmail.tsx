@@ -35,11 +35,11 @@ const CopyEmail = () => {
       <span
         role="status"
         aria-live="polite"
-        className={`hand pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 text-xl text-accent-text transition-opacity ${
+        className={`pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 font-mono text-xs text-accent-text transition-opacity ${
           copied ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        {copied ? 'copied!' : ''}
+        {copied ? 'Copied' : ''}
       </span>
     </span>
   );

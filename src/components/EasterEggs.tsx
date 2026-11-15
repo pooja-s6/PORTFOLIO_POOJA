@@ -53,7 +53,7 @@ const EasterEggs = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 8 }}
         >
-          hi again :)
+          Welcome back.
         </motion.p>
       ) : null}
     </AnimatePresence>

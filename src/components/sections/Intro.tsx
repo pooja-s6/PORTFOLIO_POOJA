@@ -27,13 +27,6 @@ const Intro = () => (
               {profile.photoCaption}
             </figcaption>
           </div>
-          <p aria-hidden="true" className="hand absolute -right-2 top-2 text-xl text-accent-text sm:-right-10">
-            hi!
-            <svg className="ml-1 inline -rotate-12" width="28" height="18" viewBox="0 0 28 18" fill="none" aria-hidden="true">
-              <path d="M2 14 C10 2, 18 2, 26 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M21 5 L26 8 L22 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </p>
         </figure>
 
         <div className="min-w-0 flex-1">
@@ -67,7 +60,7 @@ const Intro = () => (
           className="group inline-flex items-center gap-2 rounded-sm bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90"
           data-cursor="open"
         >
-          Say hi
+          Contact
           <FaArrowRight size={11} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
         </button>
         <a
@@ -84,7 +77,7 @@ const Intro = () => (
 
       <SocialLinks size="sm" className="mt-8" />
       <p className="mt-6 text-sm text-muted">
-        <span className="hand text-lg text-fg">currently exploring:</span> {exploring.join(' · ')}
+        <span className="font-medium text-fg">Currently learning:</span> {exploring.join(' · ')}
       </p>
     </Reveal>
   </section>

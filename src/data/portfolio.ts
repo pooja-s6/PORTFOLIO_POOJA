@@ -10,7 +10,7 @@ export const profile = {
 };
 
 export const links = {
-  email: 'pooja.cse.vec2023@gmail.com',
+  email: 'poojasuku0606@gmail.com',
   github: { url: 'https://github.com/pooja-s6', handle: 'pooja-s6' },
   linkedin: { url: 'https://linkedin.com/in/pooja-s2006', handle: 'pooja-s2006' },
   leetcode: { url: 'https://leetcode.com/u/pooja_0606/', handle: 'pooja_0606' },
@@ -406,13 +406,13 @@ export const certificationGroups = [
   { issuer: 'NPTEL', items: certifications.filter((item) => item.issuer === 'NPTEL') },
 ];
 
-export const alsoRecognition = 'Also: technical symposiums across colleges, 2024 – 2026.';
+export const alsoRecognition = 'Additional: technical symposiums across colleges, 2024 – 2026.';
 
 export const sections = [
-  { id: 'work', name: 'Work', heading: 'Work', note: 'five internships, newest first' },
-  { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'my strongest work' },
-  { id: 'projects', name: 'All projects', heading: 'All projects', note: 'with source code on GitHub' },
-  { id: 'skills', name: 'Skills', heading: 'Skills', note: 'click a skill to see where I used it' },
-  { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'small wins along the way' },
-  { id: 'contact', name: 'Contact', heading: 'Say hi', note: '' },
+  { id: 'work', name: 'Work', heading: 'Work', note: 'Five internships · reverse chronological' },
+  { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'Selected work with demos' },
+  { id: 'projects', name: 'All projects', heading: 'All projects', note: 'Source available on GitHub' },
+  { id: 'skills', name: 'Skills', heading: 'Skills', note: 'Select a skill to see where it was used' },
+  { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'Hackathons and certifications' },
+  { id: 'contact', name: 'Contact', heading: 'Contact', note: '' },
 ];
