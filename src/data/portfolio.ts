@@ -19,7 +19,7 @@ export const links = {
 };
 
 export const intro = [
-  "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year CSE (Honours in Data Science) student at Velammal Engineering College, Chennai, and a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform.",
+  "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year CSE (Honours in Data Science) student at Velammal Engineering College, Chennai. Most recently I was a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform.",
   "Across five internships I've shipped a real-time quiz app used by **200+ students**, a role-based legal aid platform, and a multi-tenant RAG system with permission-aware caching.",
 ];
 
@@ -46,9 +46,9 @@ export const experience: Experience[] = [
     current: false,
     tags: ['FastAPI', 'PostgreSQL', 'REST APIs', 'LLM Pipelines'],
     points: [
-      'Building backend services for an **AI-powered education platform** with **FastAPI, PostgreSQL and REST APIs**.',
-      'Designing and implementing backend modules with cross-functional teams in **Agile sprints**, including **production debugging**.',
-      'Integrating **AI workflows** into backend services while keeping the architecture clean and maintainable.',
+      'Built backend services for an **AI-powered education platform** with **FastAPI, PostgreSQL and REST APIs**.',
+      'Designed and implemented backend modules with cross-functional teams in **Agile sprints**, including **production debugging**.',
+      'Integrated **AI workflows** into backend services while keeping the architecture clean and maintainable.',
     ],
   },
   {
@@ -116,6 +116,7 @@ export type Project = {
   github: string;
   live: string;
   image?: string;
+  imageAlt?: string;
   imageCaption?: string;
   featured?: boolean;
 };
@@ -136,6 +137,7 @@ export const projects: Project[] = [
     github: 'https://github.com/pooja-s6/multitenant-rag',
     live: '',
     image: '/projects/multitenant-rag.webp',
+    imageAlt: 'Screenshot of the multi-tenant RAG platform document Q&A interface',
     featured: true,
   },
   {
@@ -153,6 +155,7 @@ export const projects: Project[] = [
     github: '', // TODO: no public BugLens repo under github.com/pooja-s6; add the repo URL
     live: 'https://buglens-ai-coral.vercel.app/',
     image: '/projects/buglens.webp',
+    imageAlt: 'Screenshot of BugLens AI bug triage dashboard',
     featured: true,
   },
   {
@@ -169,6 +172,7 @@ export const projects: Project[] = [
     github: 'https://github.com/FlyHighSkills/eduflex_final',
     live: 'https://eduflex-zeta.vercel.app/',
     image: '/projects/quizflow.webp',
+    imageAlt: 'Screenshot of QuizFlow live quiz and leaderboard interface',
     featured: true,
   },
   {
@@ -313,7 +317,7 @@ export const languageSkills = {
 };
 
 export const foundationsLine =
-  'Strong foundations in DSA, OOP, operating systems, DBMS, computer networks and system design.';
+  'Strong foundations in **DSA**, **OOP**, **operating systems**, **DBMS**, **computer networks** and **system design**.';
 
 export const allSkills = [
   ...skillLayers.flatMap((layer) => layer.skills),
@@ -338,7 +342,7 @@ const placeCatalog: PlaceRef[] = [
   ...projects.map((item) => ({
     label: item.title,
     year: item.year,
-    targetId: item.id,
+    targetId: item.featured ? `featured-${item.id}` : item.id,
     kind: 'project' as const,
   })),
   {
@@ -405,13 +409,47 @@ export const certificationGroups = [
   { issuer: 'NPTEL', items: certifications.filter((item) => item.issuer === 'NPTEL') },
 ];
 
-export const alsoRecognition = 'Additional: technical symposiums across colleges, 2024 – 2026.';
+export const alsoRecognition = {
+  title: 'Campus involvement',
+  detail:
+    'Technical symposiums and college competitions across Chennai, 2024 – 2026, including debugging contests, hackathons, and department events beyond the highlights above.',
+};
 
 export const sections = [
-  { id: 'work', name: 'Work', heading: 'Work', note: 'Five internships · reverse chronological' },
-  { id: 'featured', name: 'Projects', heading: 'Featured projects', note: 'Selected work with demos' },
-  { id: 'projects', name: 'All projects', heading: 'All projects', note: 'Source available on GitHub' },
-  { id: 'skills', name: 'Skills', heading: 'Skills', note: 'Select a skill to see where it was used' },
-  { id: 'recognition', name: 'Recognition', heading: 'Recognition', note: 'Hackathons and certifications' },
-  { id: 'contact', name: 'Contact', heading: 'Contact', note: '' },
+  {
+    id: 'work',
+    name: 'Internships',
+    heading: 'Internship Experience',
+    note: 'Five internships · reverse chronological',
+  },
+  {
+    id: 'featured',
+    name: 'Projects',
+    heading: 'Selected Projects',
+    note: 'Featured work with demos',
+  },
+  {
+    id: 'projects',
+    name: 'More',
+    heading: 'Additional Projects',
+    note: 'Source available on GitHub',
+  },
+  {
+    id: 'skills',
+    name: 'Skills',
+    heading: 'Skills',
+    note: 'Select a skill to see where it was used',
+  },
+  {
+    id: 'recognition',
+    name: 'Recognition',
+    heading: 'Recognition',
+    note: 'Hackathons, certifications, and campus events',
+  },
+  {
+    id: 'contact',
+    name: 'Contact',
+    heading: 'Contact',
+    note: '',
+  },
 ];

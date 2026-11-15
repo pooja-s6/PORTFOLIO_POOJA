@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
+import { FaBars, FaTimes, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { profile, sections } from '../data/portfolio';
-import { playClick, toggleSound, useSound } from '../lib/extras';
-import { openPalette, scrollToId } from '../lib/navigation';
+import { playClick, setSound, useSound } from '../lib/extras';
+import { scrollToId } from '../lib/navigation';
 import ThemeToggle from './ThemeToggle';
 
 const navIds = ['work', 'featured', 'skills', 'contact'];
@@ -12,7 +13,9 @@ const Header = () => {
   const onHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
   const soundOn = useSound();
+  const menuId = useId();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -34,33 +37,64 @@ const Header = () => {
     return () => observer.disconnect();
   }, [onHome]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [menuOpen]);
+
   const items = sections.filter((section) => navIds.includes(section.id));
+
+  const goTo = (id: string) => {
+    playClick();
+    setMenuOpen(false);
+    if (onHome) {
+      scrollToId(id);
+      return;
+    }
+    window.location.assign(`/#${id}`);
+  };
+
+  const toggleSfx = () => {
+    const next = !soundOn;
+    setSound(next);
+    if (next) window.setTimeout(() => playClick(), 0);
+  };
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors ${
-        scrolled ? 'border-line bg-bg/85 backdrop-blur-md' : 'border-transparent bg-bg'
+      className={`sticky top-0 z-50 overflow-x-clip border-b transition-colors ${
+        scrolled || menuOpen ? 'border-line bg-bg/85 backdrop-blur-md' : 'border-transparent bg-bg'
       }`}
     >
-      <nav aria-label="Primary" className="mx-auto flex h-16 max-w-2xl items-center justify-between gap-4 px-5">
+      <nav aria-label="Primary" className="page-shell flex h-16 items-center justify-between gap-4">
         <Link
           to="/"
           data-logo
           onClick={(event) => {
             playClick();
+            setMenuOpen(false);
             if (onHome) {
               event.preventDefault();
               scrollToId('top');
             }
           }}
-          className="font-serif text-xl font-medium text-fg"
+          className="shrink-0 whitespace-nowrap font-serif text-xl font-medium text-fg"
         >
           {profile.name}
           <span className="text-accent-text">.</span>
         </Link>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <ul className="hidden items-center gap-1 sm:flex">
+        <div className="flex shrink-0 items-center gap-1">
+          <ul className="mr-1 hidden items-center gap-0.5 lg:flex">
             {items.map((item) => {
               const isActive = onHome && active === item.id;
               return (
@@ -90,31 +124,90 @@ const Header = () => {
             href={profile.resume.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors hover:text-fg"
+            className="hidden rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors hover:text-fg sm:inline-block"
             data-cursor="open"
           >
             Resume
           </a>
           <button
             type="button"
-            onClick={openPalette}
-            aria-label="Open command palette (Ctrl+K)"
-            className="hidden rounded-md border border-line px-1.5 py-0.5 font-mono text-[11px] text-muted hover:text-fg md:inline-block"
-          >
-            Ctrl K
-          </button>
-          <button
-            type="button"
-            onClick={toggleSound}
+            onClick={toggleSfx}
             aria-pressed={soundOn}
-            aria-label={soundOn ? 'Turn sound off' : 'Turn sound on'}
-            className="hidden rounded-md border border-line px-1.5 py-0.5 font-mono text-[11px] text-muted hover:text-fg sm:inline-block"
+            aria-label={soundOn ? 'Turn UI click sounds off' : 'Turn UI click sounds on'}
+            title="UI click sounds (not music)"
+            className={`hidden h-9 w-9 place-items-center rounded-md border sm:grid ${
+              soundOn ? 'border-accent text-accent-text' : 'border-line text-muted hover:text-fg'
+            }`}
           >
-            sound: {soundOn ? 'on' : 'off'}
+            {soundOn ? <FaVolumeUp size={13} aria-hidden="true" /> : <FaVolumeMute size={13} aria-hidden="true" />}
           </button>
           <ThemeToggle />
+          <button
+            type="button"
+            className="grid h-9 w-9 place-items-center rounded-md border border-line text-fg lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => {
+              playClick();
+              setMenuOpen((open) => !open);
+            }}
+          >
+            {menuOpen ? <FaTimes size={14} aria-hidden="true" /> : <FaBars size={14} aria-hidden="true" />}
+          </button>
         </div>
       </nav>
+
+      {menuOpen ? (
+        <div id={menuId} className="border-t border-line bg-bg lg:hidden">
+          <div className="page-shell pb-5 pt-3">
+            <ul className="flex flex-col gap-1">
+              {items.map((item) => {
+                const isActive = onHome && active === item.id;
+                return (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() => goTo(item.id)}
+                      className={`w-full rounded-md px-3 py-3 text-left text-base ${
+                        isActive ? 'bg-surface font-medium text-fg' : 'text-muted'
+                      }`}
+                    >
+                      {item.name}
+                    </button>
+                  </li>
+                );
+              })}
+              <li>
+                <a
+                  href={profile.resume.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-md px-3 py-3 text-base text-muted sm:hidden"
+                  data-cursor="open"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Resume
+                </a>
+              </li>
+              <li className="mt-2 flex items-center justify-between gap-3 px-3 sm:hidden">
+                <button
+                  type="button"
+                  onClick={toggleSfx}
+                  aria-pressed={soundOn}
+                  className={`inline-flex items-center gap-2 rounded-md border px-3 py-2.5 text-sm ${
+                    soundOn ? 'border-accent text-accent-text' : 'border-line text-muted'
+                  }`}
+                >
+                  {soundOn ? <FaVolumeUp size={13} aria-hidden="true" /> : <FaVolumeMute size={13} aria-hidden="true" />}
+                  sfx: {soundOn ? 'on' : 'off'}
+                </button>
+                <span className="text-xs text-muted">UI clicks, not music</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 };

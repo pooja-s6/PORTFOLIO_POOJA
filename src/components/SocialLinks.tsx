@@ -17,21 +17,21 @@ type SocialLinksProps = {
 };
 
 const SocialLinks = ({ size = 'md', className = '' }: SocialLinksProps) => (
-  <ul className={`flex flex-wrap items-center gap-2 ${className}`}>
+  <ul className={`grid grid-cols-5 gap-2 sm:flex sm:flex-wrap sm:items-center ${className}`}>
     {socials.map(({ label, href, icon: Icon }) => {
       const external = href.startsWith('http');
       return (
-        <li key={label}>
+        <li key={label} className="min-w-0">
           <a
             href={href}
             aria-label={label}
             {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className={`has-tooltip relative grid place-items-center rounded-full border border-line text-fg transition hover:-translate-y-0.5 hover:border-accent hover:text-accent-text ${
-              size === 'sm' ? 'h-9 w-9' : 'h-11 w-11'
+            className={`has-tooltip relative grid w-full place-items-center rounded-full border border-line text-fg transition hover:-translate-y-0.5 hover:border-accent hover:text-accent-text sm:w-auto ${
+              size === 'sm' ? 'h-10 sm:h-9 sm:w-9' : 'h-11 sm:w-11'
             }`}
           >
             <Icon size={size === 'sm' ? 14 : 16} aria-hidden="true" />
-            <span className="tooltip" role="tooltip">
+            <span className="tooltip max-sm:hidden" role="tooltip">
               {label}
             </span>
           </a>

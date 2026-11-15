@@ -10,23 +10,26 @@ const Recognition = () => (
       {highlights.map((item, index) => (
         <li key={item.id}>
           <article className="ticket h-full" style={{ ['--tilt' as string]: `${tilts[index] ?? 0}deg` }}>
-            <p className="label">Highlight</p>
+            <p className="label text-accent-text">Highlight</p>
             <h3 className="mt-3 font-serif text-2xl font-medium leading-tight text-fg">{item.title}</h3>
-            <p className="mt-2 text-sm leading-6 text-muted">{item.detail}</p>
+            <p className="mt-2 text-base leading-7 text-muted">{item.detail}</p>
             {item.outOf ? <p className="mt-1 font-mono text-xs text-muted">out of {item.outOf} teams</p> : null}
-            {item.built ? <p className="mt-3 text-sm text-fg">{item.built}</p> : null}
-            <p className="mt-5 font-mono text-sm tabular-nums text-fg">{item.year}</p>
+            {item.built ? <p className="mt-3 text-sm font-medium text-fg">{item.built}</p> : null}
+            <p className="mt-5 font-mono text-sm font-semibold tabular-nums text-accent-text">{item.year}</p>
           </article>
         </li>
       ))}
     </ul>
 
     <div className="mt-12">
-      <h3 className="label mb-5">Certifications</h3>
-      <div className="space-y-8">
+      <h3 className="font-serif text-2xl font-medium text-fg">Certifications</h3>
+      <p className="mt-2 max-w-2xl text-base leading-7 text-muted">
+        Formal credentials that support the skills above.
+      </p>
+      <div className="mt-6 space-y-8">
         {certificationGroups.map((group) => (
           <div key={group.issuer}>
-            <p className="label mb-3">{group.issuer}</p>
+            <p className="label mb-3 text-fg">{group.issuer}</p>
             <ul className="flex flex-wrap gap-4">
               {group.items.map((item, index) => {
                 const inner = (
@@ -80,7 +83,13 @@ const Recognition = () => (
       </div>
     </div>
 
-    <p className="label mt-10">{alsoRecognition}</p>
+    <aside className="index-card mt-12 p-5 sm:p-6" style={{ ['--tilt' as string]: '0.6deg' }}>
+      <p className="label text-accent-text">{alsoRecognition.title}</p>
+      <p className="mt-3 font-serif text-xl font-medium leading-snug text-fg sm:text-2xl">
+        Symposiums and competitions
+      </p>
+      <p className="mt-3 max-w-2xl text-base leading-7 text-muted">{alsoRecognition.detail}</p>
+    </aside>
   </Section>
 );
 

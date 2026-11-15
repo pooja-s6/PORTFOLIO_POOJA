@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { experience } from '../../data/portfolio';
 import { useSkillFilter } from '../../lib/skillFilter';
@@ -19,6 +20,11 @@ const Work = () => {
 
   return (
     <Section id="work">
+      <p className="mb-8 max-w-2xl text-base leading-7 text-muted">
+        {coarse
+          ? 'Tap a company to expand the details. Tap again to collapse.'
+          : 'Hover a company to expand the details of that internship.'}
+      </p>
       <ol className="relative space-y-1 border-l border-dashed border-line-strong pl-6 sm:pl-8">
         {experience.map((item) => {
           const open = openId === item.id;
@@ -31,18 +37,23 @@ const Work = () => {
                 isFiltering && !visible ? 'opacity-35' : 'opacity-100'
               }`}
               onMouseEnter={() => !coarse && setOpenId(item.id)}
-              onFocusCapture={() => setOpenId(item.id)}
             >
               <span aria-hidden="true" className="absolute -left-[29px] top-8 h-2.5 w-2.5 rounded-full border border-accent bg-paper sm:-left-[37px]" />
               <button
                 type="button"
                 className="w-full text-left"
                 aria-expanded={open}
-                onClick={() => coarse && setOpenId((current) => (current === item.id ? null : item.id))}
+                onClick={() => {
+                  if (coarse) {
+                    setOpenId((current) => (current === item.id ? null : item.id));
+                    return;
+                  }
+                  setOpenId(item.id);
+                }}
               >
-                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                  <div>
-                    <h3 className="inline-flex flex-wrap items-center gap-3 text-lg font-semibold text-fg">
+                <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-[minmax(0,1fr)_11.5rem]">
+                  <div className="min-w-0">
+                    <h3 className="subhead inline-flex flex-wrap items-center gap-3">
                       {item.company}
                       {item.current ? (
                         <span className="stamp" aria-label="Current role">
@@ -54,21 +65,32 @@ const Work = () => {
                       {item.role} · {item.location}
                     </p>
                   </div>
-                  <p className="label tabular-nums">{item.period}</p>
+                  <p className="label whitespace-nowrap tabular-nums sm:justify-self-end sm:pt-1 sm:text-right">
+                    {item.period}
+                  </p>
                 </div>
               </button>
-              {open ? (
-                <ul className="mt-4 space-y-2.5">
-                  {item.points.map((point) => (
-                    <li key={point} className="relative pl-5 text-[0.9375rem] leading-7 text-muted">
-                      <span className="absolute left-0 top-[0.8rem] h-px w-2.5 bg-line-strong" aria-hidden="true" />
-                      <Rich text={point} />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-3 text-sm text-muted">{coarse ? 'Tap to view details' : 'Hover to view details'}</p>
-              )}
+              <AnimatePresence initial={false}>
+                {open ? (
+                  <motion.div
+                    key="details"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <ul className="mt-4 space-y-2.5">
+                      {item.points.map((point) => (
+                        <li key={point} className="relative pl-5 body-copy">
+                          <span className="absolute left-0 top-[0.8rem] h-px w-2.5 bg-line-strong" aria-hidden="true" />
+                          <Rich text={point} />
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
             </li>
           );
         })}

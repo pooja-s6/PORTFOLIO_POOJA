@@ -11,7 +11,7 @@ const Home = () => {
   usePageTitle();
 
   return (
-    <div className="mx-auto max-w-2xl px-5">
+    <div className="page-shell">
       <Intro />
       <Work />
       <Featured />

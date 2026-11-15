@@ -3,6 +3,7 @@ import { foundationsLine, languageSkills, skillLayers } from '../../data/portfol
 import type { SkillItem } from '../../data/portfolio';
 import { jumpToPlace } from '../../lib/jumpToPlace';
 import { useSkillFilter } from '../../lib/skillFilter';
+import Rich from '../Rich';
 import Section from '../Section';
 
 const SkillChip = ({ skill }: { skill: SkillItem }) => {
@@ -59,7 +60,7 @@ const Skills = () => {
 
   return (
     <Section id="skills">
-      <p className="label -mt-4 mb-8">Backend &amp; AI Developer . the toolkit</p>
+      <p className="label -mt-4 mb-8">Backend and AI · primary stack</p>
 
       {isFiltering ? (
         <div className="mb-6 flex items-center gap-3 rounded-sm border border-dashed border-line-strong bg-paper px-3 py-2">
@@ -72,7 +73,7 @@ const Skills = () => {
         </div>
       ) : null}
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-8 sm:grid-cols-2 sm:gap-5">
         {skillLayers.map((layer, index) => (
           <article key={layer.id} className="index-card relative p-5" style={{ ['--tilt' as string]: `${index % 2 === 0 ? -1.2 : 1.1}deg` }}>
             <span aria-hidden="true" className="paperclip" />
@@ -89,7 +90,10 @@ const Skills = () => {
               ))}
             </ul>
             {index < skillLayers.length - 1 ? (
-              <p aria-hidden="true" className="hand absolute -bottom-4 left-1/2 z-10 -translate-x-1/2 text-base text-muted sm:hidden">
+              <p
+                aria-hidden="true"
+                className="hand pointer-events-none absolute -bottom-5 left-1/2 z-10 -translate-x-1/2 text-lg leading-none text-muted sm:hidden"
+              >
                 ↓
               </p>
             ) : null}
@@ -116,7 +120,12 @@ const Skills = () => {
           ))}
           .
         </p>
-        <p className="mt-5 text-[0.9375rem] leading-7 text-muted">{foundationsLine}</p>
+        <div className="mt-8 rounded-sm border border-accent/40 bg-accent-fill/10 px-4 py-4 sm:px-5">
+          <p className="label text-accent-text">Core CS</p>
+          <p className="mt-2 text-base font-medium leading-7 text-fg sm:text-lg">
+            <Rich text={foundationsLine} />
+          </p>
+        </div>
       </div>
     </Section>
   );

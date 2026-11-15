@@ -4,21 +4,25 @@ import { links } from '../data/portfolio';
 
 type Field = 'email' | 'message';
 type Errors = Partial<Record<Field, string>>;
-type Status = 'idle' | 'sending' | 'sent' | 'error';
+type Status = 'idle' | 'sending' | 'sent' | 'copied' | 'error';
 
 const validate = (values: Record<Field, string>): Errors => {
   const errors: Errors = {};
-  if (!/^\S+@\S+\.\S+$/.test(values.email.trim())) errors.email = 'Please add a valid email so I can reply.';
-  if (values.message.trim().length < 10) errors.message = 'A sentence or two is plenty (10+ characters).';
+  if (!/^\S+@\S+\.\S+$/.test(values.email.trim())) errors.email = 'Enter a valid email so I can reply.';
+  if (values.message.trim().length < 10) errors.message = 'Please write at least a short sentence (10+ characters).';
   return errors;
 };
 
 const inputClass =
-  'mt-2 w-full rounded-lg border border-line-strong bg-transparent px-3.5 py-2.5 text-[0.9375rem] text-fg placeholder:text-muted focus:border-accent focus:outline-none aria-[invalid=true]:border-[var(--error)]';
+  'mt-2 w-full rounded-lg border border-line-strong bg-transparent px-3.5 py-3 text-base text-fg placeholder:text-muted focus:border-accent focus:outline-none aria-[invalid=true]:border-[var(--error)]';
+
+const draftText = (values: Record<Field, string>) =>
+  `To: ${links.email}\nFrom: ${values.email}\n\n${values.message.trim()}`;
 
 const ContactForm = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>('idle');
+  const [draft, setDraft] = useState('');
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,10 +38,17 @@ const ContactForm = () => {
     }
 
     if (!links.formspreeId) {
-      const subject = encodeURIComponent('Hi from your portfolio');
-      const body = encodeURIComponent(`${values.message}\n\n${values.email}`);
-      window.location.href = `mailto:${links.email}?subject=${subject}&body=${body}`;
-      setStatus('sent');
+      const body = draftText(values);
+      setDraft(body);
+      try {
+        await navigator.clipboard.writeText(body);
+        setStatus('copied');
+      } catch {
+        const subject = encodeURIComponent('Hello from your portfolio');
+        const mailBody = encodeURIComponent(`${values.message}\n\n${values.email}`);
+        window.location.href = `mailto:${links.email}?subject=${subject}&body=${mailBody}`;
+        setStatus('sent');
+      }
       return;
     }
 
@@ -56,21 +67,37 @@ const ContactForm = () => {
     }
   };
 
-  if (status === 'sent') {
+  if (status === 'sent' || status === 'copied') {
     return (
       <div role="status" className="rounded-sm border border-line-strong bg-paper p-6">
-        <p className="hand text-3xl text-accent-text" aria-hidden="true">
-          ✈
+        <p className="text-lg font-semibold text-fg">
+          {status === 'copied' ? 'Message copied to your clipboard.' : 'Ready to send.'}
         </p>
-        <p className="mt-2 text-lg font-semibold text-fg">Thanks, message received.</p>
-        <p className="mt-2 text-[0.9375rem] text-muted">
+        <p className="mt-2 text-base leading-7 text-muted">
           {links.formspreeId
-            ? "I'll get back to you soon."
-            : 'Your email app should open with the message ready. Hit send there and it reaches me.'}
+            ? "Thanks — I'll get back to you soon."
+            : status === 'copied'
+              ? `Paste it into an email to ${links.email}. If you prefer, open your mail app with the button below.`
+              : 'Your email app should open with the draft. If nothing opens, use Copy email below and send manually.'}
         </p>
-        <button type="button" onClick={() => setStatus('idle')} className="mt-4 text-sm font-medium text-accent-text hover:underline">
-          Send another
-        </button>
+        {status === 'copied' && draft ? (
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href={`mailto:${links.email}?subject=${encodeURIComponent('Hello from your portfolio')}&body=${encodeURIComponent(draft)}`}
+              className="inline-flex rounded-sm bg-fg px-4 py-2.5 text-sm font-semibold text-bg"
+              data-cursor="open"
+            >
+              Open email app
+            </a>
+            <button type="button" onClick={() => setStatus('idle')} className="text-sm font-medium text-accent-text hover:underline">
+              Edit message
+            </button>
+          </div>
+        ) : (
+          <button type="button" onClick={() => setStatus('idle')} className="mt-4 text-sm font-medium text-accent-text hover:underline">
+            Write another message
+          </button>
+        )}
       </div>
     );
   }
@@ -85,6 +112,11 @@ const ContactForm = () => {
 
   return (
     <form noValidate onSubmit={onSubmit} className="space-y-5">
+      {!links.formspreeId ? (
+        <p className="text-sm leading-6 text-muted">
+          Messages are prepared on your device. Prefer the fastest path? Copy my email below and write directly.
+        </p>
+      ) : null}
       <div>
         <label htmlFor="contact-email" className="text-sm font-medium text-fg">
           Your email
@@ -109,7 +141,7 @@ const ContactForm = () => {
           id="contact-message"
           name="message"
           rows={4}
-          placeholder="A role, a project, or just hello"
+          placeholder="A role, a project, or a quick hello"
           aria-invalid={Boolean(errors.message)}
           aria-describedby={describedBy('message')}
           className={`${inputClass} resize-y`}
@@ -123,11 +155,11 @@ const ContactForm = () => {
           className="rounded-sm bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
           data-cursor="open"
         >
-          {status === 'sending' ? 'Sending…' : 'Send message'}
+          {status === 'sending' ? 'Sending…' : links.formspreeId ? 'Send message' : 'Prepare message'}
         </button>
         {status === 'error' ? (
           <p role="alert" className="text-sm text-muted">
-            That didn't go through. Please email {links.email} directly.
+            That did not go through. Please email {links.email} directly.
           </p>
         ) : null}
       </div>

@@ -5,7 +5,7 @@ import SocialLinks from './SocialLinks';
 
 const Footer = () => (
   <footer className="border-t border-dashed border-line-strong">
-    <div className="mx-auto flex max-w-2xl flex-col gap-5 px-5 py-10">
+    <div className="page-shell flex flex-col gap-5 py-10">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-muted">Built in Chennai</p>
         <SocialLinks size="sm" />
