@@ -21,7 +21,7 @@ export const links = {
 
 export const intro = [
   "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year **CSE (Honours in Data Science)** student at Velammal Engineering College, Chennai.",
-  "Right now I'm a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform. Across **five internships** I've shipped a real-time quiz app used by **200+ students** and a role-based legal aid platform, and built a **multi-tenant RAG system** with permission-aware caching.",
+  "Most recently I was a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform. Across **five internships** I've shipped a real-time quiz app used by **200+ students** and a role-based legal aid platform, and built a **multi-tenant RAG system** with permission-aware caching.",
 ];
 
 export const exploring = ['Agentic AI', 'LangGraph', 'System design'];
@@ -43,8 +43,8 @@ export const experience: Experience[] = [
     company: 'Hexaware Technologies',
     role: 'Backend Developer Intern',
     location: 'Remote',
-    period: 'Feb 2026 – Present',
-    current: true,
+    period: 'Feb 2026 – Sep 2026',
+    current: false,
     tags: ['FastAPI', 'PostgreSQL', 'REST APIs', 'LLM Pipelines'],
     points: [
       'Building backend services for an **AI-powered education platform** with **FastAPI, PostgreSQL and REST APIs**.',
