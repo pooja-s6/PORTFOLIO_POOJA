@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { links, profile, sections } from '../data/portfolio';
-import { toggleSepia, toggleSound } from '../lib/extras';
+import { toggleSepia } from '../lib/extras';
 import { scrollToId } from '../lib/navigation';
 import { toggleTheme } from '../lib/theme';
 
@@ -19,7 +19,6 @@ const CommandPalette = () => {
       { name: 'Resume', hint: 'Opens the PDF', run: () => window.open(profile.resume.href, '_blank', 'noopener') },
       { name: 'Email Pooja', hint: links.email, run: () => (window.location.href = `mailto:${links.email}`) },
       { name: 'Toggle theme', hint: 'Light / dark', run: toggleTheme },
-      { name: 'Toggle sound', hint: 'Soft typewriter clicks', run: toggleSound },
       { name: 'Toggle sepia', hint: 'Vintage filter', run: toggleSepia },
     ];
   }, [navigate, pathname]);
@@ -81,7 +80,7 @@ const CommandPalette = () => {
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-start justify-center bg-black/50 px-4 pt-[15vh] backdrop-blur-sm"
+      className="fixed inset-0 z-[80] flex items-start justify-center bg-black/50 px-4 pt-[15vh]"
       role="presentation"
       onClick={() => setOpen(false)}
     >

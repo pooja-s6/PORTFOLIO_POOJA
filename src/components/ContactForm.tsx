@@ -114,7 +114,7 @@ const ContactForm = () => {
     <form noValidate onSubmit={onSubmit} className="space-y-5">
       {!links.formspreeId ? (
         <p className="text-sm leading-6 text-muted">
-          Messages are prepared on your device. Prefer the fastest path? Copy my email below and write directly.
+          This drafts an email on your device. For the fastest reply path, copy my address above and write directly.
         </p>
       ) : null}
       <div>
@@ -155,7 +155,7 @@ const ContactForm = () => {
           className="rounded-sm bg-fg px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
           data-cursor="open"
         >
-          {status === 'sending' ? 'Sending…' : links.formspreeId ? 'Send message' : 'Prepare message'}
+          {status === 'sending' ? 'Sending…' : 'Send message'}
         </button>
         {status === 'error' ? (
           <p role="alert" className="text-sm text-muted">

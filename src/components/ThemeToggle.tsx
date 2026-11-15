@@ -1,5 +1,4 @@
 import { FaMoon, FaSun } from 'react-icons/fa';
-import { playClick } from '../lib/extras';
 import { toggleTheme, useTheme } from '../lib/theme';
 
 const ThemeToggle = () => {
@@ -9,10 +8,7 @@ const ThemeToggle = () => {
   return (
     <button
       type="button"
-      onClick={() => {
-        playClick();
-        toggleTheme();
-      }}
+      onClick={toggleTheme}
       aria-label={`Switch to ${next} theme`}
       className="has-tooltip relative grid h-9 w-9 place-items-center rounded-full border border-line text-fg transition hover:border-accent hover:text-accent-text"
     >

@@ -1,8 +1,7 @@
 import { useEffect, useId, useState } from 'react';
-import { FaBars, FaTimes, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { profile, sections } from '../data/portfolio';
-import { playClick, setSound, useSound } from '../lib/extras';
 import { scrollToId } from '../lib/navigation';
 import ThemeToggle from './ThemeToggle';
 
@@ -14,7 +13,6 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
-  const soundOn = useSound();
   const menuId = useId();
 
   useEffect(() => {
@@ -54,7 +52,6 @@ const Header = () => {
   const items = sections.filter((section) => navIds.includes(section.id));
 
   const goTo = (id: string) => {
-    playClick();
     setMenuOpen(false);
     if (onHome) {
       scrollToId(id);
@@ -63,16 +60,10 @@ const Header = () => {
     window.location.assign(`/#${id}`);
   };
 
-  const toggleSfx = () => {
-    const next = !soundOn;
-    setSound(next);
-    if (next) window.setTimeout(() => playClick(), 0);
-  };
-
   return (
     <header
       className={`sticky top-0 z-50 overflow-x-clip border-b transition-colors ${
-        scrolled || menuOpen ? 'border-line bg-bg/85 backdrop-blur-md' : 'border-transparent bg-bg'
+        scrolled || menuOpen ? 'border-line bg-bg' : 'border-transparent bg-bg'
       }`}
     >
       <nav aria-label="Primary" className="page-shell flex h-16 items-center justify-between gap-4">
@@ -80,7 +71,6 @@ const Header = () => {
           to="/"
           data-logo
           onClick={(event) => {
-            playClick();
             setMenuOpen(false);
             if (onHome) {
               event.preventDefault();
@@ -102,9 +92,7 @@ const Header = () => {
                   <Link
                     to={`/#${item.id}`}
                     aria-current={isActive ? 'location' : undefined}
-                    onMouseEnter={playClick}
                     onClick={(event) => {
-                      playClick();
                       if (onHome) {
                         event.preventDefault();
                         scrollToId(item.id);
@@ -129,18 +117,6 @@ const Header = () => {
           >
             Resume
           </a>
-          <button
-            type="button"
-            onClick={toggleSfx}
-            aria-pressed={soundOn}
-            aria-label={soundOn ? 'Turn UI click sounds off' : 'Turn UI click sounds on'}
-            title="UI click sounds (not music)"
-            className={`hidden h-9 w-9 place-items-center rounded-md border sm:grid ${
-              soundOn ? 'border-accent text-accent-text' : 'border-line text-muted hover:text-fg'
-            }`}
-          >
-            {soundOn ? <FaVolumeUp size={13} aria-hidden="true" /> : <FaVolumeMute size={13} aria-hidden="true" />}
-          </button>
           <ThemeToggle />
           <button
             type="button"
@@ -148,10 +124,7 @@ const Header = () => {
             aria-expanded={menuOpen}
             aria-controls={menuId}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => {
-              playClick();
-              setMenuOpen((open) => !open);
-            }}
+            onClick={() => setMenuOpen((open) => !open)}
           >
             {menuOpen ? <FaTimes size={14} aria-hidden="true" /> : <FaBars size={14} aria-hidden="true" />}
           </button>
@@ -189,20 +162,6 @@ const Header = () => {
                 >
                   Resume
                 </a>
-              </li>
-              <li className="mt-2 flex items-center justify-between gap-3 px-3 sm:hidden">
-                <button
-                  type="button"
-                  onClick={toggleSfx}
-                  aria-pressed={soundOn}
-                  className={`inline-flex items-center gap-2 rounded-md border px-3 py-2.5 text-sm ${
-                    soundOn ? 'border-accent text-accent-text' : 'border-line text-muted'
-                  }`}
-                >
-                  {soundOn ? <FaVolumeUp size={13} aria-hidden="true" /> : <FaVolumeMute size={13} aria-hidden="true" />}
-                  sfx: {soundOn ? 'on' : 'off'}
-                </button>
-                <span className="text-xs text-muted">UI clicks, not music</span>
               </li>
             </ul>
           </div>

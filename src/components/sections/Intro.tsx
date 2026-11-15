@@ -3,7 +3,7 @@ import { FaArrowRight, FaFileAlt } from 'react-icons/fa';
 import { exploring, intro, profile } from '../../data/portfolio';
 import { useBootDone } from '../../lib/boot';
 import { scrollToId } from '../../lib/navigation';
-import Rich from '../Rich';
+import CopyEmail from '../CopyEmail';
 import SocialLinks from '../SocialLinks';
 
 const Intro = () => {
@@ -51,21 +51,23 @@ const Intro = () => {
 
         <h1
           id="intro-title"
-          className="mt-8 font-serif text-[2.75rem] font-medium leading-[1.05] tracking-tight text-fg sm:mt-12 sm:text-7xl"
+          className="mt-8 max-w-4xl font-serif text-[2.35rem] font-medium leading-[1.08] tracking-tight text-fg sm:mt-12 sm:text-6xl lg:text-7xl"
         >
-          Hi, I'm Pooja S<span className="text-accent-text">.</span>
+          {profile.headline}
         </h1>
-        <p className="mt-4 text-[1.35rem] font-medium leading-snug text-accent-text underline decoration-accent/35 decoration-2 underline-offset-[0.35em] sm:mt-5 sm:text-[1.9rem]">
-          {profile.positioning}
-        </p>
 
-        <div className="mt-8 max-w-3xl space-y-3 body-copy">
-          <p>
-            <Rich text={intro[0]} />
-          </p>
-          <p>
-            <Rich text={intro[1]} />
-          </p>
+        <div className="mt-8 max-w-2xl space-y-4 body-copy">
+          {intro.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+
+        <div className="mt-8 max-w-xl rounded-sm border border-line-strong bg-paper px-4 py-4 sm:px-5">
+          <p className="label">Email</p>
+          <div className="mt-2">
+            <CopyEmail />
+          </div>
+          <p className="mt-2 text-sm text-muted">The easiest way to reach me — feel free to drop me a message.</p>
         </div>
 
         <div className="mt-9 flex flex-wrap items-center gap-3">

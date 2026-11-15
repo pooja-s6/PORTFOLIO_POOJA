@@ -1,6 +1,7 @@
 export const profile = {
   name: 'Pooja S',
   positioning: 'Backend & AI Developer',
+  headline: 'Building the Systems Behind Intelligent Products.',
   status: 'Backend & AI roles · Graduating 2027',
   photoCaption: 'Chennai, 2026',
   lastUpdated: 'Nov 2026',
@@ -19,8 +20,9 @@ export const links = {
 };
 
 export const intro = [
-  "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year CSE (Honours in Data Science) student at Velammal Engineering College, Chennai. Most recently I was a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform.",
-  "Across five internships I've shipped a real-time quiz app used by **200+ students**, a role-based legal aid platform, and a multi-tenant RAG system with permission-aware caching.",
+  "I'm Pooja, a final-year Computer Science Engineering student (Honours in Data Science) at Velammal Engineering College, Chennai.",
+  'I build backend systems, scalable APIs, and AI-powered applications, focusing on the engineering behind reliable, intelligent products.',
+  'Open to backend engineering and applied AI roles, collaborations, and interesting conversations.',
 ];
 
 export const exploring = ['Agentic AI', 'LangGraph', 'System design'];
@@ -419,37 +421,37 @@ export const sections = [
   {
     id: 'work',
     name: 'Internships',
-    heading: 'Internship Experience',
-    note: 'Five internships · reverse chronological',
+    heading: 'Internships',
+    note: 'Five roles · reverse chronological',
   },
   {
     id: 'featured',
-    name: 'Projects',
-    heading: 'Selected Projects',
-    note: 'Featured work with demos',
+    name: 'Builds',
+    heading: 'Featured Builds',
+    note: 'Selected work with demos',
   },
   {
     id: 'projects',
-    name: 'More',
-    heading: 'Additional Projects',
+    name: 'Other',
+    heading: 'Other Builds',
     note: 'Source available on GitHub',
   },
   {
     id: 'skills',
     name: 'Skills',
-    heading: 'Skills',
+    heading: 'Technical Skills',
     note: 'Select a skill to see where it was used',
   },
   {
     id: 'recognition',
     name: 'Recognition',
-    heading: 'Recognition',
+    heading: 'Contest Participation & Recognition',
     note: 'Hackathons, certifications, and campus events',
   },
   {
     id: 'contact',
     name: 'Contact',
-    heading: 'Contact',
+    heading: "Let's Connect",
     note: '',
   },
 ];
