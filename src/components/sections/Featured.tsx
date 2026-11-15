@@ -18,25 +18,15 @@ const Featured = () => {
         >
           {project.image ? (
             <figure className="index-card overflow-hidden p-2" style={{ ['--tilt' as string]: '-0.8deg' }}>
-              <a
-                href={project.live || project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={-1}
-                aria-hidden="true"
-                className="group block overflow-hidden"
-                data-cursor="open"
-              >
-                <img
-                  src={project.image}
-                  alt=""
-                  width={960}
-                  height={540}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
-                />
-              </a>
+              <img
+                src={project.image}
+                alt=""
+                width={960}
+                height={540}
+                loading="lazy"
+                decoding="async"
+                className="h-auto w-full"
+              />
               {project.imageCaption ? (
                 <figcaption className="mt-2 px-1 text-xs text-muted">{project.imageCaption}</figcaption>
               ) : null}
