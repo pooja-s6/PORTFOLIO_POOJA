@@ -1,4 +1,3 @@
-import { useId } from 'react';
 import { foundationsLine, languageSkills, skillLayers } from '../../data/portfolio';
 import type { SkillItem } from '../../data/portfolio';
 import { jumpToPlace } from '../../lib/jumpToPlace';
@@ -7,69 +6,60 @@ import Rich from '../Rich';
 import Section from '../Section';
 
 const SkillChip = ({ skill }: { skill: SkillItem }) => {
-  const { selected, select, places } = useSkillFilter();
+  const { selected, select } = useSkillFilter();
   const pressed = selected === skill.name;
-  const noteId = useId();
   const canOpen = skill.usedIn.length > 0;
 
   return (
-    <span className="relative inline-flex">
-      <button
-        type="button"
-        aria-pressed={pressed}
-        aria-describedby={pressed && canOpen ? noteId : undefined}
-        disabled={!canOpen && !pressed}
-        onClick={() => canOpen && select(skill.name)}
-        className={`${skill.kind === 'primary' ? 'chip-primary' : 'chip-also'} ${!canOpen ? 'opacity-70' : ''}`}
-        data-cursor="view"
-      >
-        {skill.name}
-      </button>
-      {pressed && canOpen ? (
-        <span
-          id={noteId}
-          role="status"
-          className="absolute left-0 top-[calc(100%+0.55rem)] z-20 w-56 rounded-sm border border-line-strong bg-paper p-3 shadow-lg sm:w-64"
-        >
-          <span aria-hidden="true" className="tape left-4 translate-x-0" />
-          <p className="label">Used in</p>
-          <ul className="mt-2 space-y-1.5">
-            {places.slice(0, 3).map((place) => (
-              <li key={place.label}>
-                <button
-                  type="button"
-                  onClick={() => jumpToPlace(place)}
-                  className="text-left text-sm text-fg underline decoration-line-strong underline-offset-3 hover:text-accent-text"
-                  data-cursor="open"
-                >
-                  {place.label}
-                  <span className="ml-1 font-mono text-xs text-muted">{place.year}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-          {places.length > 3 ? <p className="mt-2 text-xs text-muted">+{places.length - 3} more</p> : null}
-        </span>
-      ) : null}
-    </span>
+    <button
+      type="button"
+      aria-pressed={pressed}
+      disabled={!canOpen && !pressed}
+      onClick={() => canOpen && select(skill.name)}
+      className={`${skill.kind === 'primary' ? 'chip-primary' : 'chip-also'} ${!canOpen ? 'opacity-70' : ''}`}
+      data-cursor="view"
+    >
+      {skill.name}
+    </button>
   );
 };
 
 const Skills = () => {
-  const { selected, clear, isFiltering } = useSkillFilter();
+  const { selected, clear, isFiltering, places } = useSkillFilter();
 
   return (
     <Section id="skills">
       <p className="label -mt-4 mb-8">Backend and AI · primary stack</p>
 
       {isFiltering ? (
-        <div className="mb-6 flex items-center gap-3 rounded-sm border border-dashed border-line-strong bg-paper px-3 py-2">
-          <p className="text-sm text-muted">
-            Showing where <span className="font-medium text-fg">{selected}</span> shows up
-          </p>
-          <button type="button" onClick={clear} className="hand text-lg text-accent-text" aria-label="Clear skill filter">
-            ✕
-          </button>
+        <div className="mb-6 rounded-sm border border-dashed border-line-strong bg-paper px-4 py-3">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-sm text-muted">
+                Showing where <span className="font-medium text-fg">{selected}</span> shows up
+              </p>
+              <p className="label mt-3">Used in</p>
+              <ul className="mt-2 space-y-1.5">
+                {places.slice(0, 5).map((place) => (
+                  <li key={place.label}>
+                    <button
+                      type="button"
+                      onClick={() => jumpToPlace(place)}
+                      className="text-left text-sm text-fg underline decoration-line-strong underline-offset-3 hover:text-accent-text"
+                      data-cursor="open"
+                    >
+                      {place.label}
+                      <span className="ml-1 font-mono text-xs text-muted">{place.year}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {places.length > 5 ? <p className="mt-2 text-xs text-muted">+{places.length - 5} more</p> : null}
+            </div>
+            <button type="button" onClick={clear} className="hand shrink-0 text-lg text-accent-text" aria-label="Clear skill filter">
+              ✕
+            </button>
+          </div>
         </div>
       ) : null}
 

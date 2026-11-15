@@ -250,14 +250,16 @@ html[data-sepia="on"] body {
   }
 
   .cert-stamp {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     gap: 0.15rem;
-    min-width: 8.5rem;
-    max-width: 11rem;
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    box-sizing: border-box;
     border: 1.5px solid var(--stamp);
     color: var(--stamp);
-    padding: 0.65rem 0.75rem;
+    padding: 0.85rem 0.9rem;
     transform: rotate(var(--tilt, -2deg));
     transition: transform 180ms ease;
     background: color-mix(in srgb, var(--paper) 88%, transparent);

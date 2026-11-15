@@ -1,8 +1,9 @@
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import { alsoRecognition, certificationGroups, highlights } from '../../data/portfolio';
+import { alsoRecognition, certifications, highlights } from '../../data/portfolio';
 import Section from '../Section';
 
 const tilts = [-1.4, 1.1, -0.8];
+const stampTilts = [-1.6, 1.4, -0.9, 1.1, -1.2];
 
 const Recognition = () => (
   <Section id="recognition">
@@ -26,61 +27,54 @@ const Recognition = () => (
       <p className="mt-2 max-w-2xl text-base leading-7 text-muted">
         Formal credentials that support the skills above.
       </p>
-      <div className="mt-6 space-y-8">
-        {certificationGroups.map((group) => (
-          <div key={group.issuer}>
-            <p className="label mb-3 text-fg">{group.issuer}</p>
-            <ul className="flex flex-wrap gap-4">
-              {group.items.map((item, index) => {
-                const inner = (
-                  <>
-                    <span className="font-serif text-base font-medium leading-snug text-stamp">{item.name}</span>
-                    <span className="font-mono text-[11px] uppercase tracking-wide text-stamp/80">
-                      {item.issuer}
-                      {item.year ? ` · ${item.year}` : ''}
-                    </span>
-                    {item.url ? (
-                      <span className="mt-1 inline-flex items-center gap-1 font-mono text-[10px] text-stamp/70">
-                        credential
-                        <FaExternalLinkAlt size={8} aria-hidden="true" />
-                      </span>
-                    ) : null}
-                  </>
-                );
-                return (
-                  <li key={item.name}>
-                    {item.url ? (
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cert-stamp has-tooltip relative"
-                        style={{ ['--tilt' as string]: `${index % 2 === 0 ? -2.2 : 1.8}deg` }}
-                        data-cursor="open"
-                      >
-                        {inner}
-                        <span className="tooltip" role="tooltip">
-                          {item.issuer}
-                        </span>
-                      </a>
-                    ) : (
-                      <span
-                        className="cert-stamp has-tooltip relative"
-                        style={{ ['--tilt' as string]: `${index % 2 === 0 ? -2.2 : 1.8}deg` }}
-                      >
-                        {inner}
-                        <span className="tooltip" role="tooltip">
-                          {item.issuer}
-                        </span>
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
-      </div>
+      <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {certifications.map((item, index) => {
+          const inner = (
+            <>
+              <span className="font-serif text-base font-medium leading-snug text-stamp">{item.name}</span>
+              <span className="font-mono text-[11px] uppercase tracking-wide text-stamp/80">
+                {item.issuer}
+                {item.year ? ` · ${item.year}` : ''}
+              </span>
+              {item.url ? (
+                <span className="mt-1 inline-flex items-center gap-1 font-mono text-[10px] text-stamp/70">
+                  credential
+                  <FaExternalLinkAlt size={8} aria-hidden="true" />
+                </span>
+              ) : null}
+            </>
+          );
+          return (
+            <li key={item.name} className="min-w-0">
+              {item.url ? (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cert-stamp has-tooltip relative h-full w-full max-w-none"
+                  style={{ ['--tilt' as string]: `${stampTilts[index % stampTilts.length]}deg` }}
+                  data-cursor="open"
+                >
+                  {inner}
+                  <span className="tooltip" role="tooltip">
+                    {item.issuer}
+                  </span>
+                </a>
+              ) : (
+                <span
+                  className="cert-stamp has-tooltip relative h-full w-full max-w-none"
+                  style={{ ['--tilt' as string]: `${stampTilts[index % stampTilts.length]}deg` }}
+                >
+                  {inner}
+                  <span className="tooltip" role="tooltip">
+                    {item.issuer}
+                  </span>
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
 
     <aside className="index-card mt-12 p-5 sm:p-6" style={{ ['--tilt' as string]: '0.6deg' }}>
