@@ -30,27 +30,29 @@ const Intro = () => (
         </figure>
 
         <div className="min-w-0 flex-1">
-          <p className="inline-flex items-center gap-3 text-sm text-success">
-            <span className="stamp" aria-hidden="true">
+          <p className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+            <span className="stamp shrink-0" aria-hidden="true">
               Open to roles
             </span>
-            <span className="label normal-case tracking-normal text-success">{profile.status}</span>
+            <span className="font-mono text-sm leading-none tracking-wide text-fg">{profile.status}</span>
           </p>
-          <p className="mt-2 text-sm text-muted">{profile.location}</p>
         </div>
       </div>
 
       <h1 id="intro-title" className="mt-10 font-serif text-5xl font-medium tracking-tight text-fg sm:text-6xl">
-        Hi, I'm Pooja<span className="text-accent-text">.</span>
+        Hi, I'm Pooja S<span className="text-accent-text">.</span>
       </h1>
-      <p className="mt-3 text-lg text-fg sm:text-xl">{profile.positioning}</p>
+      <p className="mt-4 text-[1.55rem] font-medium leading-snug text-accent-text underline decoration-accent/35 decoration-2 underline-offset-[0.35em] sm:text-[1.75rem]">
+        {profile.positioning}
+      </p>
 
-      <div className="mt-8 space-y-4 text-[1.0625rem] leading-8 text-muted">
-        {intro.map((paragraph) => (
-          <p key={paragraph}>
-            <Rich text={paragraph} />
-          </p>
-        ))}
+      <div className="mt-8 space-y-3 text-[1.0625rem] leading-8 text-muted">
+        <p>
+          <Rich text={intro[0]} />
+        </p>
+        <p>
+          <Rich text={intro[1]} />
+        </p>
       </div>
 
       <div className="mt-9 flex flex-wrap items-center gap-3">

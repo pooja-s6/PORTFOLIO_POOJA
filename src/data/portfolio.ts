@@ -1,8 +1,7 @@
 export const profile = {
   name: 'Pooja S',
   positioning: 'Backend & AI Developer',
-  status: 'Open to backend & AI roles · Graduating 2027',
-  location: 'Based in Chennai, India',
+  status: 'Backend & AI roles · Graduating 2027',
   photoCaption: 'Chennai, 2026',
   lastUpdated: 'Nov 2026',
   photo: { webp: '/pooja.webp', jpg: '/pooja.jpg', alt: 'Portrait of Pooja S smiling outdoors' },
@@ -20,8 +19,8 @@ export const links = {
 };
 
 export const intro = [
-  "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year **CSE (Honours in Data Science)** student at Velammal Engineering College, Chennai.",
-  "Most recently I was a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform. Across **five internships** I've shipped a real-time quiz app used by **200+ students** and a role-based legal aid platform, and built a **multi-tenant RAG system** with permission-aware caching.",
+  "I build the part of software most people never see: the **APIs, databases and AI pipelines** that make a product work. I'm a final-year CSE (Honours in Data Science) student at Velammal Engineering College, Chennai, and a **Backend Developer Intern at Hexaware Technologies**, building FastAPI services for an AI education platform.",
+  "Across five internships I've shipped a real-time quiz app used by **200+ students**, a role-based legal aid platform, and a multi-tenant RAG system with permission-aware caching.",
 ];
 
 export const exploring = ['Agentic AI', 'LangGraph', 'System design'];
