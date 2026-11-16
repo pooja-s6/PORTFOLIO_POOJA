@@ -303,7 +303,7 @@ export const skillLayers: SkillLayer[] = [
     title: 'Ship and test it',
     skills: [
       { name: 'Docker', kind: 'primary', usedIn: ['AVPS Technologies', 'Multi-Tenant RAG Platform'] },
-      { name: 'AWS', kind: 'also', usedIn: ['AWS Solutions Architecture Simulation (Forage)'] },
+      { name: 'AWS', kind: 'also', usedIn: ['AWS Certified Cloud Practitioner', 'AWS Solutions Architecture Simulation (Forage)'] },
       { name: 'Git', kind: 'also', usedIn: ['Infosys Springboard'] },
       { name: 'Playwright', kind: 'also', usedIn: ['AVPS Technologies'] },
     ],
@@ -347,6 +347,12 @@ const placeCatalog: PlaceRef[] = [
     targetId: item.featured ? `featured-${item.id}` : item.id,
     kind: 'project' as const,
   })),
+  {
+    label: 'AWS Certified Cloud Practitioner',
+    year: '',
+    targetId: 'recognition',
+    kind: 'recognition',
+  },
   {
     label: 'AWS Solutions Architecture Simulation (Forage)',
     year: '2025',
@@ -397,6 +403,7 @@ export type Certification = {
 };
 
 export const certifications: Certification[] = [
+  { name: 'AWS Certified Cloud Practitioner', issuer: 'Amazon Web Services', year: '', url: '' }, // TODO: year and credential URL
   { name: 'Java Foundation', issuer: 'Infosys Springboard', year: '2025', url: '' }, // TODO: credential URL
   { name: 'AI Fundamentals', issuer: 'IBM SkillsBuild', year: '2025', url: '' }, // TODO: credential URL
   { name: 'AWS Solutions Architecture Simulation', issuer: 'Forage', year: '2025', url: '' }, // TODO: credential URL
@@ -405,6 +412,7 @@ export const certifications: Certification[] = [
 ];
 
 export const certificationGroups = [
+  { issuer: 'Amazon Web Services', items: certifications.filter((item) => item.issuer === 'Amazon Web Services') },
   { issuer: 'Infosys Springboard', items: certifications.filter((item) => item.issuer === 'Infosys Springboard') },
   { issuer: 'IBM SkillsBuild', items: certifications.filter((item) => item.issuer === 'IBM SkillsBuild') },
   { issuer: 'Forage', items: certifications.filter((item) => item.issuer === 'Forage') },

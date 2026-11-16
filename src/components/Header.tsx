@@ -50,6 +50,7 @@ const Header = () => {
   }, [menuOpen]);
 
   const items = sections.filter((section) => navIds.includes(section.id));
+  const menuItems = sections;
 
   const goTo = (id: string) => {
     setMenuOpen(false);
@@ -147,7 +148,7 @@ const Header = () => {
           >
             <div className="page-shell py-4">
               <ul className="flex flex-col gap-1">
-                {items.map((item) => {
+                {menuItems.map((item) => {
                   const isActive = onHome && active === item.id;
                   return (
                     <li key={item.id}>
@@ -158,7 +159,7 @@ const Header = () => {
                           isActive ? 'bg-surface font-medium text-fg' : 'text-muted'
                         }`}
                       >
-                        {item.name}
+                        {item.heading}
                       </button>
                     </li>
                   );

@@ -20,7 +20,6 @@ const Intro = () => {
       >
         <div className="flex flex-wrap items-end gap-6 sm:gap-8">
           <figure className="relative">
-            <span aria-hidden="true" className="tape" />
             <div className="polaroid">
               <picture>
                 <source srcSet={profile.photo.webp} type="image/webp" />
